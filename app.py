@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-  return jsonify({'success': False, 'message': 'Forbidden'}), 403
+  return jsonify({'success': False, 'message': 'Fabris'}), 403
 
 @app.route('/api/init', methods=['GET'])
 def init():
