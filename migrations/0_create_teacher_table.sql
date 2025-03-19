@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS teacher (
+  id SERIAL PRIMARY KEY AUTO INCREMENT,
+  abbreviation VARCHAR(3) NOT NULL,
+  password_hash VARCHAR(64) NOT NULL
+);

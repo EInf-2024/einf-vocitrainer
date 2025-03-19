@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS student (
+  id SERIAL PRIMARY KEY AUTO INCREMENT,
+  department_id FOREIGN KEY REFERENCES department(id),
+  username VARCHAR(32) NOT NULL,
+  password_hash VARCHAR(64) NOT NULL
+);

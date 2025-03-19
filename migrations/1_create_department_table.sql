@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS department (
+  id SERIAL PRIMARY KEY AUTO INCREMENT,
+  teacher_id FOREIGN KEY REFERENCES teacher(id)
+  name VARCHAR(6) NOT NULL,
+);
