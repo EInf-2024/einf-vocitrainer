@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from pydantic import BaseModel
 import openai
 import connection
@@ -14,10 +14,12 @@ class SqlQueryFormat(BaseModel):
 # Create Flask app
 app = Flask(__name__)
 
+# Frontend
 @app.route('/')
 def index():
-  return jsonify({'success': False, 'message': 'Mika'}), 403
+  return render_template('index.html')
 
+# Backend
 @app.route('/api/init', methods=['GET'])
 def init():
   conn = connection.open()
