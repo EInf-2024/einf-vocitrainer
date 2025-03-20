@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
-    <h1>Welcome to the home page</h1>
-    <p>This is the home page content</p>
+<div class="wrapper">
+    <h1>Login</h1>
+    <p>Melden sie sich bitte an</p>
+    <p> <input type="text" name="name" placeholder="Ihr Name"> </p>
+    <input type="password" name="password" placeholder="Ihr Passwort">
+
 
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
