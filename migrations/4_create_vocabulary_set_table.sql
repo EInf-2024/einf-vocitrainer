@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS mf_vocabulary_set (
-  id SERIAL PRIMARY KEY AUTO INCREMENT,
-  teacher_id FOREIGN KEY REFERENCES mf_teacher(id),
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  teacher_id INT NOT NULL REFERENCES mf_teacher(id),
   label VARCHAR(32) NOT NULL
 );

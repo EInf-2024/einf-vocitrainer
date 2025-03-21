@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS mf_config (
-  key VARCHAR(64) PRIMARY KEY,
+  config_key VARCHAR(64) PRIMARY KEY,
   value TEXT NOT NULL
 );
 

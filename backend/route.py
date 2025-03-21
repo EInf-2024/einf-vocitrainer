@@ -14,7 +14,7 @@ def authenticated(app: Flask, route: str, role: Literal["student", "teacher"], m
       if auth_cookie is None: return jsonify({'success': False}), 401
       
       with connection.open() as (_conn, cursor):
-        cursor.execute("SELECT value FROM mf_config WHERE key = 'access_token_ttl'")
+        cursor.execute("SELECT value FROM mf_config WHERE config_key = 'access_token_ttl'")
         ttl = cursor.fetchone()['value']
         
         cursor.execute("SELECT * FROM mf_access_token WHERE token = %s", (auth_cookie,))
