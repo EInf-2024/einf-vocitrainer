@@ -1,9 +1,9 @@
-CREATE TABLE IF NOT EXISTS config (
+CREATE TABLE IF NOT EXISTS mf_config (
   key VARCHAR(64) PRIMARY KEY,
   value TEXT NOT NULL
 );
 
-INSERT INTO config (key, value) VALUES (
+INSERT INTO mf_config (key, value) VALUES (
   'access_token_ttl',
   '2592000' -- 1 Month
 );

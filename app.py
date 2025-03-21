@@ -21,10 +21,10 @@ app = Flask(__name__)
 @app.route('/')
 def index():
   return render_template('index.html')
+
 @app.route("/test")
 def test():
   return render_template("test.html")
-
 
 # Backend
 @app.route('/api/login', methods=['POST'])
@@ -36,13 +36,13 @@ def login():
   with connection.open() as (_conn, cursor):
     # Try to login as student
     is_student = True
-    cursor.execute("SELECT * FROM student WHERE username = %s AND password = %s", (username, hashed_password))
+    cursor.execute("SELECT * FROM mf_student WHERE username = %s AND password_hash = %s", (username, hashed_password))
     result = cursor.fetchone()
     
     # Else, try to login as teacher
     if result is None:
       is_student = False
-      cursor.execute("SELECT * FROM teacher WHERE username = %s AND password = %s", (username, hashed_password))
+      cursor.execute("SELECT * FROM mf_teacher WHERE abbreviation = %s AND password_hash = %s", (username, hashed_password))
       result = cursor.fetchone()
     
     # Check if user exists
@@ -52,7 +52,7 @@ def login():
     access_token = crypto.generate_access_token()
     
     # Insert access token into database
-    cursor.execute("INSERT INTO access_token (token, teacher_id, student_id, created_at) VALUES (%s, %s, %s, %s)", (
+    cursor.execute("INSERT INTO mf_access_token (token, teacher_id, student_id, created_at) VALUES (%s, %s, %s, %s)", (
       access_token, 
       result['id'] if not is_student else None,
       result['id'] if is_student else None,

@@ -14,10 +14,10 @@ def authenticated(app: Flask, route: str, role: Literal["student", "teacher"], m
       if auth_cookie is None: return jsonify({'success': False}), 401
       
       with connection.open() as (_conn, cursor):
-        cursor.execute("SELECT value FROM config WHERE key = 'access_token_ttl'")
+        cursor.execute("SELECT value FROM mf_config WHERE key = 'access_token_ttl'")
         ttl = cursor.fetchone()['value']
         
-        cursor.execute("SELECT * FROM access_token WHERE token = %s", (auth_cookie,))
+        cursor.execute("SELECT * FROM mf_access_token WHERE token = %s", (auth_cookie,))
         result = cursor.fetchone()
         
         # Check if token is invalid -> return 403
@@ -27,7 +27,7 @@ def authenticated(app: Flask, route: str, role: Literal["student", "teacher"], m
         created_at = result['created_at']
         
         if (time.time() - created_at) > ttl:
-          cursor.execute("DELETE FROM access_token WHERE token = %s", (auth_cookie,))
+          cursor.execute("DELETE FROM mf_access_token WHERE token = %s", (auth_cookie,))
           return jsonify({'success': False}), 401
           
         # Determine role of the user and check if it matches the required role

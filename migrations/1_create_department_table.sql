@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS department (
+CREATE TABLE IF NOT EXISTS mf_department (
   id SERIAL PRIMARY KEY AUTO INCREMENT,
-  teacher_id FOREIGN KEY REFERENCES teacher(id)
+  teacher_id FOREIGN KEY REFERENCES mf_teacher(id)
   label VARCHAR(6) NOT NULL,
 );
