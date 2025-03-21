@@ -17,7 +17,7 @@ body
 ```json
 {
   "username": "USERNAME",	
-  "password": "HASHED_PASSWORD"
+  "password": "PASSWORD"
 }
 ```
 

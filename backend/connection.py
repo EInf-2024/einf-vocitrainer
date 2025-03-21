@@ -1,6 +1,7 @@
 from mysql.connector import pooling
 import dotenv
 import os
+from contextlib import contextmanager
 
 dotenv.load_dotenv()
 
@@ -14,5 +15,16 @@ connection_pool = pooling.MySQLConnectionPool(
   password=os.getenv('DB_PASS')
 )
 
+@contextmanager
 def open():
-  return connection_pool.get_connection()
+  cursor = None
+  conn = None
+  
+  try:
+    conn = connection_pool.get_connection()
+    cursor = conn.cursor(dictionary=True)
+    
+    yield (conn, cursor)
+  finally:
+    if (cursor is not None): cursor.close()
+    if (conn is not None): conn.close()

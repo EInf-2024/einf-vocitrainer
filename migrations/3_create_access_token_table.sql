@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS access_token (
   teacher_id FOREIGN KEY REFERENCES teacher(id),
   student_id FOREIGN KEY REFERENCES student(id),
   token VARCHAR(64) NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  created_at INT NOT NULL
 );

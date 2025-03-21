@@ -1,7 +1,10 @@
 from flask import Flask, jsonify, request, render_template
 from pydantic import BaseModel
 import openai
-import connection
+import backend.connection as connection
+import backend.route as route
+import backend.crypto as crypto
+import time
 
 # Init openai
 OPENAI_MODEL = "gpt-4o-mini"
@@ -24,6 +27,52 @@ def test():
 
 
 # Backend
+@app.route('/api/login', methods=['POST'])
+def login():
+  data = request.get_json()
+  username = data['username']
+  hashed_password = crypto.hash_password(data['password'])
+  
+  with connection.open() as (_conn, cursor):
+    # Try to login as student
+    is_student = True
+    cursor.execute("SELECT * FROM student WHERE username = %s AND password = %s", (username, hashed_password))
+    result = cursor.fetchone()
+    
+    # Else, try to login as teacher
+    if result is None:
+      is_student = False
+      cursor.execute("SELECT * FROM teacher WHERE username = %s AND password = %s", (username, hashed_password))
+      result = cursor.fetchone()
+    
+    # Check if user exists
+    if result is None: return jsonify({'success': False}), 401
+    
+    # Generate access token
+    access_token = crypto.generate_access_token()
+    
+    # Insert access token into database
+    cursor.execute("INSERT INTO access_token (token, teacher_id, student_id, created_at) VALUES (%s, %s, %s, %s)", (
+      access_token, 
+      result['id'] if not is_student else None,
+      result['id'] if is_student else None,
+      int(time.time())
+    ))
+    
+    response = jsonify({
+      'success': True,
+      'access_token': access_token,
+      'role': 'student' if is_student else 'teacher'
+    })
+    response.set_cookie('auth', access_token) # Set cookie
+    
+    return response
+
+@route.authenticated(app, '/api/department', 'teacher', ['GET'])
+def department():
+  return jsonify({'success': True, 'data': 'Department data'})
+
+'''
 @app.route('/api/init', methods=['GET'])
 def init():
   conn = connection.open()
@@ -87,6 +136,7 @@ def api():
     'success': True,
     'data': results
   })
+'''
   
 if __name__ == '__main__':
   app.run(debug=True)
