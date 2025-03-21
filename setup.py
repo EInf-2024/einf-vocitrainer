@@ -10,14 +10,19 @@ if os.path.exists(migration_progress_file):
   with open(migration_progress_file) as f:
     migration_progress = int(f.read())
 
-with connection.open() as (_conn, cursor):
   for i, migration_file in enumerate(migration_files):
     if i < migration_progress:
       print(f'Skipping {migration_file}')
       continue
 
     with open(migration_file) as f:
-      cursor.execute(f.read())
+      sql_script = f.read()
+      statements = [stmt.strip() for stmt in sql_script.split(';') if stmt.strip()]
+      
+      with connection.open() as (conn, cursor):
+        for statement in statements:
+          cursor.execute(statement)
+        conn.commit()
 
     with open(migration_progress_file, 'w') as f:
       f.write(str(i + 1))
