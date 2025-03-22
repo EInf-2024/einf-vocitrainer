@@ -46,8 +46,10 @@ auth.route(app, '/api/vocabulary-sets', ['teacher', 'student'], ['GET']) \
 auth.route(app, '/api/vocabulary-sets/create', ['teacher'], ['PUT']) \
   (routes.vocabulary_sets_create)
 
-# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>', ['teacher', 'student'], ['GET'])(TODO)
-# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/delete', ['teacher'], ['DELETE'])(TODO)
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>', ['teacher', 'student'], ['GET']) \
+  (routes.vocabulary_sets_id)
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/delete', ['teacher'], ['DELETE']) \
+  (routes.vocabulary_sets_id_delete)
 
 # auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments/add', ['teacher'], ['PATCH'])(TODO)
 # auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments/remove', ['teacher'], ['PATCH'])(TODO)

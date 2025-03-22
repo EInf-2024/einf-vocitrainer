@@ -11,3 +11,5 @@ from backend.routes.departments_id_students_id_delete import departments_id_stud
 
 from backend.routes.vocabulary_sets import vocabulary_sets
 from backend.routes.vocabulary_sets_create import vocabulary_sets_create
+from backend.routes.vocabulary_sets_id import vocabulary_sets_id
+from backend.routes.vocabulary_sets_id_delete import vocabulary_sets_id_delete
