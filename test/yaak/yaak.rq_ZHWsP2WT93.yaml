@@ -1,0 +1,26 @@
+type: http_request
+model: http_request
+id: rq_ZHWsP2WT93
+createdAt: 2025-03-22T10:56:33.920495200
+updatedAt: 2025-03-22T16:41:06.267763
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers:
+- enabled: true
+  name: ''
+  value: ''
+  id: xNEZ6puPad
+method: GET
+name: ''
+sortPriority: -1742634600000.0
+url: localhost:5000/api/departments/1
+urlParameters:
+- enabled: true
+  name: ''
+  value: ''
+  id: RB60ZsCyQH
