@@ -4,3 +4,6 @@ from backend.routes.login import login
 from backend.routes.departments import departments
 from backend.routes.departments_create import departments_create
 from backend.routes.departments_id import departments_id
+from backend.routes.departments_id_delete import departments_id_delete
+from backend.routes.departments_id_students_create import departments_id_students_create
+from backend.routes.departments_id_students_generate_passwords import departments_id_students_generate_passwords

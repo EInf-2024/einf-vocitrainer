@@ -27,8 +27,9 @@ auth.route(app, '/api/departments', ['teacher'], ['GET'])(routes.departments)
 auth.route(app, '/api/departments/create', ['teacher'], ['PUT'])(routes.departments_create)
 
 auth.route(app, '/api/departments/<int:department_id>', ['teacher'], ['GET'])(routes.departments_id)
-# auth.route(app, '/api/departments/<int:department_id>/delete', ['teacher'], ['DELETE'])(TODO)
-# auth.route(app, '/api/departments/<int:department_id>/students/create', ['teacher'], ['PATCH'])(TODO)
+auth.route(app, '/api/departments/<int:department_id>/delete', ['teacher'], ['DELETE'])(routes.departments_id_delete)
+auth.route(app, '/api/departments/<int:department_id>/students/create', ['teacher'], ['PATCH'])(routes.departments_id_students_create)
+auth.route(app, '/api/departments/<int:department_id>/students/generate-passwords', ['teacher'], ['GET'])(routes.departments_id_students_generate_passwords)
 # auth.route(app, '/api/departments/<int:department_id>/students/<int:student_id>/delete', ['teacher'], ['DELETE'])(TODO)
 
 # auth.route(app, '/api/vocabulary-sets', ['teacher', 'student'], ['GET'])(TODO)

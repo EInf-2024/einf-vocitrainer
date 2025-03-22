@@ -1,30 +1,28 @@
 from flask import jsonify
 
 # TODO: Implement this route
-def departments_id(department_id: int):
+def departments_id_students_generate_passwords(department_id: int):
   """
-  GET /api/departments/<int:department_id>
+  GET /api/departments/<int:department_id>/students/generate-passwords
 
   **Response Format**
   .. code-block:: json
     {
-      "id": 1,
-      "label": "G2025D",
       "students": [
         {
           "id": 1,
           "username": "student1",
+          "password": "password1"
         }
       ]
     }
-  """  
+  """
   return jsonify({
-    'id': department_id,
-    'label': 'G2025D',
     'students': [
       {
         'id': 1,
         'username': 'student1',
+        'password': 'password1'
       }
     ]
   })
