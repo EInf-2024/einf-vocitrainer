@@ -1,6 +1,8 @@
 from flask import jsonify
+import backend.route as route
 
 # TODO: Implement this route
+@route.failsafe
 def departments():
   """
   GET /api/departments

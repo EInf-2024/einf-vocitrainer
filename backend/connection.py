@@ -26,10 +26,10 @@ def open():
     
     yield (conn, cursor)
   finally:
-    if (cursor is not None):
+    if cursor is not None:
       try: cursor.close()
       except Exception as e: print(f'Failed to close cursor: {e}')
       
-    if (conn is not None and conn.is_connected()):
+    if conn is not None and conn.is_connected():
       try: conn.close()
       except Exception as e: print(f'Failed to close connection: {e}')

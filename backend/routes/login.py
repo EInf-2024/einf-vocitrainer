@@ -2,8 +2,10 @@ from flask import jsonify, request
 import backend.connection as connection
 import backend.crypto as crypto
 import time
+import backend.route as route
 
-def login():  
+@route.failsafe
+def login():
   """
   POST /api/login
   
@@ -53,10 +55,10 @@ def login():
     ))
     conn.commit()
     
-    response = jsonify({
-      'access_token': access_token,
-      'role': 'student' if is_student else 'teacher'
-    })
-    response.set_cookie('auth', access_token) # Set cookie
+  response = jsonify({
+    'access_token': access_token,
+    'role': 'student' if is_student else 'teacher'
+  })
+  response.set_cookie('auth', access_token) # Set cookie
     
-    return response
+  return response

@@ -1,8 +1,17 @@
 from flask import Flask, jsonify, Response, request
-from typing import Callable, Literal, Any
+from typing import Callable, Literal, Any, Union
 from functools import wraps
 import backend.connection as connection
 import time
+
+def failsafe(func: Callable[..., Union[Response, tuple[Response, int]]]):
+  @wraps(func)
+  def wrapper(*args: Any, **kwargs: Any):
+    try:
+      return func(*args, **kwargs)
+    except Exception as e:
+      return jsonify({'error': str(e)}), 500
+  return wrapper
 
 # Get access token TTL from database
 with connection.open() as (_conn, cursor):
@@ -10,35 +19,43 @@ with connection.open() as (_conn, cursor):
   ACCESS_TOKEN_TTL = int(cursor.fetchone()['value'])
 assert ACCESS_TOKEN_TTL is not None
 
-def authenticated(app: Flask, route: str, role: Literal["student", "teacher"], methods: list[Literal["GET", "POST", "PUT", "DELETE"]] = ['GET']):
-  def decorator(func: Callable[..., Response]):
+def authenticated(app: Flask, route: str, required_role: list[Literal["student", "teacher"]], methods: list[Literal["GET", "POST", "PUT", "PATCH", "DELETE"]] = ['GET']):
+  def decorator(func: Callable[..., Union[Response, tuple[Response, int]]]):
     @app.route(route, methods=methods)
+    @failsafe
     @wraps(func)
     def wrapper(*args: Any, **kwargs: Any):
       auth_cookie = request.cookies.get('auth')
-      # Check if cookie is None -> return 401
       if auth_cookie is None: return jsonify({'error': "Cookie 'auth' not found"}), 401
       
-      with connection.open() as (_conn, cursor):        
+      with connection.open() as (_conn, cursor):
         cursor.execute("SELECT * FROM mf_access_token WHERE token = %s", (auth_cookie,))
         result = cursor.fetchone()
-        
-        # Check if token is not found -> return 403
         if result is None: return jsonify({'error': "Invalid token"}), 401
+        
+        # Determine id and role of the user
+        auth_role = 'student' if result['teacher_id'] is None else 'teacher'
+        user_id = result['student_id'] if auth_role == 'student' else result['teacher_id']
         
         # Check if created_at is expired -> return 401
         created_at = result['created_at']
-        
         if (time.time() - created_at) > ACCESS_TOKEN_TTL:
-          cursor.execute("DELETE FROM mf_access_token WHERE token = %s", (auth_cookie,))
+          # Not just delete the used token, but delete all expired tokens
+          cursor.execute(
+            "DELETE FROM mf_access_token WHERE %s = %s AND created_at < %s", 
+            (
+              'student_id' if auth_role == 'student' else 'teacher_id',
+              user_id,
+              int(time.time()) - ACCESS_TOKEN_TTL
+            )
+          )
           return jsonify({'error': "Token expired"}), 401
-          
-        # Determine role of the user and check if it matches the required role
-        auth_role = 'student' if result['teacher_id'] is None else 'teacher'
-        if role != auth_role: return jsonify({'error': "Invalid role"}), 403
-        
-        # If all checks pass, execute the function and return the real response
-        return func(*args, **kwargs)
+            
+      # Check if the role matches the required role -> return 403
+      if auth_role in required_role: return jsonify({'error': "Invalid role"}), 403
+      
+      # If all checks pass, execute the function and return the real response
+      return func(*args, **kwargs)
     
     return wrapper
   return decorator
