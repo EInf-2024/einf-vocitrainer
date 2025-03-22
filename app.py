@@ -21,22 +21,37 @@ def test():
   return render_template("test.html")
 
 # Backend
-app.route('/api/login', methods=['POST'])(routes.login)
+app.route('/api/login', methods=['POST']) \
+  (routes.login)
 
-auth.route(app, '/api/departments', ['teacher'], ['GET'])(routes.departments)
-auth.route(app, '/api/departments/create', ['teacher'], ['PUT'])(routes.departments_create)
+auth.route(app, '/api/departments', ['teacher'], ['GET']) \
+  (routes.departments)
+auth.route(app, '/api/departments/create', ['teacher'], ['PUT']) \
+  (routes.departments_create)
 
-auth.route(app, '/api/departments/<int:department_id>', ['teacher'], ['GET'])(routes.departments_id)
-auth.route(app, '/api/departments/<int:department_id>/delete', ['teacher'], ['DELETE'])(routes.departments_id_delete)
-auth.route(app, '/api/departments/<int:department_id>/students/create', ['teacher'], ['PATCH'])(routes.departments_id_students_create)
-auth.route(app, '/api/departments/<int:department_id>/students/generate-passwords', ['teacher'], ['GET'])(routes.departments_id_students_generate_passwords)
-# auth.route(app, '/api/departments/<int:department_id>/students/<int:student_id>/delete', ['teacher'], ['DELETE'])(TODO)
+auth.route(app, '/api/departments/<int:department_id>', ['teacher'], ['GET']) \
+  (routes.departments_id)
+auth.route(app, '/api/departments/<int:department_id>/delete', ['teacher'], ['DELETE']) \
+  (routes.departments_id_delete)
+  
+auth.route(app, '/api/departments/<int:department_id>/students/create', ['teacher'], ['PATCH']) \
+  (routes.departments_id_students_create)
+auth.route(app, '/api/departments/<int:department_id>/students/<int:student_id>/delete', ['teacher'], ['DELETE']) \
+  (routes.departments_id_students_id_delete)
+auth.route(app, '/api/departments/<int:department_id>/students/generate-passwords', ['teacher'], ['GET']) \
+  (routes.departments_id_students_generate_passwords)
 
-# auth.route(app, '/api/vocabulary-sets', ['teacher', 'student'], ['GET'])(TODO)
-# auth.route(app, '/api/vocabulary-sets/create', ['teacher'], ['PUT'])(TODO)
+auth.route(app, '/api/vocabulary-sets', ['teacher', 'student'], ['GET']) \
+  (routes.vocabulary_sets)
+auth.route(app, '/api/vocabulary-sets/create', ['teacher'], ['PUT']) \
+  (routes.vocabulary_sets_create)
 
 # auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>', ['teacher', 'student'], ['GET'])(TODO)
 # auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/delete', ['teacher'], ['DELETE'])(TODO)
+
+# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments/add', ['teacher'], ['PATCH'])(TODO)
+# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments/remove', ['teacher'], ['PATCH'])(TODO)
+
 # auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/create', ['teacher'], ['PATCH'])(TODO)
 # auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/delete', ['teacher'], ['DELETE'])(TODO)
 # auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/update', ['teacher'], ['PATCH'])(TODO)
