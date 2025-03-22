@@ -1,9 +1,9 @@
-from dotenv import load_dotenv
+import dotenv
 import os
 import hashlib
 import secrets
 
-load_dotenv()
+dotenv.load_dotenv()
 
 PASSWORD_SALT = os.getenv('PASSWORD_SALT') or ''
 assert len(PASSWORD_SALT) > 0

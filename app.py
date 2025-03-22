@@ -1,8 +1,14 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, render_template
 from pydantic import BaseModel
 import openai
 import backend.route as route
 import backend.routes as routes
+import dotenv
+import os
+
+# Load environment variables
+dotenv.load_dotenv()
+PROD_ENVIRONMENT = os.getenv('PROD') == 'true'
 
 # Init openai
 OPENAI_MODEL = "gpt-4o-mini"
@@ -26,10 +32,8 @@ def test():
 
 # Backend
 app.route('/api/login', methods=['POST'])(routes.login)
+route.authenticated(app, '/api/departments', 'teacher', ['GET'])(routes.departments)
+route.authenticated(app, '/api/departments/<int:department_id>', 'teacher', ['GET'])(routes.department)
 
-@route.authenticated(app, '/api/department', 'teacher', ['GET'])
-def department():
-  return jsonify({'success': True, 'data': 'Department data'})
-  
 if __name__ == '__main__':
-  app.run(debug=True)
+  app.run(debug=not PROD_ENVIRONMENT)

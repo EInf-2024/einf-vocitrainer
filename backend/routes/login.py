@@ -3,7 +3,25 @@ import backend.connection as connection
 import backend.crypto as crypto
 import time
 
-def login():
+def login():  
+  """
+  POST /api/login
+  
+  **Request Format**
+  .. code-block:: json
+    {
+      "username": "Bob",
+      "password": "password123"
+    }
+    
+  **Response Format**
+  .. code-block:: json
+    {
+      "access_token": "a1b2c3d4e5f6",
+      "role": "student"
+    }
+  """
+  
   data = request.get_json()
   username = data['username']
   hashed_password = crypto.hash_password(data['password'])
@@ -21,7 +39,7 @@ def login():
       result = cursor.fetchone()
     
     # Check if user exists
-    if result is None: return jsonify({'success': False}), 401
+    if result is None: return jsonify({'error': "User doesn't exist."}), 401
     
     # Generate access token
     access_token = crypto.generate_access_token()
@@ -36,7 +54,6 @@ def login():
     conn.commit()
     
     response = jsonify({
-      'success': True,
       'access_token': access_token,
       'role': 'student' if is_student else 'teacher'
     })
