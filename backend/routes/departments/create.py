@@ -1,9 +1,7 @@
 from flask import jsonify
-import backend.route as route
 
 # TODO: Implement this route
-@route.failsafe
-def department_create():
+def create():
   """
   PUT /api/departments/create
 

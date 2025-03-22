@@ -1,5 +1,5 @@
-from backend.routes.login import *
-from backend.routes.departments import *
-from backend.routes.department import *
-from backend.routes.department_create import *
-from backend.routes.department_students import *
+# type: ignore
+from backend.routes.login import login
+
+import backend.routes.departments as departments
+import backend.routes.vocabulary_sets as vocabulary_sets

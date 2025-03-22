@@ -12,41 +12,6 @@ Oben links auf Linie mit Punkt in der Mitte klicken
 
 ---
 
-POST /api/department?id=<ID> (id parameter is optional)
-
-header
-```yaml
-Authorization: ACCESS_TOKEN
-```
-
-body
-```json
-{
-  "label": "LABEL"
-  "students": [
-    {
-      "username": "USERNAME"
-    }
-  ]
-}
-```
-
-response
-```json
-{
-  "id": "ID",
-  "label": "LABEL",
-  "students": [
-    {
-      "id": "ID",
-      "username": "USERNAME"
-    }
-  ]
-}
-```
-
----
-
 GET /api/vocabulary-set
 
 header
