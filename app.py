@@ -16,7 +16,7 @@ app = Flask(__name__)
 def index():
   return render_template('index.html')
 
-@app.route("/test")
+@auth.route(app, '/test', redirect_url='/')
 def test():
   return render_template("test.html")
 

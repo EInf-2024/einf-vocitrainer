@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, Response, request
+from flask import Flask, jsonify, Response, request, redirect
 from typing import Callable, Literal, Any, Union
 from functools import wraps
 import backend.connection as connection
@@ -10,19 +10,29 @@ with connection.open() as (_conn, cursor):
   ACCESS_TOKEN_TTL = int(cursor.fetchone()['value'])
 assert ACCESS_TOKEN_TTL is not None
 
-def route(app: Flask, route: str, required_role: list[Literal["student", "teacher"]], methods: list[Literal["GET", "POST", "PUT", "PATCH", "DELETE"]] = ['GET']):
-  def decorator(func: Callable[..., Union[Response, tuple[Response, int]]]):
+def route(
+  app: Flask, 
+  route: str,
+  required_role: list[Literal["student", "teacher"]] = ['student', 'teacher'],
+  methods: list[Literal["GET", "POST", "PUT", "PATCH", "DELETE"]] = ['GET'],
+  redirect_url: Union[str, None] = None
+):
+  def decorator(func: Callable[..., Union[str, Response, tuple[Response, int]]]):
     @app.route(route, methods=methods)
     @wraps(func)
     def wrapper(*args: Any, **kwargs: Any):
+      def handle_error(error: str, status_code: int):
+        if redirect_url is not None: return redirect(redirect_url)
+        return jsonify({'error': error}), status_code
+      
       auth_cookie = request.cookies.get('auth')
-      if auth_cookie is None: return jsonify({'error': "Cookie 'auth' not found"}), 401
+      if auth_cookie is None: return handle_error("Unauthorized", 401)
       
       try:
         with connection.open() as (_conn, cursor):
           cursor.execute("SELECT * FROM mf_access_token WHERE token = %s", (auth_cookie,))
           result = cursor.fetchone()
-          if result is None: return jsonify({'error': "Invalid token"}), 401
+          if result is None: return handle_error("Invalid token", 401)
           
           # Determine id and role of the user
           auth_role = 'student' if result['teacher_id'] is None else 'teacher'
@@ -40,15 +50,15 @@ def route(app: Flask, route: str, required_role: list[Literal["student", "teache
                 int(time.time()) - ACCESS_TOKEN_TTL
               )
             )
-            return jsonify({'error': "Token expired"}), 401
+            return handle_error("Token expired", 401)
               
         # Check if the role matches the required role -> return 403
-        if auth_role not in required_role: return jsonify({'error': "Invalid role"}), 403
+        if auth_role not in required_role: return handle_error("Forbidden", 403)
         
         # If all checks pass, execute the function and return the real response
         return func(*args, **kwargs)
       except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return handle_error(str(e), 500)
     
     return wrapper
   return decorator
