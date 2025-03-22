@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS mf_teacher (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   abbreviation VARCHAR(3) NOT NULL,
-  password_hash VARCHAR(64) NOT NULL
+  password_hash VARCHAR(128) NOT NULL
 );
