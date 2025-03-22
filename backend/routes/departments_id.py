@@ -1,7 +1,7 @@
 from flask import jsonify
 
 # TODO: Implement this route
-def root(department_id: int):
+def departments_id(department_id: int):
   """
   GET /api/departments/:department_id
 

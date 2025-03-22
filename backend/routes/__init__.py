@@ -1,5 +1,6 @@
 # type: ignore
 from backend.routes.login import login
 
-import backend.routes.departments as departments
-import backend.routes.vocabulary_sets as vocabulary_sets
+from backend.routes.departments import departments
+from backend.routes.departments_create import departments_create
+from backend.routes.departments_id import departments_id

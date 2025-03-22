@@ -23,10 +23,10 @@ def test():
 # Backend
 app.route('/api/login', methods=['POST'])(routes.login)
 
-auth.route(app, '/api/departments', ['teacher'], ['GET'])(routes.departments.root)
-auth.route(app, '/api/departments/create', ['teacher'], ['PUT'])(routes.departments.create)
+auth.route(app, '/api/departments', ['teacher'], ['GET'])(routes.departments)
+auth.route(app, '/api/departments/create', ['teacher'], ['PUT'])(routes.departments_create)
 
-# auth.route(app, '/api/departments/<int:department_id>', ['teacher'], ['GET'])(routes.departments.id.root)
+auth.route(app, '/api/departments/<int:department_id>', ['teacher'], ['GET'])(routes.departments_id)
 # auth.route(app, '/api/departments/<int:department_id>/delete', ['teacher'], ['DELETE'])(TODO)
 # auth.route(app, '/api/departments/<int:department_id>/students/create', ['teacher'], ['PATCH'])(TODO)
 # auth.route(app, '/api/departments/<int:department_id>/students/<int:student_id>/delete', ['teacher'], ['DELETE'])(TODO)

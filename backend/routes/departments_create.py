@@ -1,7 +1,7 @@
 from flask import jsonify
 
 # TODO: Implement this route
-def create():
+def departments_create():
   """
   PUT /api/departments/create
 
