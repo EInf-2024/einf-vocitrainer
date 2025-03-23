@@ -51,18 +51,25 @@ auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>', ['teacher', 'stu
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/delete', ['teacher'], ['DELETE']) \
   (routes.vocabulary_sets_id_delete)
 
-# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments/add', ['teacher'], ['PATCH'])(TODO)
-# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments/remove', ['teacher'], ['PATCH'])(TODO)
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments/add', ['teacher'], ['PATCH']) \
+  (routes.vocabulary_sets_id_departments_add)
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments/remove', ['teacher'], ['PATCH']) \
+  (routes.vocabulary_sets_id_departments_remove)
 
-# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/create', ['teacher'], ['PATCH'])(TODO)
-# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/delete', ['teacher'], ['DELETE'])(TODO)
-# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/update', ['teacher'], ['PATCH'])(TODO)
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/create', ['teacher'], ['PATCH']) \
+  (routes.vocabulary_sets_id_words_create)
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/delete', ['teacher'], ['DELETE']) \
+  (routes.vocabulary_sets_id_words_id_delete)
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/update', ['teacher'], ['PATCH']) \
+  (routes.vocabulary_sets_id_words_id_update)
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/log', ['student'], ['PATCH']) \
+  (routes.vocabulary_sets_id_words_id_log)
 
-# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/generate-context-sentences', ['student'], ['GET'])(TODO)
-# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/log', ['student'], ['PATCH'])(TODO)
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/statistics', ['teacher'], ['GET']) \
+  (routes.vocabulary_sets_id_statistics)
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/generate-context-sentences', ['student'], ['GET']) \
+  (routes.vocabulary_sets_id_generate_context_sentences)
 
-# auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/statistics', ['teacher'], ['GET'])(TODO)
-
-
+# Run the app
 if __name__ == '__main__':
   app.run(debug=not PROD_ENVIRONMENT)
