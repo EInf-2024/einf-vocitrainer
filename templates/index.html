@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
 <div class="wrapper">
     <h1>Login</h1>
-    <p>Melden sie sich bitte an</p>
-    <p> <input type="text" name="name" placeholder="Ihr Name"> </p>
-    <input type="password" name="password" placeholder="Ihr Passwort">
+    <p>Melden Sie sich bitte an</p>
+    <form id="loginForm">
+        <p><input type="text" id="name" name="name" placeholder="Ihr Name" required></p>
+        <p><input type="password" id="password" name="password" placeholder="Ihr Passwort" required></p>
+        <p><button type="submit">Login</button></p>
+    </form>
+</div>
 
-
-    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>

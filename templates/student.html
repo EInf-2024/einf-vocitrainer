@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Schüler Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+    <!-- Header mit Logout -->
+    <div>
+        <h1>Hallo Schüler</h1>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Lernseite mit Flashcards -->
+    <div id="learn-page">
+        <h2>Vokabeln lernen</h2>
+        <div id="flashcards"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/voci.js') }}"></script>
+</body>
+</html>

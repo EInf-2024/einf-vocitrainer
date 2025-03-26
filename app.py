@@ -16,9 +16,9 @@ app = Flask(__name__)
 def index():
   return render_template('index.html')
 
-@auth.route(app, '/test', redirect_url='/')
+@auth.route(app, '/student', redirect_url='/')
 def test():
-  return render_template("test.html")
+  return render_template("student.html")
 
 # Backend
 app.route('/api/login', methods=['POST']) \
