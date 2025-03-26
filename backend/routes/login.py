@@ -35,12 +35,14 @@ def login():
       is_student = True
       cursor.execute("SELECT * FROM mf_student WHERE username = %s AND password_hash = %s", (username, hashed_password))
       result = cursor.fetchone()
+      cursor.nextset()
       
       # Else, try to login as teacher
       if result is None:
         is_student = False
         cursor.execute("SELECT * FROM mf_teacher WHERE abbreviation = %s AND password_hash = %s", (username, hashed_password))
         result = cursor.fetchone()
+        cursor.nextset()
       
       # Check if user exists
       if result is None: return jsonify({'error': "User doesn't exist."}), 401
@@ -61,7 +63,7 @@ def login():
       'access_token': access_token,
       'role': 'student' if is_student else 'teacher'
     })
-    response.set_cookie('auth', access_token) # Set cookie
+    response.set_cookie('auth', access_token, httponly=True, samesite='Strict', secure=True) # Set cookie
       
     return response
   except Exception as e:
