@@ -29,7 +29,7 @@ def route(
       if auth_cookie is None: return handle_error("Unauthorized", 401)
       
       try:
-        with connection.open() as (_conn, cursor):
+        with connection.open() as (conn, cursor):
           cursor.execute("SELECT * FROM mf_access_token WHERE token = %s", (auth_cookie,))
           result = cursor.fetchone()
           cursor.nextset()
@@ -51,6 +51,7 @@ def route(
                 int(time.time()) - ACCESS_TOKEN_TTL
               )
             )
+            conn.commit()
             return handle_error("Token expired", 401)
               
         # Check if the role matches the required role -> return 403

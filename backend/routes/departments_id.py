@@ -32,6 +32,7 @@ def departments_id(department_id: int):
     
     cursor.execute("SELECT * FROM mf_student WHERE department_id = %s", (department_id,))
     students_response = cursor.fetchall()
+    cursor.nextset()
     
     department["students"] = []
     for student in students_response:
