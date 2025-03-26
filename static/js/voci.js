@@ -1,4 +1,4 @@
- document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
 
     // Funktion zum Laden aller Vokabelsets
     async function fetchVocabularySets() {
@@ -6,7 +6,7 @@
             const response = await fetch("/api/vocabulary-sets");
 
             if (response.ok) {
-                const data = await response.json();
+                const data = (await response.json()).sets;
                 const container = document.getElementById("vocisets-container");
 
                 // Wenn keine Vokabelsets vorhanden sind
@@ -20,14 +20,14 @@
                 data.forEach(set => {
                     const div = document.createElement("div");
                     div.innerHTML = `
-                        <h3>${set.name}</h3>
+                        <h3>${set.label}</h3>
                         <div>
                             <div style="width: ${set.progress}%; background-color: green; color: white; text-align: center;">
                                 ${set.progress}%
                             </div>
                         </div>
                     `;
-                    div.onclick = () => loadVocabularySet(set.id);
+                    div.onclick = () => loadVocabularySetForFlashcards(set.id);
                     container.appendChild(div);
                 });
             } else {
@@ -39,8 +39,8 @@
         }
     }
 
-    // Funktion zum Laden eines einzelnen Vokabelsets
-    async function loadVocabularySet(setId) {
+    // Funktion zum Laden eines einzelnen Vokabelsets für Flashcards
+    async function loadVocabularySetForFlashcards(setId) {
         try {
             const response = await fetch(`/api/vocabulary-sets/${setId}`);
             if (response.ok) {
@@ -48,6 +48,7 @@
                 const flashcardsContainer = document.getElementById("flashcards");
                 flashcardsContainer.innerHTML = "";
 
+                // Flashcards anzeigen
                 data.words.forEach(word => {
                     let card = document.createElement("div");
                     card.textContent = word.word;
@@ -65,9 +66,9 @@
                     flashcardsContainer.appendChild(card);
                 });
 
-                // Wechsel zur Lernseite
+                // Wechsel zur Flashcard-Seite
                 document.getElementById("vocisets-container").style.display = "none";
-                document.getElementById("learn-page").style.display = "block";
+                document.getElementById("flashcards-page").style.display = "block";
             } else {
                 alert("Fehler beim Laden des Vokabelsets");
             }
@@ -77,9 +78,48 @@
         }
     }
 
-    // Zurück zu den Vocisets-Seiten
+    // Funktion für den "Lernen"-Button
+    function goToLearningPage() {
+        // Flashcards ausblenden
+        document.getElementById("flashcards-page").style.display = "none";
+
+        // Lernseite anzeigen
+        document.getElementById("learn-page").style.display = "block";
+        loadLearningPage();
+    }
+
+    // Lernseite mit Vokabeln laden
+    function loadLearningPage() {
+        // Hier werden die Vokabeln zur Eingabe gezeigt
+        const flashcardsLearningContainer = document.getElementById("flashcards-learning");
+        flashcardsLearningContainer.innerHTML = "";
+
+        const words = [
+            { word: "Haus", translation: "maison" },
+            { word: "Auto", translation: "voiture" },
+            // Beispiel-Vokabeln (dies sollte aus der API kommen)
+        ];
+
+        words.forEach(word => {
+            const div = document.createElement("div");
+            div.innerHTML = `
+                <label>${word.word}:</label>
+                <input type="text" placeholder="Übersetzung">
+            `;
+            flashcardsLearningContainer.appendChild(div);
+        });
+    }
+
+    // Zurück zu den Flashcards
+    function goBackToFlashcards() {
+        document.getElementById("flashcards-page").style.display = "block";
+        document.getElementById("learn-page").style.display = "none";
+    }
+
+    // Zurück zur Vocisets-Seite
     function backToVocisets() {
         document.getElementById("vocisets-container").style.display = "block";
+        document.getElementById("flashcards-page").style.display = "none";
         document.getElementById("learn-page").style.display = "none";
     }
 
@@ -95,4 +135,7 @@
     // Logout zur Verfügung stellen
     window.logout = logout;
     window.backToVocisets = backToVocisets;
+    window.goToLearningPage = goToLearningPage;
+    window.goBackToFlashcards = goBackToFlashcards;
 });
+

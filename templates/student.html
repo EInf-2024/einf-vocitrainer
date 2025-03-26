@@ -12,10 +12,22 @@
         <button onclick="logout()">Logout</button>
     </div>
 
-    <!-- Lernseite mit Flashcards -->
-    <div id="learn-page">
-        <h2>Vokabeln lernen</h2>
+    <!-- Vocisets Übersicht -->
+    <h2>Vocisets</h2>
+    <div id="vocisets-container"></div>
+
+    <!-- Flashcards-Seite (Zwischenansicht) -->
+    <div id="flashcards-page" style="display: none;">
+        <h2>Flashcards</h2>
         <div id="flashcards"></div>
+        <button onclick="goToLearningPage()">Zum Lernen</button>
+    </div>
+
+    <!-- Lernseite -->
+    <div id="learn-page" style="display: none;">
+        <h2>Vokabeln lernen</h2>
+        <div id="flashcards-learning"></div>
+        <button onclick="goBackToFlashcards()">Zurück zu den Flashcards</button>
     </div>
 
     <script src="{{ url_for('static', filename='js/voci.js') }}"></script>
