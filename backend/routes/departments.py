@@ -34,7 +34,7 @@ def departments():
       departments.append({
         'id': department['id'],
         'label': department['label'],
-        'studentsCount': students_count_response['count']
+        'studentsCount': students_count_response['COUNT(*)']
       })
     
   return jsonify({
