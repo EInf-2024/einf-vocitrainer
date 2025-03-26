@@ -1,0 +1,30 @@
+type: http_request
+model: http_request
+id: rq_aynixq93SX
+createdAt: 2025-03-26T19:21:08.881732100
+updatedAt: 2025-03-26T19:21:30.016005500
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "label": "test"
+    }
+bodyType: null
+description: ''
+headers:
+- enabled: true
+  name: ''
+  value: ''
+  id: xNEZ6puPad
+method: DELETE
+name: ''
+sortPriority: 1000.00195
+url: localhost:5000/api/departments/3/delete
+urlParameters:
+- enabled: true
+  name: ''
+  value: ''
+  id: RB60ZsCyQH

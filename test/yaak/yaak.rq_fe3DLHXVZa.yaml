@@ -1,0 +1,34 @@
+type: http_request
+model: http_request
+id: rq_fe3DLHXVZa
+createdAt: 2025-03-26T19:16:24.853182700
+updatedAt: 2025-03-26T19:16:48.111242100
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "label": "test"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: ''
+  value: ''
+  id: xNEZ6puPad
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: Mpu7QzfUce
+method: PUT
+name: ''
+sortPriority: 1000.001
+url: localhost:5000/api/departments/create
+urlParameters:
+- enabled: true
+  name: ''
+  value: ''
+  id: RB60ZsCyQH
