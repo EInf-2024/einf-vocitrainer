@@ -2,8 +2,7 @@ from flask import jsonify
 from typing import Union, Any
 import backend.connection as connection
 
-# TODO: Implement this route
-def departments_id(department_id: int):
+def departments_id(department_id: int, user_id: int, user_role: str):
   """
   GET /api/departments/<int:department_id>
 
@@ -23,13 +22,18 @@ def departments_id(department_id: int):
   department: dict[str, Union[Any, list[Any]]] = {}
   
   with connection.open() as (_conn, cursor):
-    cursor.execute("SELECT * FROM mf_department WHERE id = %s", (department_id,))
+    # Get the department
+    cursor.execute("SELECT * FROM mf_department WHERE teacher_id = %s AND id = %s", (user_id, department_id))
     department_response = cursor.fetchone()
     cursor.nextset()
+    
+    if department_response is None:
+      return jsonify({"error": "Department not found"}), 404
     
     department["id"] = department_response["id"]
     department["label"] = department_response["label"]
     
+    # Get all students in the department
     cursor.execute("SELECT * FROM mf_student WHERE department_id = %s", (department_id,))
     students_response = cursor.fetchall()
     cursor.nextset()

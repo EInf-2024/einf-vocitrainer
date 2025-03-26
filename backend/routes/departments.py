@@ -2,8 +2,7 @@ from typing import Any
 from flask import jsonify
 import backend.connection as connection
 
-# TODO: Implement this route
-def departments():
+def departments(user_id: int, user_role: str):
   """
   GET /api/departments
 
@@ -22,19 +21,21 @@ def departments():
   departments: list[dict[str, Any]] = []
   
   with connection.open() as (_conn, cursor):
-    cursor.execute("SELECT * FROM mf_department")
+    # Get all departments of the teacher
+    cursor.execute("SELECT * FROM mf_department WHERE teacher_id = %s", (user_id,))
     departments_response = cursor.fetchall()
+    cursor.nextset()
     
+    # Get the number of students in each department and add it to the response
     for department in departments_response:
-      cursor.execute("SELECT COUNT(*) FROM mf_student WHERE department_id = %s", (department['id'],))
+      cursor.execute("SELECT COUNT(*) AS student_count FROM mf_student WHERE department_id = %s", (department['id'],))
       students_count_response = cursor.fetchone()
-      
-      print(students_count_response)
+      cursor.nextset()
       
       departments.append({
         'id': department['id'],
         'label': department['label'],
-        'studentsCount': students_count_response['COUNT(*)']
+        'studentsCount': students_count_response['student_count']
       })
     
   return jsonify({
