@@ -22,6 +22,10 @@ def login():
     }
   """
   data = request.get_json()
+  
+  if 'username' not in data or 'password' not in data:
+    return jsonify({'error': "Missing username or password."}), 400
+  
   username = data['username']
   hashed_password = crypto.hash_password(data['password'])
   

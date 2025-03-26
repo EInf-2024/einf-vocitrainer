@@ -21,3 +21,6 @@ Teacher:
 Student:
 - Username: STU
 - 1234
+
+# Backend TODOs
+- [ ] Add "ON DELETE CASCADE" to some foreign keys
