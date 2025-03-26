@@ -1,5 +1,0 @@
-CREATE TABLE IF NOT EXISTS mf_department (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  teacher_id INT NOT NULL REFERENCES mf_teacher(id),
-  label VARCHAR(6) NOT NULL
-);

@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, Response, request, redirect
 from typing import Callable, Literal, Any, Union
 from functools import wraps
-import backend.connection as connection
+import auth.connection as connection
 import time
 
 # Get access token TTL from database
