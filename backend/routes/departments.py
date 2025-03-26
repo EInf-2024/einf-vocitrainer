@@ -19,12 +19,12 @@ def departments():
       ]
     }
   """
+  departments: list[dict[str, Any]] = []
   
   with connection.open() as (_conn, cursor):
     cursor.execute("SELECT * FROM mf_department")
     departments_response = cursor.fetchall()
     
-    departments: list[dict[str, Any]] = []
     for department in departments_response:
       cursor.execute("SELECT COUNT(*) FROM mf_student WHERE department_id = %s", (department['id'],))
       students_count_response = cursor.fetchone()
