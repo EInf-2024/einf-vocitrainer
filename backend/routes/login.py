@@ -27,25 +27,28 @@ def login():
     return jsonify({'error': "Missing username or password."}), 400
   
   username = data['username']
-  hashed_password = crypto.hash_password(data['password'])
+  password = data['password']
   
   try:
     with connection.open() as (conn, cursor):
       # Try to login as student
       is_student = True
-      cursor.execute("SELECT * FROM mf_student WHERE username = %s AND password_hash = %s", (username, hashed_password))
+      cursor.execute("SELECT id, password_hash FROM mf_student WHERE username = %s", (username,))
       result = cursor.fetchone()
-      cursor.nextset()
-      
+
       # Else, try to login as teacher
       if result is None:
         is_student = False
-        cursor.execute("SELECT * FROM mf_teacher WHERE abbreviation = %s AND password_hash = %s", (username, hashed_password))
+        cursor.execute("SELECT id, password_hash FROM mf_teacher WHERE abbreviation = %s", (username,))
         result = cursor.fetchone()
-        cursor.nextset()
-      
+
       # Check if user exists
-      if result is None: return jsonify({'error': "User doesn't exist."}), 401
+      if result is None:
+        return jsonify({'error': "User doesn't exist."}), 401
+
+      # Verify password
+      if not crypto.verify_password(password, result['password_hash']):
+        return jsonify({'error': "Invalid password."}), 401
       
       # Generate access token
       access_token = crypto.generate_access_token()
