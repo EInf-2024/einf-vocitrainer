@@ -32,6 +32,7 @@ def route(
         with connection.open() as (_conn, cursor):
           cursor.execute("SELECT * FROM mf_access_token WHERE token = %s", (auth_cookie,))
           result = cursor.fetchone()
+          cursor.nextset()
           if result is None: return handle_error("Invalid token", 401)
           
           # Determine id and role of the user
