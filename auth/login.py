@@ -1,6 +1,6 @@
 from flask import jsonify, request
-import backend.connection as connection
-import backend.crypto as crypto
+import auth.connection as connection
+import auth.crypto as crypto
 import time
 
 def login():
@@ -22,6 +22,10 @@ def login():
     }
   """
   data = request.get_json()
+  
+  if 'username' not in data or 'password' not in data:
+    return jsonify({'error': "Missing username or password."}), 400
+  
   username = data['username']
   hashed_password = crypto.hash_password(data['password'])
   
