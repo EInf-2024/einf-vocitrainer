@@ -1,7 +1,7 @@
 from flask import jsonify
 
 # TODO: Implement this route
-def vocabulary_sets_id_departments_remove(vocabulary_set_id: int):
+def vocabulary_sets_id_departments_remove(vocabulary_set_id: int, user_id: int, user_role: str):
   """
   PATCH /api/vocabulary-sets/<int:vocabulary_set_id>/departments/remove
 
