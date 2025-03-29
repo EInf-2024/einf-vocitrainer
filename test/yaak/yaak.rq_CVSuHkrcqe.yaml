@@ -1,8 +1,8 @@
 type: http_request
 model: http_request
-id: rq_dSpZDTwwGP
-createdAt: 2025-03-22T09:10:26.388147600
-updatedAt: 2025-03-29T10:44:11.346002200
+id: rq_CVSuHkrcqe
+createdAt: 2025-03-29T10:42:04.754443600
+updatedAt: 2025-03-29T10:44:11.346224400
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -10,8 +10,8 @@ authenticationType: null
 body:
   text: |-
     {
-      "username": "TST",
-      "password": "1234"
+      "username": "STU",
+      "password": "G2025D_STU"
     }
 bodyType: application/json
 description: ''
@@ -22,6 +22,6 @@ headers:
   id: A3Vpzg3wHJ
 method: POST
 name: ''
-sortPriority: 0.0
+sortPriority: 1000.0
 url: localhost:5000/api/login
 urlParameters: []

@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_aynixq93SX
 createdAt: 2025-03-26T19:21:08.881732100
-updatedAt: 2025-03-26T19:21:30.016005500
+updatedAt: 2025-03-29T10:44:11.346318600
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -21,7 +21,7 @@ headers:
   id: xNEZ6puPad
 method: DELETE
 name: ''
-sortPriority: 1000.00195
+sortPriority: 5000.0
 url: localhost:5000/api/departments/3/delete
 urlParameters:
 - enabled: true

@@ -35,11 +35,11 @@ def departments_id(department_id: int, user_id: int, user_role: str):
     
     # Get all students in the department
     cursor.execute("SELECT * FROM mf_student WHERE department_id = %s", (department_id,))
-    students_query_result = cursor.fetchall()
+    students = cursor.fetchall()
     cursor.nextset()
     
     department_response["students"] = []
-    for student in students_query_result:
+    for student in students:
       student_id = student["id"]
       student_username = student["username"]
       

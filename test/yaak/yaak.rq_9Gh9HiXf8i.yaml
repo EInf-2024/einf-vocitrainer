@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_9Gh9HiXf8i
 createdAt: 2025-03-29T09:42:25.545061400
-updatedAt: 2025-03-29T09:44:53.025346700
+updatedAt: 2025-03-29T10:44:11.346405400
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -25,7 +25,7 @@ headers:
   id: qsHhkNdmus
 method: PATCH
 name: ''
-sortPriority: 1000.0029
+sortPriority: 6000.0
 url: localhost:5000/api/departments/1/students/create
 urlParameters:
 - enabled: true

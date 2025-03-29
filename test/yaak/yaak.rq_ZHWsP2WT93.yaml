@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_ZHWsP2WT93
 createdAt: 2025-03-22T10:56:33.920495200
-updatedAt: 2025-03-26T15:52:32.959387400
+updatedAt: 2025-03-29T10:44:11.346383700
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -17,7 +17,7 @@ headers:
   id: xNEZ6puPad
 method: GET
 name: ''
-sortPriority: 1000.0
+sortPriority: 3000.0
 url: localhost:5000/api/departments/1
 urlParameters:
 - enabled: true

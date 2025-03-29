@@ -1,8 +1,8 @@
 type: http_request
 model: http_request
-id: rq_bgjuAJThcC
-createdAt: 2025-03-26T13:46:50.662197700
-updatedAt: 2025-03-29T10:44:11.346267600
+id: rq_sSR3339quF
+createdAt: 2025-03-29T10:43:55.930656400
+updatedAt: 2025-03-29T10:44:11.346649100
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -13,6 +13,6 @@ description: ''
 headers: []
 method: GET
 name: ''
-sortPriority: 2000.0
-url: localhost:5000/api/departments
+sortPriority: 9000.0
+url: localhost:5000/api/vocabulary-sets
 urlParameters: []

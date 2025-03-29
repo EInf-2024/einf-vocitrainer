@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_VYVJpXf54f
 createdAt: 2025-03-29T09:52:08.790539500
-updatedAt: 2025-03-29T10:05:32.721055800
+updatedAt: 2025-03-29T10:44:11.346550600
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -21,7 +21,7 @@ headers:
   id: xNEZ6puPad
 method: GET
 name: ''
-sortPriority: 1000.0049
+sortPriority: 8000.0
 url: localhost:5000/api/departments/1/students/generate-passwords
 urlParameters:
 - enabled: true

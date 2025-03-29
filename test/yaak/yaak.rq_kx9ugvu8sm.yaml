@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_kx9ugvu8sm
 createdAt: 2025-03-29T09:45:29.909394
-updatedAt: 2025-03-29T09:50:34.292823200
+updatedAt: 2025-03-29T10:44:11.346440100
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -21,7 +21,7 @@ headers:
   id: xNEZ6puPad
 method: DELETE
 name: ''
-sortPriority: 1000.0039
+sortPriority: 7000.0
 url: localhost:5000/api/departments/1/students/7/delete
 urlParameters:
 - enabled: true

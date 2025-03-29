@@ -34,15 +34,15 @@ def login():
       # Try to login as student
       is_student = True
       cursor.execute("SELECT id, password_hash FROM mf_student WHERE username = %s", (username,))
-      cursor.nextset()
       user = cursor.fetchone()
+      cursor.nextset()
 
       # Else, try to login as teacher
       if user is None:
         is_student = False
         cursor.execute("SELECT id, password_hash FROM mf_teacher WHERE abbreviation = %s", (username,))
-        cursor.nextset()
         user = cursor.fetchone()
+        cursor.nextset()
 
       # Check if user exists
       if user is None:

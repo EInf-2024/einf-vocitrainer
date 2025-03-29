@@ -18,26 +18,26 @@ def departments(user_id: int, user_role: str):
       ]
     }
   """
-  departments: list[dict[str, Any]] = []
+  departments_response: list[dict[str, Any]] = []
   
   with connection.open() as (_conn, cursor):
     # Get all departments of the teacher
     cursor.execute("SELECT * FROM mf_department WHERE teacher_id = %s", (user_id,))
-    departments_query_result = cursor.fetchall()
+    departments = cursor.fetchall()
     cursor.nextset()
     
     # Get the number of students in each department and add it to the response
-    for department in departments_query_result:
+    for department in departments:      
       cursor.execute("SELECT COUNT(*) AS student_count FROM mf_student WHERE department_id = %s", (department['id'],))
-      students_count_query_result = cursor.fetchone()
+      students = cursor.fetchone()
       cursor.nextset()
       
-      departments.append({
+      departments_response.append({
         'id': department['id'],
         'label': department['label'],
-        'studentsCount': students_count_query_result['student_count']
+        'studentsCount': students['student_count']
       })
     
   return jsonify({
-    'departments': departments
+    'departments': departments_response
   })
