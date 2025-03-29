@@ -39,7 +39,7 @@ auth.route(app, '/api/departments/<int:department_id>/students/create', ['teache
 auth.route(app, '/api/departments/<int:department_id>/students/<int:student_id>/delete', ['teacher'], ['DELETE']) \
   (routes.departments_id_students_id_delete)
 auth.route(app, '/api/departments/<int:department_id>/students/generate-passwords', ['teacher'], ['GET']) \
-  (routes.departments_id_students_generate_passwords) # TODO
+  (routes.departments_id_students_generate_passwords)
 
 auth.route(app, '/api/vocabulary-sets', ['teacher', 'student'], ['GET']) \
   (routes.vocabulary_sets) # TODO

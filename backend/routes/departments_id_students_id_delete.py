@@ -12,7 +12,7 @@ def departments_id_students_id_delete(department_id: int, student_id: int, user_
   
   with connection.open() as (conn, cursor):
     # Check if the teacher is allowed to delete the student
-    cursor.execute("SELECT * FROM mf_department WHERE teacher_id = %s AND id = %s", (user_id, department_id))
+    cursor.execute("SELECT id FROM mf_department WHERE teacher_id = %s AND id = %s", (user_id, department_id))
     department = cursor.fetchone()
     cursor.nextset()
     
