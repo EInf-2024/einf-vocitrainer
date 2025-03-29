@@ -3,7 +3,7 @@ import backend.connection as connection
 
 def departments_create(user_id: int, user_role: str):
   """
-  PUT /api/departments/create
+  POST /api/departments/create
 
   **Request Format**
   .. code-block:: json

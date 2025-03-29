@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_fe3DLHXVZa
 createdAt: 2025-03-26T19:16:24.853182700
-updatedAt: 2025-03-29T10:44:11.346164
+updatedAt: 2025-03-29T11:59:05.268594600
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -23,7 +23,7 @@ headers:
   name: Content-Type
   value: application/json
   id: Mpu7QzfUce
-method: PUT
+method: POST
 name: ''
 sortPriority: 4000.0
 url: localhost:5000/api/departments/create

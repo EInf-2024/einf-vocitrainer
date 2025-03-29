@@ -3,7 +3,7 @@ from flask import jsonify
 # TODO: Implement this route
 def vocabulary_sets_create(user_id: int, user_role: str):
   """
-  PUT /api/vocabulary-sets/create
+  POST /api/vocabulary-sets/create
 
   **Response Format**
   .. code-block:: json

@@ -5,7 +5,7 @@ from typing import Any
 
 def departments_id_students_generate_passwords(department_id: int, user_id: int, user_role: str):
   """
-  GET /api/departments/<int:department_id>/students/generate-passwords
+  POST /api/departments/<int:department_id>/students/generate-passwords
 
   **Response Format**
   .. code-block:: json

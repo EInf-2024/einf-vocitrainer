@@ -3,7 +3,7 @@ import backend.connection as connection
 
 def departments_id_students_create(department_id: int, user_id: int, user_role: str):
   """
-  PATCH /api/departments/<int:department_id>/students/create
+  POST /api/departments/<int:department_id>/students/create
   
   **Request Format**
   .. code-block:: json
