@@ -20,4 +20,4 @@ def vocabulary_sets_id_words_create(vocabulary_set_id: int, user_id: int, user_r
   """
   return jsonify({
     "id": 0
-  })
+  }), 201

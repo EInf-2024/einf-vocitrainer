@@ -1,8 +1,8 @@
 type: http_request
 model: http_request
-id: rq_dSpZDTwwGP
-createdAt: 2025-03-22T09:10:26.388147600
-updatedAt: 2025-03-29T13:09:25.576746600
+id: rq_QgevQMqm9P
+createdAt: 2025-03-29T13:20:21.498604100
+updatedAt: 2025-03-29T13:20:48.987915
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -10,8 +10,7 @@ authenticationType: null
 body:
   text: |-
     {
-      "username": "TST",
-      "password": "1234"
+      "id": 1
     }
 bodyType: application/json
 description: ''
@@ -19,9 +18,9 @@ headers:
 - enabled: true
   name: Content-Type
   value: application/json
-  id: A3Vpzg3wHJ
-method: POST
+  id: CUeCpq9uQZ
+method: PATCH
 name: ''
-sortPriority: 0.0
-url: localhost:5000/api/login
+sortPriority: 9000.004
+url: localhost:5000/api/vocabulary-sets/4/departments/remove
 urlParameters: []

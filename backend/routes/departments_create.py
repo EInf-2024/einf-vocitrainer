@@ -35,4 +35,4 @@ def departments_create(user_id: int, user_role: str):
   return jsonify({
     'id': department_id,
     'label': label
-  })
+  }), 201

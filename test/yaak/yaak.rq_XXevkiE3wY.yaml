@@ -1,0 +1,22 @@
+type: http_request
+model: http_request
+id: rq_XXevkiE3wY
+createdAt: 2025-03-29T13:13:00.934816600
+updatedAt: 2025-03-29T13:13:20.235645700
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "label": "Sample API voci"
+    }
+bodyType: null
+description: ''
+headers: []
+method: DELETE
+name: ''
+sortPriority: 9000.002
+url: localhost:5000/api/vocabulary-sets/3/delete
+urlParameters: []

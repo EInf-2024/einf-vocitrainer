@@ -43,4 +43,4 @@ def departments_id_students_create(department_id: int, user_id: int, user_role: 
   return jsonify({
     'id': student_id,
     'username': username
-  })
+  }), 201
