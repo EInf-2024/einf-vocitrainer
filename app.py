@@ -68,7 +68,7 @@ auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/statistics', ['teacher'], ['GET']) \
   (routes.vocabulary_sets_id_statistics) # TODO
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/generate-context-sentences', ['student'], ['GET']) \
-  (routes.vocabulary_sets_id_generate_context_sentences) # TODO
+  (routes.vocabulary_sets_id_generate_context_sentences)
 
 # Run the app
 if __name__ == '__main__':

@@ -1,0 +1,22 @@
+type: http_request
+model: http_request
+id: rq_vZXh8dTMqm
+createdAt: 2025-03-29T13:41:15.624010300
+updatedAt: 2025-03-29T20:26:11.392798300
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "id": 1
+    }
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: ''
+sortPriority: 9000.005
+url: localhost:5000/api/vocabulary-sets/1/generate-context-sentences
+urlParameters: []

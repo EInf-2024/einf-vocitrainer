@@ -82,7 +82,7 @@ def _get_vocabulary_set_info(cursor: Any, vocabulary_set_id: int, user_id: int, 
             (progress.correct_count / NULLIF(progress.correct_count + progress.incorrect_count, 0)) > 0.5 
           )
         )
-    """, (vocabulary_set_id, user_id))
+    """, (vocabulary_set_id, user_id)) # TODO: Add progress criteria to the DB config table
     learned_count = cursor.fetchone()['learned_count']
     cursor.nextset()
 
