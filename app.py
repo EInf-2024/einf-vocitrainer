@@ -42,7 +42,7 @@ auth.route(app, '/api/departments/<int:department_id>/students/generate-password
   (routes.departments_id_students_generate_passwords)
 
 auth.route(app, '/api/vocabulary-sets', ['teacher', 'student'], ['GET']) \
-  (routes.vocabulary_sets) # TODO
+  (routes.vocabulary_sets)
 auth.route(app, '/api/vocabulary-sets/create', ['teacher'], ['PUT']) \
   (routes.vocabulary_sets_create) # TODO
 
