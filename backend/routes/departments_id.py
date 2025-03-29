@@ -19,30 +19,33 @@ def departments_id(department_id: int, user_id: int, user_role: str):
       ]
     }
   """
-  department: dict[str, Union[Any, list[Any]]] = {}
+  department_response: dict[str, Union[Any, list[Any]]] = {}
   
   with connection.open() as (_conn, cursor):
     # Get the department
     cursor.execute("SELECT * FROM mf_department WHERE teacher_id = %s AND id = %s", (user_id, department_id))
-    department_query_result = cursor.fetchone()
+    department = cursor.fetchone()
     cursor.nextset()
     
-    if department_query_result is None:
+    if department is None:
       return jsonify({"error": "Department not found"}), 404
     
-    department["id"] = department_query_result["id"]
-    department["label"] = department_query_result["label"]
+    department_response["id"] = department["id"]
+    department_response["label"] = department["label"]
     
     # Get all students in the department
     cursor.execute("SELECT * FROM mf_student WHERE department_id = %s", (department_id,))
     students_query_result = cursor.fetchall()
     cursor.nextset()
     
-    department["students"] = []
+    department_response["students"] = []
     for student in students_query_result:
-      department["students"].append({
-        "id": student["id"],
-        "username": student["username"]
+      student_id = student["id"]
+      student_username = student["username"]
+      
+      department_response["students"].append({
+        "id": student_id,
+        "username": student_username
       })
     
-  return jsonify(department)
+  return jsonify(department_response)

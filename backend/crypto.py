@@ -1,14 +1,8 @@
 import secrets
 import bcrypt
 
+# TODO: Does this need to be more secure?
 def generate_password(department_label: str, student_username: str) -> str:
-  """
-  Generates a password for a student based on their username and department label.
-  
-  :param department_label: The label of the department.
-  :param student_username: The username of the student.
-  :return: A generated password.
-  """
   return f"{department_label}_{student_username}"
 
 def hash_password(password: str) -> str:

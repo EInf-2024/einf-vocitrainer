@@ -34,20 +34,24 @@ def login():
       # Try to login as student
       is_student = True
       cursor.execute("SELECT id, password_hash FROM mf_student WHERE username = %s", (username,))
-      user_query_result = cursor.fetchone()
+      cursor.nextset()
+      user = cursor.fetchone()
 
       # Else, try to login as teacher
-      if user_query_result is None:
+      if user is None:
         is_student = False
         cursor.execute("SELECT id, password_hash FROM mf_teacher WHERE abbreviation = %s", (username,))
-        user_query_result = cursor.fetchone()
+        cursor.nextset()
+        user = cursor.fetchone()
 
       # Check if user exists
-      if user_query_result is None:
+      if user is None:
         return jsonify({'error': "User doesn't exist."}), 401
+      
+      user_password_hash = user['password_hash']
 
       # Verify password
-      if not crypto.verify_password(password, user_query_result['password_hash']):
+      if not crypto.verify_password(password, user_password_hash):
         return jsonify({'error': "Invalid password."}), 401
       
       # Generate access token
@@ -56,8 +60,8 @@ def login():
       # Insert access token into database
       cursor.execute("INSERT INTO mf_access_token (token, teacher_id, student_id, created_at) VALUES (%s, %s, %s, %s)", (
         access_token, 
-        user_query_result['id'] if not is_student else None,
-        user_query_result['id'] if is_student else None,
+        user['id'] if not is_student else None,
+        user['id'] if is_student else None,
         int(time.time())
       ))
       conn.commit()

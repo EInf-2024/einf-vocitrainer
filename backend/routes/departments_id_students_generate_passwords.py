@@ -35,6 +35,7 @@ def departments_id_students_generate_passwords(department_id: int, user_id: int,
     # Fetch students from the department
     cursor.execute("SELECT id, username FROM mf_student WHERE department_id = %s", (department_id,))
     students = cursor.fetchall()
+    cursor.nextset()
     
     # Generate passwords for each student
     for student in students:
