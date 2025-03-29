@@ -35,9 +35,9 @@ auth.route(app, '/api/departments/<int:department_id>/delete', ['teacher'], ['DE
   (routes.departments_id_delete)
   
 auth.route(app, '/api/departments/<int:department_id>/students/create', ['teacher'], ['PATCH']) \
-  (routes.departments_id_students_create) # TODO
+  (routes.departments_id_students_create)
 auth.route(app, '/api/departments/<int:department_id>/students/<int:student_id>/delete', ['teacher'], ['DELETE']) \
-  (routes.departments_id_students_id_delete) # TODO
+  (routes.departments_id_students_id_delete)
 auth.route(app, '/api/departments/<int:department_id>/students/generate-passwords', ['teacher'], ['GET']) \
   (routes.departments_id_students_generate_passwords) # TODO
 

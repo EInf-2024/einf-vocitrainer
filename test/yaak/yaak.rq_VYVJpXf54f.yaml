@@ -1,0 +1,30 @@
+type: http_request
+model: http_request
+id: rq_VYVJpXf54f
+createdAt: 2025-03-29T09:52:08.790539500
+updatedAt: 2025-03-29T09:52:21.893138200
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "username": "api"
+    }
+bodyType: null
+description: ''
+headers:
+- enabled: true
+  name: ''
+  value: ''
+  id: xNEZ6puPad
+method: GET
+name: ''
+sortPriority: 1000.0049
+url: localhost:5000/api/departments/1/students/generate-passwords
+urlParameters:
+- enabled: true
+  name: ''
+  value: ''
+  id: RB60ZsCyQH

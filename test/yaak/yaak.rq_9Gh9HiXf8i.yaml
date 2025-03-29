@@ -1,0 +1,34 @@
+type: http_request
+model: http_request
+id: rq_9Gh9HiXf8i
+createdAt: 2025-03-29T09:42:25.545061400
+updatedAt: 2025-03-29T09:44:53.025346700
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "username": "api"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: ''
+  value: ''
+  id: xNEZ6puPad
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: qsHhkNdmus
+method: PATCH
+name: ''
+sortPriority: 1000.0029
+url: localhost:5000/api/departments/1/students/create
+urlParameters:
+- enabled: true
+  name: ''
+  value: ''
+  id: RB60ZsCyQH
