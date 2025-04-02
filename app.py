@@ -17,11 +17,11 @@ def index():
   return render_template('index.html')
 
 @auth.route(app, '/student', redirect_url='/')
-def student():
+def student(user_id, user_role):
   return render_template("student.html")
 
 @auth.route(app, '/teacher', redirect_url='/')
-def teacher():
+def teacher(user_id, user_role):
   return render_template("teacher.html")
 
 # Backend
