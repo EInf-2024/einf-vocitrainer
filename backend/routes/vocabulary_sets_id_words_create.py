@@ -1,9 +1,9 @@
 from flask import jsonify
 
 # TODO: Implement this route
-def vocabulary_sets_id_words_create(vocabulary_set_id: int):
+def vocabulary_sets_id_words_create(vocabulary_set_id: int, user_id: int, user_role: str):
   """
-  PATCH /api/vocabulary-sets/<int:vocabulary_set_id>/words/create
+  POST /api/vocabulary-sets/<int:vocabulary_set_id>/words/create
   
   **Request Format**
   .. code-block:: json
@@ -20,4 +20,4 @@ def vocabulary_sets_id_words_create(vocabulary_set_id: int):
   """
   return jsonify({
     "id": 0
-  })
+  }), 201

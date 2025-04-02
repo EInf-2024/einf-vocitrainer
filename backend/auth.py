@@ -29,14 +29,15 @@ def route(
       if auth_cookie is None: return handle_error("Unauthorized", 401)
       
       try:
-        with connection.open() as (_conn, cursor):
+        with connection.open() as (conn, cursor):
           cursor.execute("SELECT * FROM mf_access_token WHERE token = %s", (auth_cookie,))
           result = cursor.fetchone()
+          cursor.nextset()
           if result is None: return handle_error("Invalid token", 401)
           
           # Determine id and role of the user
-          auth_role = 'student' if result['teacher_id'] is None else 'teacher'
-          user_id = result['student_id'] if auth_role == 'student' else result['teacher_id']
+          user_role = 'student' if result['teacher_id'] is None else 'teacher'
+          user_id = result['student_id'] if user_role == 'student' else result['teacher_id']
           
           # Check if created_at is expired -> return 401
           created_at = result['created_at']
@@ -45,18 +46,19 @@ def route(
             cursor.execute(
               "DELETE FROM mf_access_token WHERE %s = %s AND created_at < %s", 
               (
-                'student_id' if auth_role == 'student' else 'teacher_id',
+                'student_id' if user_role == 'student' else 'teacher_id',
                 user_id,
                 int(time.time()) - ACCESS_TOKEN_TTL
               )
             )
+            conn.commit()
             return handle_error("Token expired", 401)
               
         # Check if the role matches the required role -> return 403
-        if auth_role not in required_role: return handle_error("Forbidden", 403)
+        if user_role not in required_role: return handle_error("Forbidden", 403)
         
         # If all checks pass, execute the function and return the real response
-        return func(*args, **kwargs)
+        return func(*args, **kwargs, user_id=user_id, user_role=user_role)
       except Exception as e:
         return handle_error(str(e), 500)
     

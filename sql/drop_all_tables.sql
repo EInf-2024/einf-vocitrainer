@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS mf_config;
+DROP TABLE IF EXISTS mf_vocabulary_set_word_progress;
+DROP TABLE IF EXISTS mf_vocabulary_set_word;
+DROP TABLE IF EXISTS mf_vocabulary_set_access;
+DROP TABLE IF EXISTS mf_vocabulary_set;
+DROP TABLE IF EXISTS mf_access_token;
+DROP TABLE IF EXISTS mf_student;
+DROP TABLE IF EXISTS mf_department;
+DROP TABLE IF EXISTS mf_teacher;

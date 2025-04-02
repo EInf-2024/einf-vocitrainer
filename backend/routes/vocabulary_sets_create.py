@@ -1,9 +1,15 @@
-from flask import jsonify
+from flask import jsonify, request
+import backend.connection as connection
 
-# TODO: Implement this route
-def vocabulary_sets_create():
+def vocabulary_sets_create(user_id: int, user_role: str):
   """
-  PUT /api/vocabulary-sets/create
+  POST /api/vocabulary-sets/create
+  
+  **Request Format**
+  .. code-block:: json
+    {
+      "label": "Vocabulary Set 1"
+    }
 
   **Response Format**
   .. code-block:: json
@@ -12,7 +18,21 @@ def vocabulary_sets_create():
       "label": "Vocabulary Set 1"
     }
   """
+  data = request.get_json()
+  
+  if "label" not in data:
+    return jsonify({"error": "Missing label"}), 400
+  
+  vocabulary_set_label = data["label"]
+  
+  with connection.open() as (conn, cursor):
+    # Create the vocabulary set
+    cursor.execute("INSERT INTO mf_vocabulary_set (teacher_id, label) VALUES (%s, %s)", (user_id, vocabulary_set_label))
+    conn.commit()
+    
+    vocabulary_set_id = cursor.lastrowid
+  
   return jsonify({
-    "id": 1,
-    "label": "Vocabulary Set 1"
-  })
+    "id": vocabulary_set_id,
+    "label": vocabulary_set_label
+  }), 201

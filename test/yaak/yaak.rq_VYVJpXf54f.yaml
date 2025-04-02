@@ -1,13 +1,17 @@
 type: http_request
 model: http_request
-id: rq_ZHWsP2WT93
-createdAt: 2025-03-22T10:56:33.920495200
-updatedAt: 2025-03-29T13:09:25.577268500
+id: rq_VYVJpXf54f
+createdAt: 2025-03-29T09:52:08.790539500
+updatedAt: 2025-03-29T13:09:25.577464800
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
 authenticationType: null
-body: {}
+body:
+  text: |-
+    {
+      "username": "api"
+    }
 bodyType: null
 description: ''
 headers:
@@ -15,10 +19,10 @@ headers:
   name: ''
   value: ''
   id: xNEZ6puPad
-method: GET
+method: POST
 name: ''
-sortPriority: 3000.0
-url: localhost:5000/api/departments/1
+sortPriority: 8000.0
+url: localhost:5000/api/departments/1/students/generate-passwords
 urlParameters:
 - enabled: true
   name: ''

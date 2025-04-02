@@ -2,8 +2,8 @@ import glob
 import backend.connection as connection
 import os
 
-migration_progress_file = 'migrations/.progress'
-migration_files = sorted(glob.glob('migrations/*.sql'))
+migration_progress_file = 'sql/migrations/.progress'
+migration_files = sorted(glob.glob('sql/migrations/*.sql'))
 
 migration_progress = 0
 if os.path.exists(migration_progress_file):

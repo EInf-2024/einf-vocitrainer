@@ -1,26 +1,30 @@
 type: http_request
 model: http_request
-id: rq_sLZvi4M7Ct
-createdAt: 2025-03-22T10:55:37.833596500
-updatedAt: 2025-03-22T16:40:56.660517400
+id: rq_aynixq93SX
+createdAt: 2025-03-26T19:21:08.881732100
+updatedAt: 2025-03-29T13:09:25.577188800
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
 authenticationType: null
-body: {}
+body:
+  text: |-
+    {
+      "label": "test"
+    }
 bodyType: null
 description: ''
 headers:
 - enabled: true
   name: ''
   value: ''
-  id: 3itFdY75W8
-method: GET
+  id: xNEZ6puPad
+method: DELETE
 name: ''
-sortPriority: -1742634600000.0
-url: localhost:5000/api/departments
+sortPriority: 5000.0
+url: localhost:5000/api/departments/3/delete
 urlParameters:
 - enabled: true
   name: ''
   value: ''
-  id: GzxXd89S4s
+  id: RB60ZsCyQH

@@ -1,13 +1,17 @@
 type: http_request
 model: http_request
-id: rq_ZHWsP2WT93
-createdAt: 2025-03-22T10:56:33.920495200
-updatedAt: 2025-03-29T13:09:25.577268500
+id: rq_kx9ugvu8sm
+createdAt: 2025-03-29T09:45:29.909394
+updatedAt: 2025-03-29T13:09:25.577403
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
 authenticationType: null
-body: {}
+body:
+  text: |-
+    {
+      "username": "api"
+    }
 bodyType: null
 description: ''
 headers:
@@ -15,10 +19,10 @@ headers:
   name: ''
   value: ''
   id: xNEZ6puPad
-method: GET
+method: DELETE
 name: ''
-sortPriority: 3000.0
-url: localhost:5000/api/departments/1
+sortPriority: 7000.0
+url: localhost:5000/api/departments/1/students/7/delete
 urlParameters:
 - enabled: true
   name: ''
