@@ -17,8 +17,12 @@ def index():
   return render_template('index.html')
 
 @auth.route(app, '/student', redirect_url='/')
-def test():
+def student():
   return render_template("student.html")
+
+@auth.route(app, '/teacher', redirect_url='/')
+def teacher():
+  return render_template("teacher.html")
 
 # Backend
 app.route('/api/login', methods=['POST']) \
