@@ -60,6 +60,7 @@ def route(
         # If all checks pass, execute the function and return the real response
         return func(*args, **kwargs, user_id=user_id, user_role=user_role)
       except Exception as e:
+        print(e)
         return handle_error(str(e), 500)
     
     return wrapper
