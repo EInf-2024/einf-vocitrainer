@@ -1,0 +1,35 @@
+body.animate-background {
+    background: linear-gradient(45deg, #007bff, #6610f2, #dc3545, #ffc107, #28a745); /* Farbiger Gradient */
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s infinite linear;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/*  Optional: Passe hier spezifische Bootstrap-Elemente an, falls nötig
+    z.B. um Abstände zu ändern oder Farben leicht zu justieren.
+    Hier ist ein Beispiel, um den Container etwas breiter zu machen: */
+.container {
+    max-width: 1200px; /* Beispiel für breiteren Container */
+}
+
+
+/* Optional: Style für Add Buttons, falls nötig. Bootstrap Buttons können über Klassen angepasst werden. */
+.btn-primary {
+    /* z.B. um die Schrift fetter zu machen: */
+    font-weight: bold;
+}
+
+.btn-success {
+    font-weight: bold;
+}
