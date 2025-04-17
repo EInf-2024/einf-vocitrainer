@@ -17,11 +17,11 @@ def index():
   return render_template('index.html')
 
 @auth.route(app, '/student', redirect_url='/')
-def student(user_id, user_role):
+def student(user_id: int, user_role: str):
   return render_template("student.html")
 
 @auth.route(app, '/teacher', redirect_url='/')
-def teacher(user_id, user_role):
+def teacher(user_id: int, user_role: str):
   return render_template("teacher.html")
 
 # Backend
@@ -51,7 +51,7 @@ auth.route(app, '/api/vocabulary-sets/create', ['teacher'], ['POST']) \
   (routes.vocabulary_sets_create)
 
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>', ['teacher', 'student'], ['GET']) \
-  (routes.vocabulary_sets_id) # TODO
+  (routes.vocabulary_sets_id)
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/delete', ['teacher'], ['DELETE']) \
   (routes.vocabulary_sets_id_delete)
 

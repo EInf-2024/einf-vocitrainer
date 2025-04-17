@@ -1,0 +1,22 @@
+type: http_request
+model: http_request
+id: rq_izpQgGwpxW
+createdAt: 2025-04-17T13:32:38.477592300
+updatedAt: 2025-04-17T13:32:46.327174600
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "id": 1
+    }
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: ''
+sortPriority: 9000.006
+url: localhost:5000/api/vocabulary-sets/1
+urlParameters: []

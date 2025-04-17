@@ -3,12 +3,9 @@ from typing import Callable, Literal, Any, Union
 from functools import wraps
 import backend.connection as connection
 import time
+from backend.config import get_config
 
-# Get access token TTL from database
-with connection.open() as (_conn, cursor):
-  cursor.execute("SELECT value FROM mf_config WHERE config_key = 'access_token_ttl'")
-  ACCESS_TOKEN_TTL = int(cursor.fetchone()['value'])
-assert ACCESS_TOKEN_TTL is not None
+ACCESS_TOKEN_TTL: int = get_config('access_token_ttl', int)
 
 def route(
   app: Flask, 

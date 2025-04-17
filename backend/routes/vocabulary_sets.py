@@ -1,6 +1,10 @@
 from flask import jsonify
 import backend.connection as connection
 from typing import Any
+from backend.config import get_config
+
+MIN_LEARNED_SUCCESSIVE_CORRECT_COUNT: int = get_config('min_learned_successive_correct_count', int)
+MIN_LEARNED_CORRECT_PERCENTAGE: float = get_config('min_learned_correct_percentage', float)
 
 def vocabulary_sets(user_id: int, user_role: str):
   """
@@ -27,7 +31,7 @@ def vocabulary_sets(user_id: int, user_role: str):
   
     for vocabulary_set in vocabulary_sets:
       vocabulary_set_id = vocabulary_set['id']
-      words_count, learned_count = _get_vocabulary_set_info(cursor, vocabulary_set_id, user_id, user_role)        
+      words_count, learned_count = _get_vocabulary_set_progress(cursor, vocabulary_set_id, user_id, user_role)        
       
       vocabulary_sets_response.append({
         'id': vocabulary_set['id'],
@@ -62,7 +66,7 @@ def _get_users_vocabulary_sets(cursor: Any, user_id: int, user_role: str) -> Any
   
   return []
 
-def _get_vocabulary_set_info(cursor: Any, vocabulary_set_id: int, user_id: int, user_role: str) -> tuple[int, int]:
+def _get_vocabulary_set_progress(cursor: Any, vocabulary_set_id: int, user_id: int, user_role: str) -> tuple[int, int]:
   cursor.execute("SELECT COUNT(id) AS words_count FROM mf_vocabulary_set_word WHERE vocabulary_set_id = %s", (vocabulary_set_id,))
   words_count = cursor.fetchone()['words_count']
   cursor.nextset()
@@ -76,13 +80,13 @@ def _get_vocabulary_set_info(cursor: Any, vocabulary_set_id: int, user_id: int, 
       WHERE word.vocabulary_set_id = %s
         AND progress.student_id = %s
         AND (
-          progress.successive_correct_count >= 2 OR
+          progress.successive_correct_count >= %s OR
           (
             (progress.correct_count + progress.incorrect_count) > 0 AND 
-            (progress.correct_count / NULLIF(progress.correct_count + progress.incorrect_count, 0)) > 0.5 
+            (progress.correct_count / NULLIF(progress.correct_count + progress.incorrect_count, 0)) > %s
           )
         )
-    """, (vocabulary_set_id, user_id)) # TODO: Add progress criteria to the DB config table
+    """, (vocabulary_set_id, user_id, MIN_LEARNED_SUCCESSIVE_CORRECT_COUNT, MIN_LEARNED_CORRECT_PERCENTAGE))
     learned_count = cursor.fetchone()['learned_count']
     cursor.nextset()
 
