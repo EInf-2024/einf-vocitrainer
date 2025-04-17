@@ -73,6 +73,9 @@ auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/statistics', ['tea
   (routes.vocabulary_sets_id_statistics) # TODO
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/generate-context-sentences', ['student'], ['GET']) \
   (routes.vocabulary_sets_id_generate_context_sentences)
+  
+auth.route(app, '/api/set-prompt/context-sentences', ['teacher'], ['POST']) \
+  (routes.set_prompt_context_sentences)
 
 # Run the app
 if __name__ == '__main__':

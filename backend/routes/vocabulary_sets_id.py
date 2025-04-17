@@ -66,7 +66,7 @@ def vocabulary_sets_id(vocabulary_set_id: int, user_id: int, user_role: str):
       FROM mf_vocabulary_set_word word
       LEFT JOIN mf_vocabulary_set_word_progress progress ON word.id = progress.vocabulary_set_word_id 
         AND (
-          %s = 'teacher' OR progress.student_id = %s
+          %s != 'teacher' AND progress.student_id = %s
         )
       WHERE word.vocabulary_set_id = %s
     """, (user_role, user_id, vocabulary_set_id))

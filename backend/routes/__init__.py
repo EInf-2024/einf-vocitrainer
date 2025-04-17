@@ -25,3 +25,5 @@ from backend.routes.vocabulary_sets_id_words_id_log import vocabulary_sets_id_wo
 
 from backend.routes.vocabulary_sets_id_statistics import vocabulary_sets_id_statistics
 from backend.routes.vocabulary_sets_id_generate_context_sentences import vocabulary_sets_id_generate_context_sentences
+
+from backend.routes.set_prompt_context_sentences import set_prompt_context_sentences
