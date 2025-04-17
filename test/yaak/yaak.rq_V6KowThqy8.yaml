@@ -1,0 +1,26 @@
+type: http_request
+model: http_request
+id: rq_V6KowThqy8
+createdAt: 2025-04-17T14:25:37.123821100
+updatedAt: 2025-04-17T14:52:11.698334100
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "answer": "Bonjour"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: xmWfCXuZxP
+method: PATCH
+name: ''
+sortPriority: 9000.009
+url: localhost:5000/api/vocabulary-sets/1/words/9/log
+urlParameters: []

@@ -28,7 +28,7 @@ def vocabulary_sets_id_generate_context_sentences(vocabulary_set_id: int, user_i
         {
           "wordId": 1,
           "sentence": "I am a {}.",
-          "correct": "student",
+          "correct": "student"
         }
       ]
     }

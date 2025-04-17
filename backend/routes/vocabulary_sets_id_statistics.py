@@ -8,6 +8,7 @@ def vocabulary_sets_id_statistics(vocabulary_set_id: int, user_id: int, user_rol
   **Response Format**
   .. code-block:: json
     {
+      "wordsCount": 1,
       "departments": [
         {
           "id": 1,
@@ -16,7 +17,7 @@ def vocabulary_sets_id_statistics(vocabulary_set_id: int, user_id: int, user_rol
             {
               "id": 1,
               "name": "Student 1",
-              "progress": 0.5
+              "learnedCount": 1,
             }
           ]
         }
@@ -24,6 +25,7 @@ def vocabulary_sets_id_statistics(vocabulary_set_id: int, user_id: int, user_rol
     }
   """
   return jsonify({
+    "wordsCount": 2,
     "departments": [
       {
         "id": 1,
@@ -32,7 +34,7 @@ def vocabulary_sets_id_statistics(vocabulary_set_id: int, user_id: int, user_rol
           {
             "id": 1,
             "name": "Student 1",
-            "progress": 0.5
+            "learnedCount": 1,
           }
         ]
       }
