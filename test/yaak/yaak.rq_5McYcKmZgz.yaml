@@ -1,0 +1,27 @@
+type: http_request
+model: http_request
+id: rq_5McYcKmZgz
+createdAt: 2025-04-17T14:21:33.940678900
+updatedAt: 2025-04-17T14:22:23.748974800
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "word": "Hallo x",
+      "translation": "Bonjour x"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: xmWfCXuZxP
+method: PATCH
+name: ''
+sortPriority: 9000.008
+url: localhost:5000/api/vocabulary-sets/1/words/8/update
+urlParameters: []
