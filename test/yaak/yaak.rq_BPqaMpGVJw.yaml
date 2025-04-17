@@ -1,0 +1,22 @@
+type: http_request
+model: http_request
+id: rq_BPqaMpGVJw
+createdAt: 2025-04-17T16:59:32.542383300
+updatedAt: 2025-04-17T16:59:48.361840300
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "answer": "Bonjour"
+    }
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: ''
+sortPriority: 9000.01
+url: localhost:5000/api/vocabulary-sets/1/statistics
+urlParameters: []

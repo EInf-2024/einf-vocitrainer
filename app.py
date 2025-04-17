@@ -64,7 +64,7 @@ auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/update', ['teacher'], ['PATCH']) \
   (routes.vocabulary_sets_id_words_id_update)
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/log', ['student'], ['PATCH']) \
-  (routes.vocabulary_sets_id_words_id_log) # TODO
+  (routes.vocabulary_sets_id_words_id_log)
 
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/statistics', ['teacher'], ['GET']) \
   (routes.vocabulary_sets_id_statistics) # TODO
