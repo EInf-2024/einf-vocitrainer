@@ -10,21 +10,16 @@ def departments_id_students_id_delete(department_id: int, student_id: int, user_
     { }
   """
   
-  with connection.open() as (conn, cursor):
-    # Check if the teacher is allowed to delete the student
-    cursor.execute("SELECT id FROM mf_department WHERE teacher_id = %s AND id = %s", (user_id, department_id))
-    department = cursor.fetchone()
-    cursor.nextset()
-    
-    if department is None:
-      return jsonify({'error': "You are not allowed to delete this student."}), 403
-    
-    # Delete the student
-    cursor.execute("DELETE FROM mf_student WHERE department_id = %s AND id = %s", (department_id, student_id))
+  with connection.open() as (conn, cursor):    
+    # Delete the student (but check if the user has permission to delete the student)
+    cursor.execute("""
+      DELETE FROM mf_student WHERE department_id = %s AND id = %s AND department_id IN (
+        SELECT id FROM mf_department WHERE teacher_id = %s
+      )
+    """, (department_id, student_id, user_id))
     conn.commit()
     
-    # Check if the student did even exist
     if cursor.rowcount == 0:
-      return jsonify({'error': "Student not found."}), 404
+      return jsonify({'error': "Student not found or you do not have permission to delete this student."}), 404
   
   return jsonify({})

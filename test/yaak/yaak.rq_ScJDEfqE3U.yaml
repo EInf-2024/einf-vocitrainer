@@ -1,0 +1,23 @@
+type: http_request
+model: http_request
+id: rq_ScJDEfqE3U
+createdAt: 2025-04-17T14:18:25.447616400
+updatedAt: 2025-04-17T14:18:45.944864800
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "word": "Hallo",
+      "translation": "Bonjour"
+    }
+bodyType: null
+description: ''
+headers: []
+method: DELETE
+name: ''
+sortPriority: 9000.008
+url: localhost:5000/api/vocabulary-sets/1/words/7/delete
+urlParameters: []
