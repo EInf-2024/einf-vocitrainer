@@ -1,12 +1,9 @@
 from flask import Flask, render_template
 import backend.auth as auth
-import dotenv
-import os
 import backend.routes as routes
 
 # Load environment variables
-dotenv.load_dotenv()
-PROD_ENVIRONMENT = os.getenv('PROD') == 'true'
+PROD_ENVIRONMENT = False
 
 # Create Flask app
 app = Flask(__name__)

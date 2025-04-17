@@ -11,9 +11,8 @@ echo open %DEPLOY_HOSTNAME% %DEPLOY_PORT% > ftp_commands.txt
 echo user %DEPLOY_USERNAME% %DEPLOY_PASSWORD% >> ftp_commands.txt
 echo binary >> ftp_commands.txt
 
-:: Upload app.py, .env and requirements.txt to /
-echo put test_app.py /app.py >> ftp_commands.txt
-echo put .env /.env >> ftp_commands.txt
+:: Upload app.py and requirements.txt to /
+echo put app.py /app.py >> ftp_commands.txt
 
 :: Upload templates/ folder and its contents
 echo mkdir /templates >> ftp_commands.txt
