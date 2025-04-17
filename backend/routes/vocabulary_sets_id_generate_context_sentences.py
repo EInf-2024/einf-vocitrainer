@@ -43,12 +43,17 @@ def vocabulary_sets_id_generate_context_sentences(vocabulary_set_id: int, user_i
       return jsonify({"error": "Vocabulary set not found."}), 404
     
     # Check if the user has access to the vocabulary set
-    cursor.execute("""
-      SELECT id FROM mf_vocabulary_set_access WHERE vocabulary_set_id = %s AND department_id IN (
-        SELECT department_id FROM mf_student WHERE id = %s
-      )
-    """, (vocabulary_set_id, user_id))
+    if user_role == 'teacher':
+      cursor.execute("SELECT id FROM mf_vocabulary_set WHERE id = %s AND teacher_id = %s", (vocabulary_set_id, user_id))
+    else:
+      cursor.execute("""
+        SELECT id FROM mf_vocabulary_set_access WHERE vocabulary_set_id = %s AND department_id IN (
+          SELECT department_id FROM mf_student WHERE id = %s
+        )
+      """, (vocabulary_set_id, user_id))
+      
     access = cursor.fetchone()
+    cursor.nextset()
     
     if access is None:
       return jsonify({"error": "You do not have access to this vocabulary set."}), 403

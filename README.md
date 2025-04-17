@@ -15,15 +15,13 @@ Oben links auf Linie mit Punkt in der Mitte klicken
 
 # Debug auth
 
-Salt: abc
-
 Teacher:
 - Username: TST
 - 1234
 
 Student:
 - Username: STU
-- 1234
+- G20205D_STU
 
 # Backend TODOs
-- [ ] Add "ON DELETE CASCADE" to some foreign keys
+- [ ] Fix password generation

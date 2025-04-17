@@ -61,7 +61,7 @@ auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments/remove
   (routes.vocabulary_sets_id_departments_remove)
 
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/create', ['teacher'], ['POST']) \
-  (routes.vocabulary_sets_id_words_create) # TODO
+  (routes.vocabulary_sets_id_words_create)
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/delete', ['teacher'], ['DELETE']) \
   (routes.vocabulary_sets_id_words_id_delete) # TODO
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id>/update', ['teacher'], ['PATCH']) \
@@ -71,7 +71,7 @@ auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/words/<int:word_id
 
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/statistics', ['teacher'], ['GET']) \
   (routes.vocabulary_sets_id_statistics) # TODO
-auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/generate-context-sentences', ['student'], ['GET']) \
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/generate-context-sentences', ['teacher', 'student'], ['GET']) \
   (routes.vocabulary_sets_id_generate_context_sentences)
   
 auth.route(app, '/api/set-prompt/context-sentences', ['teacher'], ['POST']) \

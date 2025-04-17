@@ -1,0 +1,27 @@
+type: http_request
+model: http_request
+id: rq_Qe3k4qcJdv
+createdAt: 2025-04-17T14:07:56.031809800
+updatedAt: 2025-04-17T14:08:38.673573700
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "word": "Hallo",
+      "translation": "Bonjour"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: xmWfCXuZxP
+method: POST
+name: ''
+sortPriority: 9000.007
+url: localhost:5000/api/vocabulary-sets/1/words/create
+urlParameters: []
