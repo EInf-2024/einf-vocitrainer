@@ -1,5 +1,6 @@
 from flask import jsonify, request
 import backend.connection as connection
+from backend import errors
 
 def departments_id_students_create(department_id: int, user_id: int, user_role: str):
   """
@@ -19,10 +20,7 @@ def departments_id_students_create(department_id: int, user_id: int, user_role: 
     }
   """
   data = request.get_json()
-  
-  if 'username' not in data:
-    return jsonify({'error': "Missing username key."}), 400
-  
+  if 'username' not in data: return errors.missing_keys('username')
   username = data['username']
   
   with connection.open() as (conn, cursor):
@@ -31,8 +29,7 @@ def departments_id_students_create(department_id: int, user_id: int, user_role: 
     department = cursor.fetchone()
     cursor.nextset()
     
-    if department is None:
-      return jsonify({'error': "Department not found or does not belong to the teacher."}), 404
+    if department is None: return errors.not_found_or_no_permission('Department', 'create a student in', user_role)
     
     # Create the student
     cursor.execute("INSERT INTO mf_student (department_id, username) VALUES (%s, %s)", (department_id, username))

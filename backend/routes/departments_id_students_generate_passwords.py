@@ -2,6 +2,7 @@ from flask import jsonify
 import backend.connection as connection
 import backend.crypto as crypto
 from typing import Any
+from backend import errors
 
 def departments_id_students_generate_passwords(department_id: int, user_id: int, user_role: str):
   """
@@ -19,7 +20,7 @@ def departments_id_students_generate_passwords(department_id: int, user_id: int,
       ]
     }
   """
-  updated_students: list[dict[str, Any]] = []
+  updated_students_response: list[dict[str, Any]] = []
   
   with connection.open() as (conn, cursor):
     # Check if the department exists and belongs to the teacher
@@ -27,9 +28,7 @@ def departments_id_students_generate_passwords(department_id: int, user_id: int,
     department = cursor.fetchone()
     cursor.nextset()
     
-    if department is None:
-      return jsonify({'error': "You are not allowed to generate passwords for this department."}), 403
-    
+    if department is None: return errors.not_found_or_no_permission('Department', 'generate passwords for students in', user_role)
     department_label = department['label']
     
     # Fetch students from the department
@@ -42,23 +41,19 @@ def departments_id_students_generate_passwords(department_id: int, user_id: int,
       student_id = student['id']
       student_username = student['username']
       student_password = crypto.generate_password(department_label, student_username)
+      student_password_hash = crypto.hash_password(student_password)
       
-      updated_students.append({
+      # Add the password to the database
+      cursor.execute("UPDATE mf_student SET password_hash = %s WHERE id = %s", (student_password_hash, student_id))
+      conn.commit()
+      
+      # Append the student data to the response
+      updated_students_response.append({
         'id': student_id,
         'username': student_username,
         'password': student_password
       })
-      
-    # Save the passwords to the database
-    for student in updated_students:
-      student_id = student['id']
-      student_password = student['password']
-      student_password_hash = crypto.hash_password(student_password)
-      
-      cursor.execute("UPDATE mf_student SET password_hash = %s WHERE id = %s", (student_password_hash, student_id))
-      conn.commit()
-      cursor.nextset()
   
   return jsonify({
-    'students': updated_students
+    'students': updated_students_response
   })

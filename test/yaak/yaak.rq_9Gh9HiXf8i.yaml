@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_9Gh9HiXf8i
 createdAt: 2025-03-29T09:42:25.545061400
-updatedAt: 2025-03-29T13:09:25.577340
+updatedAt: 2025-04-18T10:32:15.338905
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -10,7 +10,7 @@ authenticationType: null
 body:
   text: |-
     {
-      "username": "api"
+      "username": "api d"
     }
 bodyType: application/json
 description: ''
@@ -26,7 +26,7 @@ headers:
 method: POST
 name: ''
 sortPriority: 6000.0
-url: localhost:5000/api/departments/1/students/create
+url: localhost:5000/api/departments/102/students/create
 urlParameters:
 - enabled: true
   name: ''

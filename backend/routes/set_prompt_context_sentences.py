@@ -1,5 +1,6 @@
 from flask import jsonify, request
 import backend.connection as connection
+from backend import errors
 
 def set_prompt_context_sentences(user_id: int, user_role: str):
   """
@@ -19,9 +20,7 @@ def set_prompt_context_sentences(user_id: int, user_role: str):
   """
   data = request.get_json()
   
-  if 'prompt' not in data:
-    return jsonify({'error': "Missing prompt key."}), 400
-  
+  if 'prompt' not in data: return errors.missing_keys('prompt')
   prompt = data['prompt']
   
   with connection.open() as (conn, cursor):

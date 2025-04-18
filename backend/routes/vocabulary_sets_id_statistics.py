@@ -2,6 +2,7 @@ from flask import jsonify
 from backend import connection
 from typing import Any
 from backend.config import get_config
+from backend import errors
 
 MIN_LEARNED_SUCCESSIVE_CORRECT_COUNT: int = get_config('min_learned_successive_correct_count', int)
 MIN_LEARNED_CORRECT_PERCENTAGE: float = get_config('min_learned_correct_percentage', float)
@@ -37,8 +38,7 @@ def vocabulary_sets_id_statistics(vocabulary_set_id: int, user_id: int, user_rol
     vocabulary_set = cursor.fetchone()
     cursor.nextset()
     
-    if not vocabulary_set:
-      return jsonify({'error': 'Vocabulary set not found or access denied'}), 404
+    if not vocabulary_set: return errors.not_found_or_no_permission("Vocabulary Set", "view", user_role)
     
     # Get the number of words in the vocabulary set
     cursor.execute("SELECT COUNT(*) AS words_count FROM mf_vocabulary_set_word WHERE vocabulary_set_id = %s", (vocabulary_set_id,))
@@ -71,7 +71,7 @@ def vocabulary_sets_id_statistics(vocabulary_set_id: int, user_id: int, user_rol
         )
       GROUP BY
         progress.student_id,
-        student.username;
+        student.username
     """, (vocabulary_set_id, MIN_LEARNED_SUCCESSIVE_CORRECT_COUNT, MIN_LEARNED_CORRECT_PERCENTAGE))
     students_learn_progress = cursor.fetchall()
     cursor.nextset()

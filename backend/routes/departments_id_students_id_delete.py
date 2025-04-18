@@ -1,5 +1,6 @@
 from flask import jsonify
 import backend.connection as connection
+from backend import errors
 
 def departments_id_students_id_delete(department_id: int, student_id: int, user_id: int, user_role: str):
   """
@@ -19,7 +20,6 @@ def departments_id_students_id_delete(department_id: int, student_id: int, user_
     """, (department_id, student_id, user_id))
     conn.commit()
     
-    if cursor.rowcount == 0:
-      return jsonify({'error': "Student not found or you do not have permission to delete this student."}), 404
+    if cursor.rowcount == 0: return errors.not_found_or_no_permission("Student", "delete", user_role)
   
   return jsonify({})

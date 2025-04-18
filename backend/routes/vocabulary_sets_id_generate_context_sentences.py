@@ -90,6 +90,6 @@ def vocabulary_sets_id_generate_context_sentences(vocabulary_set_id: int, user_i
         "wordId": word["id"],
         "sentence": context_sentence.sentence,
         "correct": context_sentence.correct
-      } for word, context_sentence in zip(vocabulary_set_words, generated_context_sentences) if context_sentence.sentence and context_sentence.correct
+      } for word, context_sentence in zip(vocabulary_set_words, generated_context_sentences)
     ]
   })

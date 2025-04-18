@@ -1,5 +1,6 @@
 from flask import jsonify, request
 import backend.connection as connection
+from backend import errors
 
 def vocabulary_sets_create(user_id: int, user_role: str):
   """
@@ -20,9 +21,7 @@ def vocabulary_sets_create(user_id: int, user_role: str):
   """
   data = request.get_json()
   
-  if "label" not in data:
-    return jsonify({"error": "Missing label"}), 400
-  
+  if "label" not in data: return errors.missing_keys("label")
   vocabulary_set_label = data["label"]
   
   with connection.open() as (conn, cursor):
