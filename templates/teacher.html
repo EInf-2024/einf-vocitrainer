@@ -36,13 +36,62 @@
             <div id="voci-sets-container" class="list-group">
                 <!-- Voci Sets werden hier per JavaScript als Bootstrap List Group Items eingefügt -->
             </div>
-            <button id="addVociSetButton" class="btn btn-success mt-2">
+            <button id="addVociSetButton" class="btn btn-success mt-2" onclick="showAddVociSetSection()">
                 <i class="fas fa-plus"></i> Voci Set hinzufügen
             </button>
         </section>
+
+        <!-- *** NEUER BEREICH: Voci Set hinzufügen *** -->
+        <section id="add-voci-set-section" class="mb-4" style="display: none;"> <!- Anfangs versteckt -->
+            <h2><span id="voci-set-name-header"></span></h2> <!- Voci Set Name hier -->
+            <p>Klasse: <span id="voci-set-class"></span></p> <!- Klasse hier -->
+
+            <div class="mb-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownExistingWordsButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Wörter in <span id="voci-set-name-button"></span>
+                </button>
+                <ul class="dropdown-menu" id="existing-words-dropdown" aria-labelledby="dropdownExistingWordsButton">
+                    <!-- Wörter werden hier per JavaScript eingefügt -->
+                </ul>
+            </div>
+
+            <section id="add-words-section" class="mb-3">
+                <h3>Wörter hinzufügen</h3>
+                <div class="mb-3">
+                    <label for="deutschesWort" class="form-label">Deutsches Wort</label>
+                    <input type="text" class="form-control" id="deutschesWort">
+                </div>
+                <div class="mb-3">
+                    <label for="französischesWort" class="form-label">Französisches Wort</label>
+                    <input type="text" class="form-control" id="französischesWort">
+                </div>
+                <button id="addWordButton" class="btn btn-primary">Hinzufügen</button>
+            </section>
+
+            <button id="closeAddVociSetSection" class="btn btn-secondary" onclick="hideAddVociSetSection()">Schliessen</button>
+        </section>
+        <!-- *** ENDE NEUER BEREICH: Voci Set hinzufügen *** -->
+
+        <!-- *** NEUER BEREICH: Klassen Details *** -->
+        <section id="class-details-section" class="mb-4" style="display: none;"> <!- Anfangs versteckt -->
+            <div class="d-flex justify-content-between align-items-center mb-2"> <!-- Header mit Button -->
+                <h2>Klasse: <span id="class-details-name"></span></h2> <!- Klassen Name hier -->
+                <button id="addClassStudentButton" class="btn btn-success btn-sm"> <!-- NEU: Add Student Button -->
+                    <i class="fas fa-plus"></i> Schüler hinzufügen
+                </button>
+            </div>
+
+            <ul id="class-students-list" class="list-group mb-3">
+                <!-- Schülerliste wird hier per JavaScript eingefügt -->
+            </ul>
+            <button id="closeClassDetailsSection" class="btn btn-secondary" onclick="hideClassDetailsSection()">Schliessen</button>
+        </section>
+        <!-- *** ENDE NEUER BEREICH: Klassen Details *** -->
+
+
     </main>
 
-    <!-- **Korrigierter Bootstrap JS Bundle Link (vom User)** -->
+    <!-- Korrigierter Bootstrap JS Bundle Link (vom User) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/teacher.js') }}"></script>
 </body>
