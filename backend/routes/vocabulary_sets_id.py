@@ -2,6 +2,7 @@ from flask import jsonify
 import backend.connection as connection
 from typing import Any
 from backend.config import get_config
+from backend import errors
 
 MIN_LEARNED_SUCCESSIVE_CORRECT_COUNT: int = get_config('min_learned_successive_correct_count', int)
 MIN_LEARNED_CORRECT_PERCENTAGE: float = get_config('min_learned_correct_percentage', float)
@@ -20,8 +21,8 @@ def vocabulary_sets_id(vocabulary_set_id: int, user_id: int, user_role: str):
       "words": [
         {
           "id": 1,
-          "word": "apple",
-          "translation": "pomme",
+          "word": "Hello",
+          "translation": "Bonjour",
           "successiveCorrect": 2,
           "correct": 5,
           "incorrect": 0,
@@ -51,9 +52,7 @@ def vocabulary_sets_id(vocabulary_set_id: int, user_id: int, user_role: str):
       vocabulary_set = cursor.fetchone()
       cursor.nextset()
       
-    if not vocabulary_set:
-      return jsonify({'error': 'Vocabulary set not found'}), 404
-    
+    if not vocabulary_set: return errors.not_found_or_no_permission("Vocabulary set", "view", user_role)
     vocabulary_set_response['id'] = vocabulary_set['id']
     vocabulary_set_response['label'] = vocabulary_set['label']
     
@@ -66,30 +65,41 @@ def vocabulary_sets_id(vocabulary_set_id: int, user_id: int, user_role: str):
       FROM mf_vocabulary_set_word word
       LEFT JOIN mf_vocabulary_set_word_progress progress ON word.id = progress.vocabulary_set_word_id 
         AND (
-          %s != 'teacher' AND progress.student_id = %s
+          %s != 'teacher' AND 
+          progress.student_id = %s
         )
       WHERE word.vocabulary_set_id = %s
     """, (user_role, user_id, vocabulary_set_id))
     words = cursor.fetchall()
     
     for word in words:
-      learned = True
-      if user_role == 'student':
-        # Check if the word is learned
-        if word['successive_correct_count'] is None or \
-           (word['correct_count'] + word['incorrect_count']) == 0 or \
-           (word['correct_count'] / (word['correct_count'] + word['incorrect_count'])) < MIN_LEARNED_CORRECT_PERCENTAGE:
-          learned = False
-          
+      # Add default values for None fields (for teacher, they're all None and if the student has never answered, they're also None)
+      if word['successive_correct_count'] is None: word['successive_correct_count'] = 0
+      if word['correct_count'] is None: word['correct_count'] = 0
+      if word['incorrect_count'] is None: word['incorrect_count'] = 0
+      
+      learned = True # Default to learned (for teacher - he should know all words, right? haha)
+      
+      # Check if the word is learned
+      if user_role == 'student' and (
+        # Never answered
+        word['correct_count'] + word['incorrect_count'] == 0 or
+        # Successive correct count is not enough and correct percentage is not enough
+        (
+          word['successive_correct_count'] < MIN_LEARNED_SUCCESSIVE_CORRECT_COUNT and
+          word['correct_count'] / (word['correct_count'] + word['incorrect_count']) < MIN_LEARNED_CORRECT_PERCENTAGE
+        )
+      ): learned = False
+      
       if learned: learned_words_count += 1
       
       words_response.append({
         'id': word['id'],
         'word': word['word'],
         'translation': word['translation'],
-        'successiveCorrect': word['successive_correct_count'] if word['successive_correct_count'] is not None else 0,
-        'correct': word['correct_count'] if word['correct_count'] is not None else 0,
-        'incorrect': word['incorrect_count'] if word['incorrect_count'] is not None else 0,
+        'successiveCorrect': word['successive_correct_count'],
+        'correct': word['correct_count'],
+        'incorrect': word['incorrect_count'],
         'learned': learned
       })
     

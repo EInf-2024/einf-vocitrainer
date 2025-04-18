@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_Qe3k4qcJdv
 createdAt: 2025-04-17T14:07:56.031809800
-updatedAt: 2025-04-17T14:08:38.673573700
+updatedAt: 2025-04-18T11:40:52.793260500
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -10,8 +10,8 @@ authenticationType: null
 body:
   text: |-
     {
-      "word": "Hallo",
-      "translation": "Bonjour"
+      "word": "Hasdafdllo",
+      "translation": "Bonjsdfaour"
     }
 bodyType: application/json
 description: ''
@@ -22,6 +22,6 @@ headers:
   id: xmWfCXuZxP
 method: POST
 name: ''
-sortPriority: 9000.007
+sortPriority: 17000.0
 url: localhost:5000/api/vocabulary-sets/1/words/create
 urlParameters: []

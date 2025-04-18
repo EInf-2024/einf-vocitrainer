@@ -1,5 +1,6 @@
 from flask import jsonify, request
 import backend.connection as connection
+from backend import errors
 
 def vocabulary_sets_id_words_create(vocabulary_set_id: int, user_id: int, user_role: str):
   """
@@ -20,9 +21,7 @@ def vocabulary_sets_id_words_create(vocabulary_set_id: int, user_id: int, user_r
   """
   data = request.get_json()
   
-  if 'word' not in data or 'translation' not in data:
-    return jsonify({'error': "Missing word or translation key."}), 400
-  
+  if 'word' not in data or 'translation' not in data: errors.missing_keys('word', 'translation')
   word = data['word']
   translation = data['translation']
   
@@ -32,14 +31,10 @@ def vocabulary_sets_id_words_create(vocabulary_set_id: int, user_id: int, user_r
     vocabulary_set = cursor.fetchone()
     cursor.nextset()
     
-    if vocabulary_set is None:
-      return jsonify({"error": "Vocabulary set not found or you do not have permission to modify it."}), 404
+    if vocabulary_set is None: return errors.not_found_or_no_permission("Vocabulary set", "create a word in", user_role)
     
     # Insert the new word into the vocabulary set
-    cursor.execute("""
-      INSERT INTO mf_vocabulary_set_word (vocabulary_set_id, word, translation)
-      VALUES (%s, %s, %s)
-    """, (vocabulary_set_id, word, translation))
+    cursor.execute("INSERT INTO mf_vocabulary_set_word (vocabulary_set_id, word, translation) VALUES (%s, %s, %s)", (vocabulary_set_id, word, translation))
     conn.commit()
     
     word_id = cursor.lastrowid

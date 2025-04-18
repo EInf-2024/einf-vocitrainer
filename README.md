@@ -22,6 +22,3 @@ Teacher:
 Student:
 - Username: STU
 - G20205D_STU
-
-# Backend TODOs
-- [ ] Fix password generation

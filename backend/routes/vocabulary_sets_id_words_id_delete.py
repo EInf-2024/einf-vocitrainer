@@ -1,5 +1,6 @@
 from flask import jsonify
 from backend import connection
+from backend import errors
 
 def vocabulary_sets_id_words_id_delete(vocabulary_set_id: int, word_id: int, user_id: int, user_role: str):
   """
@@ -19,7 +20,6 @@ def vocabulary_sets_id_words_id_delete(vocabulary_set_id: int, word_id: int, use
     """, (word_id, vocabulary_set_id, user_id))
     conn.commit()
     
-    if cursor.rowcount == 0:
-      return jsonify({'error': "Word not found or you do not have permission to delete this word."}), 404
+    if cursor.rowcount == 0: return errors.not_found_or_no_permission("Word", "delete", user_role)
   
   return jsonify({})

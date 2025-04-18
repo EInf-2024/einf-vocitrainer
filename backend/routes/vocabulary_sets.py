@@ -31,11 +31,12 @@ def vocabulary_sets(user_id: int, user_role: str):
   
     for vocabulary_set in vocabulary_sets:
       vocabulary_set_id = vocabulary_set['id']
+      vocabulary_set_label = vocabulary_set['label']
       words_count, learned_count = _get_vocabulary_set_progress(cursor, vocabulary_set_id, user_id, user_role)        
       
       vocabulary_sets_response.append({
-        'id': vocabulary_set['id'],
-        'label': vocabulary_set['label'],
+        'id': vocabulary_set_id,
+        'label': vocabulary_set_label,
         'wordsCount': words_count,
         'learnedCount': learned_count
       })
@@ -74,12 +75,16 @@ def _get_vocabulary_set_progress(cursor: Any, vocabulary_set_id: int, user_id: i
   learned_count = words_count # Default to all words learned
   if user_role == 'student':
     cursor.execute("""
-      SELECT COUNT(DISTINCT word.id) AS learned_count
-      FROM mf_vocabulary_set_word word
-      JOIN mf_vocabulary_set_word_progress progress ON word.id = progress.vocabulary_set_word_id
-      WHERE word.vocabulary_set_id = %s
-        AND progress.student_id = %s
-        AND (
+      SELECT 
+        COUNT(DISTINCT word.id) AS learned_count
+      FROM 
+        mf_vocabulary_set_word word
+      JOIN 
+        mf_vocabulary_set_word_progress progress ON word.id = progress.vocabulary_set_word_id
+      WHERE 
+        word.vocabulary_set_id = %s AND
+        progress.student_id = %s AND 
+        (
           progress.successive_correct_count >= %s OR
           (
             (progress.correct_count + progress.incorrect_count) > 0 AND 

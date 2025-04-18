@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from backend import connection
+from backend import errors
 
 def vocabulary_sets_id_words_id_log(vocabulary_set_id: int, word_id: int, user_id: int, user_role: str):
   """
@@ -15,7 +16,7 @@ def vocabulary_sets_id_words_id_log(vocabulary_set_id: int, word_id: int, user_i
   .. code-block:: json
     {
       "isCorrect": true,
-      "correctAnswer": "pomme",
+      "correctAnswer": "Bonjour",
       "successiveCorrectCount": 1,
       "correctCount": 1,
       "incorrectCount": 0
@@ -23,9 +24,7 @@ def vocabulary_sets_id_words_id_log(vocabulary_set_id: int, word_id: int, user_i
   """
   data = request.get_json()
   
-  if 'answer' not in data:
-    return jsonify({'error': "Missing answer key."}), 400
-  
+  if 'answer' not in data: return errors.missing_keys('answer')
   answer = data['answer']
   
   with connection.open() as (conn, cursor):
@@ -39,14 +38,10 @@ def vocabulary_sets_id_words_id_log(vocabulary_set_id: int, word_id: int, user_i
     access = cursor.fetchone()
     cursor.nextset()
     
-    if access is None:
-      return jsonify({'error': "You don't have access to this vocabulary set."}), 403
+    if access is None: return errors.not_found_or_no_permission("Vocabulary set", "view", user_role)
     
     # Get correct answer from the database
-    cursor.execute("""
-      SELECT translation FROM mf_vocabulary_set_word
-      WHERE id = %s AND vocabulary_set_id = %s
-    """, (word_id, vocabulary_set_id))
+    cursor.execute("SELECT translation FROM mf_vocabulary_set_word WHERE id = %s AND vocabulary_set_id = %s", (word_id, vocabulary_set_id))
     correct_answer = cursor.fetchone()
     cursor.nextset()
     
@@ -57,10 +52,7 @@ def vocabulary_sets_id_words_id_log(vocabulary_set_id: int, word_id: int, user_i
     correct = answer == correct_answer # TODO: Make this case insensitive and other stuff
     
     # Get the current progress for the word
-    cursor.execute("""
-      SELECT * FROM mf_vocabulary_set_word_progress
-      WHERE vocabulary_set_word_id = %s AND student_id = %s
-    """, (word_id, user_id))
+    cursor.execute("SELECT * FROM mf_vocabulary_set_word_progress WHERE vocabulary_set_word_id = %s AND student_id = %s", (word_id, user_id))
     current_progress = cursor.fetchone()
     cursor.nextset()
     
@@ -89,9 +81,10 @@ def vocabulary_sets_id_words_id_log(vocabulary_set_id: int, word_id: int, user_i
       WHERE vocabulary_set_word_id = %s AND student_id = %s
     """, (word_id, user_id))
     current_progress = cursor.fetchone()
+    cursor.nextset()
     
     if not current_progress:
-      return jsonify({'error': "Failed to update the log."}), 500
+      return jsonify({'error': "Failed to update the word progress."}), 500
     
     successive_correct_count = current_progress['successive_correct_count']
     correct_count = current_progress['correct_count']

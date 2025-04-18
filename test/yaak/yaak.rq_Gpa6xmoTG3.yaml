@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_Gpa6xmoTG3
 createdAt: 2025-03-29T13:16:33.180505100
-updatedAt: 2025-04-18T11:10:34.438028800
+updatedAt: 2025-04-18T11:39:12.838595100
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -21,6 +21,6 @@ headers:
   id: CUeCpq9uQZ
 method: PATCH
 name: ''
-sortPriority: 9000.003
+sortPriority: 13000.0
 url: localhost:5000/api/vocabulary-sets/5/departments/add
 urlParameters: []

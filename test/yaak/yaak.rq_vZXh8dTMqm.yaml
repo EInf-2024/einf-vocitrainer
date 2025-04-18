@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_vZXh8dTMqm
 createdAt: 2025-03-29T13:41:15.624010300
-updatedAt: 2025-03-29T20:26:11.392798300
+updatedAt: 2025-04-18T11:39:12.839002300
 workspaceId: wk_tD7mhTPLxA
 folderId: null
 authentication: {}
@@ -17,6 +17,6 @@ description: ''
 headers: []
 method: GET
 name: ''
-sortPriority: 9000.005
+sortPriority: 15000.0
 url: localhost:5000/api/vocabulary-sets/1/generate-context-sentences
 urlParameters: []

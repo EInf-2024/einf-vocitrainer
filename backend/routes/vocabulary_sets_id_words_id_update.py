@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from backend import connection
+from backend import errors
 
 def vocabulary_sets_id_words_id_update(vocabulary_set_id: int, word_id: int, user_id: int, user_role: str):
   """
@@ -18,9 +19,7 @@ def vocabulary_sets_id_words_id_update(vocabulary_set_id: int, word_id: int, use
   """
   data = request.get_json()
   
-  if 'word' not in data or 'translation' not in data:
-    return jsonify({'error': "Missing word or translation key."}), 400
-  
+  if 'word' not in data or 'translation' not in data: return errors.missing_keys('word', 'translation')
   new_word = data['word']
   new_translation = data['translation']
   
@@ -35,7 +34,6 @@ def vocabulary_sets_id_words_id_update(vocabulary_set_id: int, word_id: int, use
     """, (new_word, new_translation, word_id, vocabulary_set_id, user_id))
     conn.commit()
     
-    if cursor.rowcount == 0:
-      return jsonify({'error': "Word not found or you do not have permission to update this word."}), 404
+    if cursor.rowcount == 0: return errors.not_found_or_no_permission("Word", "update", user_role)
   
   return jsonify({})
