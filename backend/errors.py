@@ -4,7 +4,7 @@ def missing_keys(*keys: str):
     """
     Returns a 400 error with a message indicating that a required key is missing.
     """
-    return jsonify({'error': f"Missing {', '.join(map(lambda x: f"'{x}'", keys))} key{'s' if len(keys) > 1 else ''}."}), 400
+    return jsonify({'error': f"Missing {', '.join(keys)} key{'s' if len(keys) > 1 else ''}."}), 400
   
 def not_found_or_no_permission(entity: str, action: str, user_role: str):
     """
