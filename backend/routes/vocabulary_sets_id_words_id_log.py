@@ -1,6 +1,7 @@
 from flask import jsonify, request
 from backend import connection
 from backend import errors
+from backend import language
 
 def vocabulary_sets_id_words_id_log(vocabulary_set_id: int, word_id: int, user_id: int, user_role: str):
   """
@@ -49,7 +50,7 @@ def vocabulary_sets_id_words_id_log(vocabulary_set_id: int, word_id: int, user_i
       return jsonify({'error': "Word not found."}), 404
     
     correct_answer = correct_answer['translation']
-    correct = answer == correct_answer # TODO: Make this case insensitive and other stuff
+    correct = language.do_match(answer, correct_answer)
     
     # Get the current progress for the word
     cursor.execute("SELECT * FROM mf_vocabulary_set_word_progress WHERE vocabulary_set_word_id = %s AND student_id = %s", (word_id, user_id))
