@@ -31,6 +31,23 @@
             </button>
         </section>
 
+        <!-- *** BEREICH: Klassen Details (jetzt nach Klassen-Section) *** -->
+        <section id="class-details-section" class="mb-4" style="display: none;"> <!- Anfangs versteckt -->
+            <div class="d-flex justify-content-between align-items-center mb-2"> <!-- Header mit Button -->
+                <h2>Klasse: <span id="class-details-name"></span></h2> <!- Klassen Name hier -->
+                <button id="addClassStudentButton" class="btn btn-success btn-sm"> <!-- Add Student Button -->
+                    <i class="fas fa-plus"></i> Schüler hinzufügen
+                </button>
+            </div>
+
+            <ul id="class-students-list" class="list-group mb-3">
+                <!-- Schülerliste wird hier per JavaScript eingefügt -->
+            </ul>
+            <button id="closeClassDetailsSection" class="btn btn-secondary" onclick="hideClassDetailsSection()">Schliessen</button>
+        </section>
+        <!-- *** ENDE BEREICH: Klassen Details *** -->
+
+
         <section id="voci-sets-section" class="mb-4">
             <h2>Voci Sets</h2>
             <div id="voci-sets-container" class="list-group">
@@ -41,7 +58,7 @@
             </button>
         </section>
 
-        <!-- *** NEUER BEREICH: Voci Set hinzufügen *** -->
+        <!-- *** BEREICH: Voci Set hinzufügen (bleibt unverändert in Position) *** -->
         <section id="add-voci-set-section" class="mb-4" style="display: none;"> <!- Anfangs versteckt -->
             <h2><span id="voci-set-name-header"></span></h2> <!- Voci Set Name hier -->
             <p>Klasse: <span id="voci-set-class"></span></p> <!- Klasse hier -->
@@ -70,26 +87,36 @@
 
             <button id="closeAddVociSetSection" class="btn btn-secondary" onclick="hideAddVociSetSection()">Schliessen</button>
         </section>
-        <!-- *** ENDE NEUER BEREICH: Voci Set hinzufügen *** -->
-
-        <!-- *** NEUER BEREICH: Klassen Details *** -->
-        <section id="class-details-section" class="mb-4" style="display: none;"> <!- Anfangs versteckt -->
-            <div class="d-flex justify-content-between align-items-center mb-2"> <!-- Header mit Button -->
-                <h2>Klasse: <span id="class-details-name"></span></h2> <!- Klassen Name hier -->
-                <button id="addClassStudentButton" class="btn btn-success btn-sm"> <!-- NEU: Add Student Button -->
-                    <i class="fas fa-plus"></i> Schüler hinzufügen
-                </button>
-            </div>
-
-            <ul id="class-students-list" class="list-group mb-3">
-                <!-- Schülerliste wird hier per JavaScript eingefügt -->
-            </ul>
-            <button id="closeClassDetailsSection" class="btn btn-secondary" onclick="hideClassDetailsSection()">Schliessen</button>
-        </section>
-        <!-- *** ENDE NEUER BEREICH: Klassen Details *** -->
+        <!-- *** ENDE BEREICH: Voci Set hinzufügen *** -->
 
 
     </main>
+
+    <!-- *** NEUES BOOTSTRAP MODAL FÜR SCHÜLER HINZUFÜGEN *** -->
+    <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addStudentModalLabel">Schüler hinzufügen</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="addStudentForm">
+              <div class="mb-3">
+                <label for="studentUsername" class="form-label">Benutzername des Schülers</label>
+                <input type="text" class="form-control" id="studentUsername" required>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schliessen</button>
+            <button type="button" class="btn btn-primary" id="saveNewStudentButton">Speichern</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- *** ENDE MODAL *** -->
+
 
     <!-- Korrigierter Bootstrap JS Bundle Link (vom User) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
