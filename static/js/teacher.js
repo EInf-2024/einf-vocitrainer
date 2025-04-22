@@ -3,97 +3,106 @@ document.addEventListener('DOMContentLoaded', function () {
     const logoutButton = document.getElementById('logoutButton');
     const klassenContainer = document.getElementById('klassen-container');
     const vociSetsContainer = document.getElementById('voci-sets-container');
-    const addKlasseButton = document.getElementById('addKlasseButton');
-    const addVociSetButtonMainPage = document.getElementById('addVociSetButton');
+    const addKlasseButton = document.getElementById('addKlasseButton'); // Klasse Hinzufügen Button (Hauptseite)
+    const addVociSetButtonMainPage = document.getElementById('addVociSetButton'); // Voci Set Hinzufügen Button (Hauptseite)
 
     // Voci Set Detail/Edit Elemente
-    const addVociSetSection = document.getElementById('add-voci-set-section');
-    const closeAddVociSetSectionButton = document.getElementById('closeAddVociSetSection');
-    const vociSetNameHeader = document.getElementById('voci-set-name-header');
-    const vociSetClassSpan = document.getElementById('voci-set-class');
+    const vocisetDetailSection = document.getElementById('vociset-detail-section'); // NEUE ID
+    const closeVocisetDetailSectionButton = document.getElementById('closeVocisetDetailSection'); // NEUE ID
+    const vocisetDetailNameHeader = document.getElementById('vociset-detail-name-header'); // NEUE ID
+    const vocisetAssignedClassesList = document.getElementById('vociset-assigned-classes-list'); // NEU UL für zugewiesene Klassen
     const dropdownExistingWordsButton = document.getElementById('dropdownExistingWordsButton');
-    const existingWordsDropdown = document.getElementById('existing-words-dropdown');
+    const existingWordsDropdown = document.getElementById('existing-words-dropdown'); // UL für Wörter im Dropdown
     const deutschesWortInput = document.getElementById('deutschesWort');
     const französischesWortInput = document.getElementById('französischesWort');
-    const addWordButton = document.getElementById('addWordButton');
-    const vociSetNameButtonSpan = document.getElementById('voci-set-name-button');
+    const addWordButton = document.getElementById('addWordButton'); // Wort hinzufügen Button
+    const vocisetDetailNameButtonSpan = document.getElementById('vociset-detail-name-button'); // NEUE ID Element für Voci Set Name im Dropdown Button
 
     // Klassen Detail Elemente
     const classDetailsSection = document.getElementById('class-details-section');
-    const classDetailsNameSpan = document.getElementById('class-details-name');
-    const classStudentsListUl = document.getElementById('class-students-list');
-    const closeClassDetailsSectionButton = document.getElementById('closeClassDetailsSection');
-    const addClassStudentButton = document.getElementById('addClassStudentButton');
+    const classDetailsNameSpan = document.getElementById('class-details-name'); // Element für Klassen Name
+    const classStudentsListUl = document.getElementById('class-students-list'); // UL für Schülerliste
+    const closeClassDetailsSectionButton = document.getElementById('closeClassDetailsSection'); // Schliessen Button im Klassen Details Div
+    const addClassStudentButton = document.getElementById('addClassStudentButton'); // Schüler hinzufügen Button
 
     // Schüler Hinzufügen Modal Elemente
-    const addStudentModalElement = document.getElementById('addStudentModal');
+    const addStudentModalElement = document.getElementById('addStudentModal'); // Das Modal HTML Element
     const addStudentModal = new bootstrap.Modal(addStudentModalElement); // Bootstrap Modal Instanz
     const studentUsernameInput = document.getElementById('studentUsername');
     const saveNewStudentButton = document.getElementById('saveNewStudentButton');
 
-    // NEUE Klasse Hinzufügen Modal Elemente
-    const addClassModalElement = document.getElementById('addClassModal');
-    const addClassModal = new bootstrap.Modal(addClassModalElement); // Bootstrap Modal Instanz
-    const classNameInput = document.getElementById('classNameInput');
-    const saveNewClassButton = document.getElementById('saveNewClassButton');
+    // NEUE Voci Set Hinzufügen Modal Elemente (Zum ERSTELLEN)
+    const createVocisetModalElement = document.getElementById('createVocisetModal'); // NEUE ID
+    const createVocisetModal = new bootstrap.Modal(createVocisetModalElement); // NEUE ID Bootstrap Modal Instanz
+    const vocisetNameInput = document.getElementById('vocisetNameInput'); // NEUE ID
+    const saveNewVocisetButton = document.getElementById('saveNewVocisetButton'); // NEUE ID
 
 
     // --- Zustandsvariablen ---
-    let currentVociSetId = null;
-    let currentDepartmentIdForClassDetails = null; // Speichert aktuelle Department ID für Klassendetails
+    let currentVociSetId = null; // Speichert die ID des aktuell bearbeiteten Voci Sets
+    let currentDepartmentIdForClassDetails = null; // Speichert die ID der Klasse, deren Details gerade angezeigt werden
 
 
-    // --- Event Listeners (zentralisiert durch Delegation oder direkte IDs) ---
+    // --- Event Listeners ---
 
-    logoutButton.addEventListener('click', function() {
-        window.location.href = 'index.html'; // Weiterleitung zur Indexseite
+    // Logout Button - (API Aufruf sollte vom Partner implementiert werden)
+    logoutButton.addEventListener('click', async function() {
+        // TODO: Hier den fetch Request an die /api/logout API einfügen, sobald sie existiert
+        // Beispiel:
+        // try {
+        //     await fetch('/api/logout', { method: 'POST' });
+        // } catch (error) {
+        //     console.error('Logout API error:', error);
+        // }
+        window.location.href = '/'; // Weiterleitung zur Basis-URL (Login)
     });
 
-    // Event Listener für den "Klasse hinzufügen" Button (öffnet jetzt ein Modal)
+
+    // Klasse Hinzufügen Button (Hauptseite) - TODO Logik
     addKlasseButton.addEventListener('click', function() {
-        classNameInput.value = ''; // Eingabefeld leeren
-        addClassModal.show(); // Neues Modal öffnen
+        // TODO: Logik zum Hinzufügen einer Klasse implementieren (z.B. Modal öffnen)
+        alert('Funktion zum Hinzufügen einer Klasse wird später implementiert (z.B. Modal)');
     });
 
-    // Event Listener für den "Speichern" Button im "Klasse hinzufügen" Modal
-    saveNewClassButton.addEventListener('click', function() {
-        const className = classNameInput.value.trim();
+    // Voci Set Hinzufügen Button (Hauptseite) - Öffnet jetzt das Modal zum ERSTELLEN
+    addVociSetButtonMainPage.addEventListener('click', function() {
+        vocisetNameInput.value = ''; // Eingabefeld im Modal leeren
+        createVocisetModal.show(); // Modal zum Erstellen öffnen
+    });
 
-        if (!className) {
-            alert('Bitte geben Sie einen Namen für die neue Klasse ein.');
+    // Speichern Button im "Neues Voci Set erstellen" Modal
+    saveNewVocisetButton.addEventListener('click', function() {
+        const vocisetName = vocisetNameInput.value.trim();
+
+        if (!vocisetName) {
+            alert('Bitte geben Sie einen Namen für das neue Voci Set ein.');
             return;
         }
 
-        createNewClass(className); // Funktion zum Erstellen der Klasse aufrufen
+        createNewVociset(vocisetName); // Funktion zum Erstellen des Sets aufrufen
     });
 
 
-    addVociSetButtonMainPage.addEventListener('click', function() {
-        // TODO: Logik zum STARTEN des Hinzufügens eines NEUEN Voci Sets
-        alert('Funktion zum Hinzufügen eines NEUEN Voci Sets wird später implementiert.');
-        showAddVociSetSection(); // Zeigt den Bearbeitungsbereich an (Platzhalter)
-    });
+    // Schliessen Button im Voci Set Detail/Edit Bereich
+    closeVocisetDetailSectionButton.addEventListener('click', hideVocisetDetailSection);
 
-    // Event Listener für die Schliessen Buttons in den Detail-Sektionen
-    closeAddVociSetSectionButton.addEventListener('click', hideAddVociSetSection);
+    // Schliessen Button im Klassen Detail Bereich
     closeClassDetailsSectionButton.addEventListener('click', hideClassDetailsSection);
 
-    // Event Listener für den "Wort hinzufügen" Button im Voci Set Detail Bereich
-    addWordButton.addEventListener('click', addWordToVociSet);
+    // Wort Hinzufügen Button im Voci Set Detail Bereich
+    addWordButton.addEventListener('click', addWordToVociset);
 
-    // Event Listener für den "Schüler hinzufügen" Button im Klassen Detail Bereich
+    // Schüler Hinzufügen Button im Klassen Detail Bereich
     addClassStudentButton.addEventListener('click', function() {
-        // Diese Funktion ruft jetzt unsere gemeinsame Modal-Anzeigefunktion auf
         if (currentDepartmentIdForClassDetails) {
              showAddStudentModalForClass(currentDepartmentIdForClassDetails);
         } else {
-            // Dies sollte nicht passieren, wenn der Button nur in der Klassendetailansicht sichtbar ist
             console.error("Keine Klasse ausgewählt, um Schüler hinzuzufügen.");
             alert("Bitte wählen Sie zuerst eine Klasse aus.");
         }
     });
 
-    // Event Listener für den "Speichern" Button im "Schüler hinzufügen" Modal
+    // Speichern Button im Schüler Hinzufügen Modal
     saveNewStudentButton.addEventListener('click', function() {
         const studentUsername = studentUsernameInput.value.trim();
 
@@ -115,27 +124,23 @@ document.addEventListener('DOMContentLoaded', function () {
     klassenContainer.addEventListener('click', function(event) {
         const target = event.target;
         const deleteButton = target.closest('.delete-button');
-        const viewClassButton = target.closest('.view-class-button'); // Den 'Anzeigen' Button finden
+        const viewClassButton = target.closest('.view-class-button');
 
         if (deleteButton) {
-            // Klick auf einen Lösch-Button in einer Klassenkarte
             const departmentIdToDelete = deleteButton.dataset.departmentId;
             if (departmentIdToDelete && confirm('Möchtest du diese Klasse wirklich löschen?')) {
                 deleteKlasse(departmentIdToDelete);
             }
         } else if (viewClassButton) {
-             // Klick auf den 'Anzeigen' Button in einer Klassenkarte
             const departmentIdToView = viewClassButton.dataset.departmentId;
             if (departmentIdToView) {
                 loadClassDetails(departmentIdToView);
             }
         }
-        // Klicks auf andere Teile der Klassenkarte (außer Buttons) werden ignoriert
     });
 
 
     // Event Delegation für Delete-Word-Buttons im Voci Set Dropdown
-    // Listener auf das übergeordnete ul-Element
     existingWordsDropdown.addEventListener('click', function(event) {
         const deleteButton = event.target.closest('.delete-word-button');
         if (deleteButton) {
@@ -143,19 +148,18 @@ document.addEventListener('DOMContentLoaded', function () {
             const vocabularySetId = deleteButton.dataset.vocabularySetId;
             if (wordIdToDelete && vocabularySetId) {
                  if (confirm('Möchtest du dieses Wort wirklich löschen?')) {
-                     deleteWordFromVociSet(vocabularySetId, wordIdToDelete);
+                     deleteWordFromVociset(vocabularySetId, wordIdToDelete);
                 }
             }
         }
     });
 
     // Event Delegation für Delete-Student-Buttons in der Schülerliste
-    // Listener auf das übergeordnete ul-Element
     classStudentsListUl.addEventListener('click', function(event) {
         const deleteButton = event.target.closest('.delete-student-button');
         if (deleteButton) {
             const studentIdToDelete = deleteButton.dataset.studentId;
-            const departmentId = deleteButton.dataset.departmentId; // Department ID vom Button holen
+            const departmentId = deleteButton.dataset.departmentId;
             if (studentIdToDelete && departmentId) {
                  if (confirm('Möchtest du diesen Schüler wirklich löschen?')) {
                      deleteStudent(departmentId, studentIdToDelete);
@@ -165,61 +169,74 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
      // Event Delegation für Klicks in der Voci Sets Liste auf der Hauptseite
-     // Um auf den "Bearbeiten" Button zu reagieren
      vociSetsContainer.addEventListener('click', function(event) {
          const editButton = event.target.closest('.edit-vociset-button'); // Button zum Bearbeiten finden
          if (editButton) {
              const vocisetId = editButton.dataset.vocisetId;
              const vocisetLabel = editButton.dataset.vocisetLabel;
              if (vocisetId && vocisetLabel) {
-                 // Ruft die Funktion auf, um den Bearbeitungsbereich zu zeigen und Daten zu laden
-                 showAddVociSetSectionForExisting(vocisetId, vocisetLabel);
+                 // Ruft die Funktion auf, um den Detail/Bearbeitungsbereich zu zeigen und Daten zu laden
+                 showVocisetDetailSection(vocisetId, vocisetLabel); // NEUE Funktion
              }
          }
      });
 
 
-    // --- Funktionen zum Anzeigen/Verstecken der Bereiche ---
+    // --- Funktionen zum Anzeigen/Verstecken der Detail-Bereiche ---
 
-    // Zeigt den Bereich zum Bearbeiten/Hinzufügen von Voci Sets
+    // Zeigt den Bereich für Voci Set Details/Bearbeiten an
     // Wird vom Hauptseiten "Voci Set hinzufügen" Button aufgerufen (initiiert neues Set)
-    function showAddVociSetSection() {
-        hideClassDetailsSection(); // Anderen Detailbereich verstecken
+    // ODER von showVocisetDetailSection (zum Bearbeiten eines existierenden)
+    function showVocisetDetailSection(vocabularySetId = null, vocabularySetName = null) { // Parameter optional machen
+        // Zuerst alle anderen Detailbereiche verstecken
+        hideClassDetailsSection();
 
-        addVociSetSection.style.display = 'block'; // Bereich anzeigen
+        vocisetDetailSection.style.display = 'block'; // Bereich anzeigen
 
-        // Setze Platzhalterwerte für ein NEUES Set (diese Funktion wird beim Klick auf "Voci Set hinzufügen" aufgerufen)
-        vociSetNameHeader.textContent = 'Neues Voci Set erstellen';
-        vociSetClassSpan.textContent = 'Nicht zugewiesen'; // TODO: Klasse ermitteln/auswählen lassen?
-        vociSetNameButtonSpan.textContent = 'Neues Voci Set';
-        existingWordsDropdown.innerHTML = '<li class="dropdown-item disabled">Noch keine Wörter</li>'; // Wörterliste leer bei neuem Set
-        currentVociSetId = null; // Wichtig: ID ist null, da es noch kein Set gibt
-        deutschesWortInput.value = '';
-        französischesWortInput.value = '';
+        if (vocabularySetId !== null) { // Wenn eine ID übergeben wurde (existierendes Set)
+            currentVociSetId = vocabularySetId; // Voci Set ID speichern
 
-        // TODO: Hier Logik zum Erstellen eines NEUEN Voci Sets implementieren.
-        // Das könnte ein Modal sein (wahrscheinlich besser), das den Namen des Sets abfragt,
-        // und dann die /api/vocabulary-sets/create API aufruft.
-        // Nach erfolgreicher Erstellung, sollte dann showAddVociSetSectionForExisting
-        // mit der ID des neu erstellten Sets aufgerufen werden.
+            // Setze Namen und lade Wörter und zugewiesene Klassen
+            vocisetDetailNameHeader.textContent = `Voci Set: ${vocabularySetName}`;
+            vocisetDetailNameButtonSpan.textContent = vocabularySetName;
+            loadWordsForVociset(vocabularySetId); // Lade Wörter
+            loadAssignedClassesForVociset(vocabularySetId); // NEU: Lade zugewiesene Klassen
+        } else { // Wenn keine ID übergeben wurde (Neues Set initiieren)
+             // Dieser Fall wird vom Hauptseiten "Voci Set hinzufügen" Button ausgelöst
+             // (Obwohl die eigentliche Erstellung im Modal passiert)
+             // Hier setzen wir nur den Bereich in einen "Erstellen" Zustand, falls das Modal nicht genutzt wird.
+             // Aber da wir jetzt ein Modal nutzen, wird dieser Teil so nicht direkt für die ERSTELLUNG verwendet,
+             // sondern showVocisetDetailSection wird NACH der Erstellung mit der neuen ID aufgerufen.
+             // Daher ist dieser 'else' Block hier streng genommen redundant mit der aktuellen Logik,
+             // da die Erstellung im Modal passiert und dann showVocisetDetailSection mit ID aufgerufen wird.
+             // Belassen wir ihn als Fallback oder für zukünftige Änderungen.
+             currentVociSetId = null; // Wichtig: ID ist null für neues Set
+             vocisetDetailNameHeader.textContent = 'Neues Voci Set erstellen';
+             vocisetDetailNameButtonSpan.textContent = 'Neues Voci Set';
+             existingWordsDropdown.innerHTML = '<li class="dropdown-item disabled">Noch keine Wörter</li>';
+             vocisetAssignedClassesList.innerHTML = '<li class="list-group-item disabled">Klassen können nach dem Erstellen zugewiesen werden.</li>';
+             deutschesWortInput.value = '';
+             französischesWortInput.value = '';
+        }
     }
 
-    // Versteckt den Bereich zum Bearbeiten/Hinzufügen von Voci Sets
-    function hideAddVociSetSection() {
-        addVociSetSection.style.display = 'none'; // Bereich verstecken
-        // Inhalte und Zustand zurücksetzen
+    // Versteckt den Bereich für Voci Set Details/Bearbeiten
+    function hideVocisetDetailSection() {
+        vocisetDetailSection.style.display = 'none'; // Bereich verstecken
+        // Zustand und Eingaben zurücksetzen
         deutschesWortInput.value = '';
         französischesWortInput.value = '';
-        currentVociSetId = null;
-        existingWordsDropdown.innerHTML = '';
-        vociSetNameHeader.textContent = '';
-        vociSetNameButtonSpan.textContent = '';
-        vociSetClassSpan.textContent = '';
+        currentVociSetId = null; // Wichtig: ID zurücksetzen
+        existingWordsDropdown.innerHTML = ''; // Dropdown leeren
+        vocisetDetailNameHeader.textContent = ''; // Header leeren
+        vocisetDetailNameButtonSpan.textContent = ''; // Button Text leeren
+        vocisetAssignedClassesList.innerHTML = ''; // Liste der Klassen leeren
     }
 
-    // Zeigt den Bereich für Klassendetails
+
+    // Zeigt den Bereich für Klassendetails an
     function showClassDetailsSection() {
-        hideAddVociSetSection(); // Anderen Detailbereich verstecken
+        hideVocisetDetailSection(); // Anderen Detailbereich verstecken
 
         classDetailsSection.style.display = 'block'; // Bereich anzeigen
     }
@@ -227,51 +244,75 @@ document.addEventListener('DOMContentLoaded', function () {
     // Versteckt den Bereich für Klassendetails
     function hideClassDetailsSection() {
         classDetailsSection.style.display = 'none'; // Bereich verstecken
-        // Inhalte und Zustand zurücksetzen
+        // Zustand und Inhalte zurücksetzen
         currentDepartmentIdForClassDetails = null;
         classDetailsNameSpan.textContent = '';
         classStudentsListUl.innerHTML = '';
     }
 
-    // Zeigt das Modal zum Hinzufügen eines Schülers für eine spezifische Klasse
+     // Zeigt das Modal zum Hinzufügen eines Schülers für eine spezifische Klasse an
      function showAddStudentModalForClass(departmentId) {
-         // Wir speichern die Department ID bereits in loadClassDetails und createNewClass
-         // Wir müssen hier nur sicherstellen, dass sie gesetzt ist.
-         if (departmentId) {
-             currentDepartmentIdForClassDetails = departmentId; // Sicherstellen, dass die ID gesetzt ist
-             studentUsernameInput.value = ''; // Eingabefeld leeren
-             addStudentModal.show(); // Modal öffnen
-         } else {
-             console.error("Ungültige Department ID beim Versuch, Schüler-Modal zu öffnen.");
-             alert("Ein Fehler ist aufgetreten: Klasse nicht gefunden.");
-         }
-     }
-
-
-     // Funktion zum Anzeigen des "Voci Set hinzufügen" Bereichs für ein EXISTIERENDES Voci Set
-     function showAddVociSetSectionForExisting(vocabularySetId, vocabularySetName) {
-         hideClassDetailsSection(); // Anderen Detailbereich verstecken
-
-         addVociSetSection.style.display = 'block'; // Bereich anzeigen
-         currentVociSetId = vocabularySetId; // Voci Set ID speichern
-
-         // Setze Namen und lade Wörter
-         vociSetNameHeader.textContent = `Voci Set bearbeiten: ${vocabularySetName}`;
-         vociSetNameButtonSpan.textContent = vocabularySetName;
-         loadWordsForVociSet(vocabularySetId); // Lade Wörter für das gewählte Voci Set
-
-         // TODO: Klasse des Voci Sets laden und anzeigen - vociSetClassSpan.textContent = ...; (API benötigt, um Voci Set mit Klasse zu verknüpfen?)
-         vociSetClassSpan.textContent = 'Wird geladen...'; // Platzhalter
+         currentDepartmentIdForClassDetails = departmentId; // Sicherstellen, dass die ID gesetzt ist
+         studentUsernameInput.value = ''; // Eingabefeld leeren
+         addStudentModal.show(); // Modal öffnen
      }
 
 
     // --- Daten Laden & API Interaktionen ---
 
-    // Funktion zum Laden der Wörter eines Voci Sets und Anzeigen im Dropdown
-    function loadWordsForVociSet(vocabularySetId) {
-        const apiVociSetWordsUrl = `/api/vocabulary-sets/${vocabularySetId}`;
+    // NEUE Funktion: Ein neues Voci Set erstellen
+    function createNewVociset(vocisetName) {
+        const apiCreateVocisetUrl = `/api/vocabulary-sets/create`; // API zum Erstellen eines neuen Sets
 
-        fetch(apiVociSetWordsUrl, {
+        fetch(apiCreateVocisetUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                 'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({
+                label: vocisetName // Annahme: API erwartet 'label'
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(`HTTP error! status: ${response.status} - ${text}`); });
+            }
+            return response.json(); // Annahme: API gibt das neu erstellte Set zurück (mit ID)
+        })
+        .then(newVocisetData => {
+            console.log('Voci Set erfolgreich erstellt:', newVocisetData);
+            alert(`Voci Set "${newVocisetData.label}" erfolgreich erstellt!`);
+
+            createVocisetModal.hide(); // Modal schließen
+
+            // Lade Voci Sets Liste neu, um das neue Set anzuzeigen
+            loadVociSets();
+
+            // Optional: Direkt den Detailbereich für das neue Set öffnen
+            if (newVocisetData && newVocisetData.id) {
+                // Kleine Verzögerung, falls die Liste erst aktualisiert werden muss
+                 setTimeout(() => {
+                     showVocisetDetailSection(newVocisetData.id, newVocisetData.label); // Detailbereich für NEUES Set öffnen
+                 }, 100);
+            } else {
+                 console.error("Neues Voci Set erstellt, aber ID fehlt in der Antwort.");
+                 alert("Voci Set erstellt, aber Details können nicht sofort angezeigt werden (ID fehlt).");
+            }
+        })
+        .catch(error => {
+            console.error('Fehler beim Erstellen des Voci Sets:', error);
+            alert('Fehler beim Erstellen des Voci Sets: ' + error.message);
+             // Modal nicht schließen
+        });
+    }
+
+
+    // Funktion zum Laden der Wörter eines Voci Sets und Anzeigen im Dropdown
+    function loadWordsForVociset(vocabularySetId) {
+        const apiVocisetWordsUrl = `/api/vocabulary-sets/${vocabularySetId}`;
+
+        fetch(apiVocisetWordsUrl, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -283,23 +324,21 @@ document.addEventListener('DOMContentLoaded', function () {
                  // Versuch, Fehlerdetails vom Server zu lesen und als Error zu werfen
                 return response.text().then(text => { throw new Error(`HTTP error! status: ${response.status} - ${text}`); });
             }
-            return response.json(); // Annahme: API gibt JSON zurück
+            return response.json();
         })
-        .then(vociSetData => {
-            const words = vociSetData.words;
+        .then(vocisetData => {
+            const words = vocisetData.words;
 
-             // Optional: Hier auch den Voci Set Namen setzen, falls nicht schon von showAddVociSetSectionForExisting gesetzt
-             // vociSetNameHeader.textContent = vociSetData.label;
-             // vociSetNameButtonSpan.textContent = vociSetData.label;
+            // Optional: Hier auch den Voci Set Namen setzen, falls nicht schon von showVocisetDetailSection gesetzt
+            // vocisetDetailNameHeader.textContent = vocisetData.label;
+            // vocisetDetailNameButtonSpan.textContent = vocisetData.label;
 
-            existingWordsDropdown.innerHTML = ''; // Dropdown leeren
+            existingWordsDropdown.innerHTML = '';
 
             if (words && Array.isArray(words) && words.length > 0) {
                 words.forEach(word => {
                     const wordItem = document.createElement('li');
-                    // Bootstrap Dropdown Item Styling + Flexbox für Layout
                     wordItem.classList.add('dropdown-item', 'd-flex', 'justify-content-between', 'align-items-center');
-                     // data-vocabulary-set-id zum Button hinzufügen (für Event Delegation)
                     wordItem.innerHTML = `
                         <span>${word.word} - ${word.translation}</span>
                          <button class="btn btn-danger btn-sm delete-word-button" data-word-id="${word.id}" data-vocabulary-set-id="${vocabularySetId}">
@@ -311,9 +350,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 existingWordsDropdown.innerHTML = '<li class="dropdown-item disabled">Keine Wörter vorhanden</li>';
             }
-
-             // Event Delegation Listener ist schon oben registriert (existingWordsDropdown.addEventListener)
-
+             // Event Delegation Listener ist schon oben registriert
         })
         .catch(error => {
             console.error('Fehler beim Laden der Wörter für Voci Set:', error);
@@ -322,9 +359,53 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // NEUE Funktion: Zugewiesene Klassen für ein Voci Set laden und anzeigen
+    function loadAssignedClassesForVociset(vocabularySetId) {
+        const apiAssignedClassesUrl = `/api/vocabulary-sets/${vocabularySetId}/departments`; // NEUE API
+
+         // Setze Platzhalter, während geladen wird
+         vocisetAssignedClassesList.innerHTML = '<li class="list-group-item disabled">Wird geladen...</li>';
+
+        fetch(apiAssignedClassesUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                 'X-Requested-With': 'XMLHttpRequest'
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(`HTTP error! status: ${response.status} - ${text}`); });
+            }
+            return response.json(); // Annahme: API gibt ein Objekt mit einem 'departments' Array zurück
+        })
+        .then(data => {
+            const departments = data.departments;
+            vocisetAssignedClassesList.innerHTML = ''; // Liste leeren
+
+            if (departments && Array.isArray(departments) && departments.length > 0) {
+                departments.forEach(department => {
+                    const classItem = document.createElement('li');
+                    classItem.classList.add('list-group-item', 'list-group-item-info'); // Bootstrap Styling
+                    classItem.textContent = department.label; // Zeige Klassennamen
+                    // TODO: Optional: Button zum Entfernen der Zuweisung hinzufügen
+                    vocisetAssignedClassesList.appendChild(classItem);
+                });
+            } else {
+                vocisetAssignedClassesList.innerHTML = '<li class="list-group-item disabled">Dieses Voci Set ist keiner Klasse zugewiesen.</li>';
+            }
+             // TODO: Später: Logik/UI zum Zuweisen von Klassen hinzufügen
+        })
+        .catch(error => {
+            console.error('Fehler beim Laden der zugewiesenen Klassen:', error);
+            vocisetAssignedClassesList.innerHTML = '<li class="list-group-item disabled">Fehler beim Laden der zugewiesenen Klassen.</li>';
+             alert('Fehler beim Laden der zugewiesenen Klassen: ' + error.message);
+        });
+    }
+
 
     // Funktion zum Hinzufügen eines Wortes zu einem Voci Set
-    function addWordToVociSet() {
+    function addWordToVociset() { // Funktion umbenannt für Konsistenz
         const deutschesWort = deutschesWortInput.value.trim();
         const französischesWort = französischesWortInput.value.trim();
 
@@ -333,11 +414,10 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         if (currentVociSetId === null) {
-             alert('Bitte wählen Sie zuerst ein Voci Set zum Bearbeiten aus (klicken Sie auf "Bearbeiten" in der Liste).');
+             alert('Ein Fehler ist aufgetreten: Kein Voci Set zum Hinzufügen von Wörtern ausgewählt.');
              return;
         }
 
-        // Korrekte Annahme basierend auf vorherigen Prompts: POST /api/vocabulary-sets/<int:vocabulary_set_id>/words/create
         const apiAddWordUrl = `/api/vocabulary-sets/${currentVociSetId}/words/create`;
 
         fetch(apiAddWordUrl, {
@@ -347,24 +427,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 'X-Requested-With': 'XMLHttpRequest'
             },
             body: JSON.stringify({
-                word: deutschesWort, // Annahme: API erwartet 'word' für Deutsch
-                translation: französischesWort  // Annahme: API erwartet 'translation' für Französisch
-                 // TODO: Weitere Felder wie 'successiveCorrect', 'correct', 'incorrect' falls API sie beim Erstellen erwartet
+                word: deutschesWort,
+                translation: französischesWort
+                 // TODO: Weitere Felder
             })
         })
         .then(response => {
             if (!response.ok) {
                 return response.text().then(text => { throw new Error(`HTTP error! status: ${response.status} - ${text}`); });
             }
-            return response.json(); // Annahme: API gibt das neu hinzugefügte Wort oder Bestätigung zurück
+            return response.json();
         })
         .then(data => {
             console.log('Wort erfolgreich hinzugefügt:', data);
             alert('Wort erfolgreich hinzugefügt!');
             deutschesWortInput.value = '';
             französischesWortInput.value = '';
-            loadWordsForVociSet(currentVociSetId); // Wörterliste im Dropdown neu laden
-            loadVociSets(); // Voci Sets Liste auf Hauptseite neu laden (Wörteranzahl aktualisieren)
+            loadWordsForVociset(currentVociSetId);
+            loadVociSets();
         })
         .catch(error => {
             console.error('Fehler beim Hinzufügen des Wortes:', error);
@@ -374,7 +454,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Funktion zum Löschen eines Wortes aus einem Voci Set
-    function deleteWordFromVociSet(vocabularySetId, wordId) {
+    function deleteWordFromVociset(vocabularySetId, wordId) { // Funktion umbenannt für Konsistenz
          if (!confirm('Möchtest du dieses Wort wirklich löschen?')) {
             return;
         }
@@ -392,13 +472,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) {
                 return response.text().then(text => { throw new Error(`HTTP error! status: ${response.status} - ${text}`); });
             }
-             return response.text().then(text => text ? JSON.parse(text) : {}); // Versucht JSON, akzeptiert leer
+             return response.text().then(text => text ? JSON.parse(text) : {});
         })
          .then(data => {
             console.log(`Wort mit ID ${wordId} aus Voci Set ${vocabularySetId} gelöscht.`, data);
             alert('Wort erfolgreich gelöscht!');
-            loadWordsForVociSet(vocabularySetId); // Wörterliste im Dropdown neu laden
-            loadVociSets(); // Voci Sets Liste auf Hauptseite neu laden (Wörteranzahl aktualisieren)
+            loadWordsForVociset(vocabularySetId);
+            loadVociSets();
         })
         .catch(error => {
             console.error('Fehler beim Löschen des Wortes:', error);
@@ -415,7 +495,7 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
+                 'X-Requested-With': 'XMLHttpRequest'
             },
         })
         .then(response => {
@@ -426,14 +506,13 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
             const departments = data.departments;
-            klassenContainer.innerHTML = ''; // Container leeren
+            klassenContainer.innerHTML = '';
 
             if (departments && Array.isArray(departments)) {
                 departments.forEach(department => {
                     const klasseCardCol = document.createElement('div');
-                    klasseCardCol.classList.add('col'); // Bootstrap Grid Spalte
-                     // Department ID auf die Card für einfachen Zugriff setzen
-                    klasseCardCol.dataset.departmentId = department.id; // ID auf dem äußeren Element speichern
+                    klasseCardCol.classList.add('col');
+                    klasseCardCol.dataset.departmentId = department.id;
                     klasseCardCol.innerHTML = `
                         <div class="card h-100">
                             <div class="card-body d-flex justify-content-between align-items-center">
@@ -457,66 +536,12 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 klassenContainer.innerHTML = '<p>Keine Klassen gefunden.</p>';
             }
-
-            // Event Delegation Listener für Klassen Container ist oben registriert
-
+             // Event Delegation Listener für Klassen Container ist oben registriert
         })
         .catch(error => {
             console.error('Fehler beim Laden der Klassen:', error);
             klassenContainer.innerHTML = '<p>Fehler beim Laden der Klassen.</p>';
              alert('Fehler beim Laden der Klassen: ' + error.message);
-        });
-    }
-
-    // NEUE Funktion: Eine neue Klasse erstellen
-    function createNewClass(className) {
-         // API zum Erstellen einer neuen Klasse
-        const apiCreateClassUrl = `/api/departments/create`; // Basierend auf deiner letzten Angabe
-
-        fetch(apiCreateClassUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                 'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: JSON.stringify({
-                label: className // Annahme: API erwartet 'label' für den Klassennamen
-                 // TODO: Eventuell weitere Felder je nach API (z.B. teacher_id)
-            })
-        })
-        .then(response => {
-            if (!response.ok) {
-                 return response.text().then(text => { throw new Error(`HTTP error! status: ${response.status} - ${text}`); });
-            }
-             // Annahme: API gibt die neu erstellte Klasse zurück, inkl. ID
-            return response.json();
-        })
-        .then(newClassData => {
-            console.log('Klasse erfolgreich erstellt:', newClassData);
-            alert(`Klasse "${newClassData.label}" erfolgreich erstellt!`);
-
-            addClassModal.hide(); // Modal zum Erstellen der Klasse schließen
-
-            // Direkt das Modal zum Hinzufügen von Schülern öffnen für die NEUE Klasse
-             if (newClassData.id) {
-                 loadKlassen(); // Klassenliste auf Hauptseite neu laden
-                 // Warte kurz, falls die Klassenliste erst gerendert werden muss, bevor Modal geöffnet wird
-                 setTimeout(() => {
-                     // Klassendetails der NEUEN Klasse laden und dann Schüler-Modal öffnen
-                     loadClassDetails(newClassData.id); // Öffnet Klassendetails Div UND speichert ID
-                     // Optional: Modal direkt hier öffnen, anstatt in loadClassDetails
-                     // showAddStudentModalForClass(newClassData.id);
-                 }, 100); // Kleine Verzögerung, falls nötig
-             } else {
-                 console.error("Klasse erstellt, aber ID fehlt in der Antwort.");
-                 alert("Klasse erstellt, aber Schüler können nicht sofort hinzugefügt werden (ID fehlt).");
-                 loadKlassen(); // Klassenliste trotzdem neu laden
-             }
-        })
-        .catch(error => {
-            console.error('Fehler beim Erstellen der Klasse:', error);
-            alert('Fehler beim Erstellen der Klasse: ' + error.message);
-             // Modal nicht schließen, damit Benutzer Eingabe korrigieren kann
         });
     }
 
@@ -539,13 +564,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) {
                  return response.text().then(text => { throw new Error(`HTTP error! status: ${response.status} - ${text}`); });
             }
-             return response.text().then(text => text ? JSON.parse(text) : {}); // Versucht JSON, akzeptiert leer
+             return response.text().then(text => text ? JSON.parse(text) : {});
         })
          .then(data => {
-            console.log(`Klasse (Department) mit ID ${departmentId} gelöscht.`, data);
+            console.log(`Klasse (Department) mit ID ${departmentId} gelöscht.`);
             alert('Klasse erfolgreich gelöscht!');
-            loadKlassen(); // Klassen neu laden nach dem Löschen
-            hideClassDetailsSection(); // Klassendetails schließen, falls die gelöschte Klasse angezeigt wurde
+            loadKlassen();
+            hideClassDetailsSection();
         })
         .catch(error => {
             console.error('Fehler beim Löschen der Klasse (Department):', error);
@@ -578,7 +603,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 vociSets.forEach(vociSet => {
                     const vociSetItem = document.createElement('li');
                     vociSetItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-                     // Klasse für den Bearbeiten Button hinzufügen
                     vociSetItem.innerHTML = `
                         <span>${vociSet.label} (Wörter: ${vociSet.wordsCount}, Gelernt: ${vociSet.learnedCount})</span>
                         <button class="btn btn-success btn-sm edit-vociset-button" data-vociset-id="${vociSet.id}" data-vociset-label="${vociSet.label}">Bearbeiten</button>
@@ -598,26 +622,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // Funktion zum Anzeigen des "Voci Set hinzufügen" Bereichs für ein EXISTIERENDES Voci Set
-    function showAddVociSetSectionForExisting(vocabularySetId, vocabularySetName) {
-        hideClassDetailsSection(); // Anderen Detailbereich verstecken
-
-        addVociSetSection.style.display = 'block'; // Bereich anzeigen
-        currentVociSetId = vocabularySetId; // Voci Set ID speichern
-
-        // Setze Namen und lade Wörter
-        vociSetNameHeader.textContent = `Voci Set bearbeiten: ${vocabularySetName}`;
-        vociSetNameButtonSpan.textContent = vocabularySetName;
-        loadWordsForVociSet(vocabularySetId); // Lade Wörter für das gewählte Voci Set
-
-        // TODO: Klasse des Voci Sets laden und anzeigen - vociSetClassSpan.textContent = ...; (API benötigt, um Voci Set mit Klasse zu verknüpfen?)
-        vociSetClassSpan.textContent = 'Wird geladen...'; // Platzhalter
-    }
-
-
     // Funktion: Klassendetails laden und anzeigen
     function loadClassDetails(departmentId) {
-        currentDepartmentIdForClassDetails = departmentId; // Department ID speichern
+        currentDepartmentIdForClassDetails = departmentId;
         const apiClassDetailsUrl = `/api/departments/${departmentId}`;
 
         fetch(apiClassDetailsUrl, {
@@ -635,14 +642,12 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(departmentData => {
             classDetailsNameSpan.textContent = departmentData.label;
-            classStudentsListUl.innerHTML = ''; // Schülerliste leeren
+            classStudentsListUl.innerHTML = '';
 
             if (departmentData.students && Array.isArray(departmentData.students) && departmentData.students.length > 0) {
                 departmentData.students.forEach(student => {
                     const studentItem = document.createElement('li');
-                    // Bootstrap List Item Styling + Flexbox für Layout
                     studentItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-                    // data-department-id zum Button hinzufügen (für Event Delegation)
                     studentItem.innerHTML = `
                         <span>${student.username}</span>
                         <button class="btn btn-danger btn-sm delete-student-button" data-student-id="${student.id}" data-department-id="${departmentData.id}">
@@ -654,20 +659,16 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 classStudentsListUl.innerHTML = '<li class="list-group-item disabled">Keine Schüler in dieser Klasse</li>';
             }
-
              // Event Delegation Listener für Schüler ist oben registriert
-
-            hideAddVociSetSection(); // Anderen Detailbereich verstecken
-            showClassDetailsSection(); // Klassendetails Section anzeigen
-
+            hideVocisetDetailSection(); // Anderen Detailbereich verstecken
+            showClassDetailsSection();
         })
         .catch(error => {
             console.error('Fehler beim Laden der Klassendetails:', error);
             classDetailsNameSpan.textContent = 'Fehler beim Laden der Klassendetails';
             classStudentsListUl.innerHTML = '<li class="list-group-item disabled">Fehler beim Laden der Schülerliste</li>';
-
-            hideAddVociSetSection(); // Anderen Detailbereich verstecken, auch bei Fehler
-            showClassDetailsSection(); // Zeige Section trotzdem an, aber mit Fehlermeldung
+            hideVocisetDetailSection(); // Anderen Detailbereich verstecken, auch bei Fehler
+            showClassDetailsSection();
              alert('Fehler beim Laden der Klassendetails: ' + error.message);
         });
     }
@@ -692,13 +693,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) {
                 return response.text().then(text => { throw new Error(`HTTP error! status: ${response.status} - ${text}`); });
             }
-             return response.text().then(text => text ? JSON.parse(text) : {}); // Versucht JSON, akzeptiert leer
+             return response.text().then(text => text ? JSON.parse(text) : {});
         })
         .then(data => {
-            console.log(`Schüler mit ID ${studentId} aus Department ${departmentId} gelöscht.`, data);
+            console.log(`Schüler mit ID ${studentId} aus Department ${departmentId} gelöscht.`);
             alert('Schüler erfolgreich gelöscht!');
-            loadClassDetails(departmentId); // Klassendetails neu laden
-            loadKlassen(); // Klassenliste auf Hauptseite neu laden (Schüleranzahl aktualisieren)
+            loadClassDetails(departmentId);
+            loadKlassen();
         })
         .catch(error => {
             console.error('Fehler beim Löschen des Schülers:', error);
@@ -706,10 +707,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Funktion: Schüler hinzufügen
+    // Funktion: Schüler hinzufügen (wird vom Modal aufgerufen)
     function addStudentToClass(departmentId, studentUsername) {
-        // Korrekte Annahme basierend auf vorherigen Prompts: POST /api/departments/<int:department_id>/students/create
-        const apiAddStudentUrl = `/api/departments/${departmentId}/students/create`; // Korrigierte API URL
+        const apiAddStudentUrl = `/api/departments/${departmentId}/students/create`;
 
         fetch(apiAddStudentUrl, {
             method: 'POST',
@@ -718,27 +718,25 @@ document.addEventListener('DOMContentLoaded', function () {
                  'X-Requested-With': 'XMLHttpRequest'
             },
             body: JSON.stringify({
-                username: studentUsername // Annahme: API erwartet 'username'
-                 // TODO: Eventuell weitere Felder je nach API (z.B. password - aber vorsicht!)
+                username: studentUsername
             })
         })
         .then(response => {
             if (!response.ok) {
-                 return response.text().then(text => { throw new Error(`HTTP error! status: ${response.status} - ${text}`); });
+                return response.text().then(text => { throw new Error(`HTTP error! status: ${response.status} - ${text}`); });
             }
-            return response.json(); // Annahme: API gibt den neuen Schüler oder Bestätigung zurück
+            return response.json();
         })
         .then(data => {
             console.log(`Schüler ${studentUsername} erfolgreich zu Department ${departmentId} hinzugefügt.`, data);
             alert('Schüler erfolgreich hinzugefügt!');
-            addStudentModal.hide(); // Modal schließen
-            loadClassDetails(departmentId); // Klassendetails neu laden
-            loadKlassen(); // Klassenliste auf Hauptseite neu laden (Schüleranzahl aktualisieren)
+            addStudentModal.hide();
+            loadClassDetails(departmentId);
+            loadKlassen();
         })
         .catch(error => {
             console.error('Fehler beim Hinzufügen des Schülers:', error);
             alert('Fehler beim Hinzufügen des Schülers: ' + error.message);
-             // Modal nicht schließen, damit Benutzer Eingabe korrigieren kann, falls API Fehlerdetails sendet
         });
     }
 

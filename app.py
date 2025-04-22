@@ -76,4 +76,4 @@ auth.route(app, '/api/set-prompt/context-sentences', ['teacher'], ['POST']) \
 
 # Run the app
 if __name__ == '__main__':
-  app.run(debug=True, port=5001) # Ändere port=5000 zu port=5001 (oder eine andere freie Nummer)
+  app.run(debug=True, port=5002) # Ändere port=5000 zu port=5001 (oder eine andere freie Nummer)

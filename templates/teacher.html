@@ -32,7 +32,7 @@
         </section>
 
         <!-- *** BEREICH: Klassen Details (jetzt nach Klassen-Section) *** -->
-        <!-- Initial versteckt mit CSS, nicht inline style -->
+        <!-- Initial versteckt mit CSS .detail-section Klasse -->
         <section id="class-details-section" class="content-section detail-section"> <!-- Custom Classes -->
             <div class="d-flex justify-content-between align-items-center mb-3"> <!-- Header mit Button -->
                 <h3>Klasse: <span id="class-details-name"></span></h3> <!-- H3 für Untertitel -->
@@ -59,19 +59,26 @@
             </button>
         </section>
 
-        <!-- *** BEREICH: Voci Set hinzufügen *** -->
-         <!-- Initial versteckt mit CSS, nicht inline style -->
-        <section id="add-voci-set-section" class="content-section detail-section"> <!-- Custom Classes -->
+        <!-- *** BEREICH: Voci Set Details/Bearbeiten *** -->
+         <!-- Initial versteckt mit CSS .detail-section Klasse -->
+        <section id="vociset-detail-section" class="content-section detail-section"> <!-- NEUE ID / Custom Classes -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-                 <h3>Voci Set: <span id="voci-set-name-header"></span></h3>
-                 <button id="closeAddVociSetSection" class="btn btn-secondary btn-sm close-button">Schliessen</button> <!-- Custom Class -->
+                 <h3>Voci Set: <span id="vociset-detail-name-header"></span></h3> <!-- NEUE ID -->
+                 <button id="closeVocisetDetailSection" class="btn btn-secondary btn-sm close-button">Schliessen</button> <!-- NEUE ID -->
             </div>
 
-            <p>Klasse: <span id="voci-set-class"></span></p>
+            <div class="mb-3">
+                 <h4>Verwendet in Klassen:</h4> <!-- NEU -->
+                 <ul id="vociset-assigned-classes-list" class="list-group"> <!-- NEU -->
+                    <!-- Liste der zugewiesenen Klassen wird hier per JS eingefügt -->
+                 </ul>
+                 <!-- TODO: Button/Logik zum Zuweisen/Entfernen von Klassen -->
+            </div>
+
 
             <div class="mb-3 dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownExistingWordsButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Wörter in <span id="voci-set-name-button"></span>
+                    Wörter in <span id="vociset-detail-name-button"></span> <!-- NEUE ID -->
                 </button>
                 <ul class="dropdown-menu" id="existing-words-dropdown" aria-labelledby="dropdownExistingWordsButton">
                     <!-- Wörter werden hier per JavaScript eingefügt -->
@@ -96,7 +103,7 @@
             </section>
 
         </section>
-        <!-- *** ENDE BEREICH: Voci Set hinzufügen *** -->
+        <!-- *** ENDE BEREICH: Voci Set Details/Bearbeiten *** -->
 
 
     </main>
@@ -126,25 +133,26 @@
     </div>
     <!-- *** ENDE MODAL *** -->
 
-    <!-- *** NEUES BOOTSTRAP MODAL FÜR KLASSE HINZUFÜGEN *** -->
-    <div class="modal fade" id="addClassModal" tabindex="-1" aria-labelledby="addClassModalLabel" aria-hidden="true">
+    <!-- *** NEUES BOOTSTRAP MODAL FÜR VOCI SET HINZUFÜGEN *** -->
+    <div class="modal fade" id="createVocisetModal" tabindex="-1" aria-labelledby="createVocisetModalLabel" aria-hidden="true"> <!-- NEUE ID -->
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addClassModalLabel">Neue Klasse erstellen</h5>
+            <h5 class="modal-title" id="createVocisetModalLabel">Neues Voci Set erstellen</h5> <!-- NEUE ID -->
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form id="addClassForm">
+            <form id="createVocisetForm"> <!-- NEUE ID -->
               <div class="mb-3">
-                <label for="classNameInput" class="form-label">Name der Klasse</label>
-                <input type="text" class="form-control" id="classNameInput" required>
+                <label for="vocisetNameInput" class="form-label">Name des Voci Sets</label> <!-- NEUE ID -->
+                <input type="text" class="form-control" id="vocisetNameInput" required> <!-- NEUE ID -->
               </div>
+               <!-- TODO: Hier könnten später Optionen zur Klassenzuweisung beim Erstellen hinzukommen -->
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
-            <button type="button" class="btn btn-primary" id="saveNewClassButton">Erstellen und Schüler hinzufügen</button>
+            <button type="button" class="btn btn-primary" id="saveNewVocisetButton">Erstellen</button> <!-- NEUE ID -->
           </div>
         </div>
       </div>
