@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Lehrer Seite</title>
-    <!-- **Korrigierte Bootstrap CSS Link (vom User)** -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Custom CSS (für Animationen und Anpassungen) -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">
 </head>
-<body class="animate-background">
-    <header class="bg-dark text-white p-3">
+<body>
+    <header class="site-header"> <!-- Custom Class for Header -->
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center">
                 <h1>Willkommen Lehrer</h1>
@@ -21,49 +21,55 @@
     </header>
 
     <main class="container mt-4">
-        <section id="klassen-section" class="mb-4">
+        <section id="klassen-section" class="content-section"> <!-- Custom Class for Section -->
             <h2>Klassen</h2>
-            <div id="klassen-container" class="row row-cols-1 row-cols-md-3 g-4 mb-3">
-                <!-- Klassen-Buttons werden hier per JavaScript als Bootstrap Cards eingefügt -->
+            <div id="klassen-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-3">
+                <!-- Klassen-Buttons (Cards) werden hier per JavaScript eingefügt -->
             </div>
-            <button id="addKlasseButton" class="btn btn-primary">
+            <button id="addKlasseButton" class="btn btn-primary add-button"> <!-- Custom Class for Add Buttons -->
                 <i class="fas fa-plus"></i> Klasse hinzufügen
             </button>
         </section>
 
         <!-- *** BEREICH: Klassen Details (jetzt nach Klassen-Section) *** -->
-        <section id="class-details-section" class="mb-4" style="display: none;"> <!- Anfangs versteckt -->
-            <div class="d-flex justify-content-between align-items-center mb-2"> <!-- Header mit Button -->
-                <h2>Klasse: <span id="class-details-name"></span></h2> <!- Klassen Name hier -->
-                <button id="addClassStudentButton" class="btn btn-success btn-sm"> <!-- Add Student Button -->
-                    <i class="fas fa-plus"></i> Schüler hinzufügen
+        <!-- Initial versteckt mit CSS .detail-section Klasse -->
+        <section id="class-details-section" class="content-section detail-section"> <!-- Custom Classes -->
+            <div class="d-flex justify-content-between align-items-center mb-3"> <!-- Header mit Button -->
+                <h3>Klasse: <span id="class-details-name"></span></h3> <!-- H3 für Untertitel -->
+                <button id="addClassStudentButton" class="btn btn-success btn-sm add-button"> <!-- Add Student Button -->
+                    <i class="fas fa-user-plus"></i> Schüler hinzufügen
                 </button>
             </div>
-
+             <h4 class="mb-2">Schülerliste</h4> <!-- Untertitel für Liste -->
             <ul id="class-students-list" class="list-group mb-3">
                 <!-- Schülerliste wird hier per JavaScript eingefügt -->
             </ul>
-            <button id="closeClassDetailsSection" class="btn btn-secondary" onclick="hideClassDetailsSection()">Schliessen</button>
+            <button id="closeClassDetailsSection" class="btn btn-secondary close-button">Schliessen</button> <!-- Custom Class -->
         </section>
         <!-- *** ENDE BEREICH: Klassen Details *** -->
 
 
-        <section id="voci-sets-section" class="mb-4">
+        <section id="voci-sets-section" class="content-section"> <!-- Custom Class for Section -->
             <h2>Voci Sets</h2>
-            <div id="voci-sets-container" class="list-group">
+            <div id="voci-sets-container" class="list-group mb-3">
                 <!-- Voci Sets werden hier per JavaScript als Bootstrap List Group Items eingefügt -->
             </div>
-            <button id="addVociSetButton" class="btn btn-success mt-2" onclick="showAddVociSetSection()">
+            <button id="addVociSetButton" class="btn btn-success mt-2 add-button"> <!-- Custom Class for Add Buttons -->
                 <i class="fas fa-plus"></i> Voci Set hinzufügen
             </button>
         </section>
 
-        <!-- *** BEREICH: Voci Set hinzufügen (bleibt unverändert in Position) *** -->
-        <section id="add-voci-set-section" class="mb-4" style="display: none;"> <!- Anfangs versteckt -->
-            <h2><span id="voci-set-name-header"></span></h2> <!- Voci Set Name hier -->
-            <p>Klasse: <span id="voci-set-class"></span></p> <!- Klasse hier -->
+        <!-- *** BEREICH: Voci Set hinzufügen *** -->
+         <!-- Initial versteckt mit CSS .detail-section Klasse -->
+        <section id="add-voci-set-section" class="content-section detail-section"> <!-- Custom Classes -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                 <h3>Voci Set: <span id="voci-set-name-header"></span></h3>
+                 <button id="closeAddVociSetSection" class="btn btn-secondary btn-sm close-button">Schliessen</button> <!-- Custom Class -->
+            </div>
 
-            <div class="mb-3">
+            <p>Klasse: <span id="voci-set-class"></span></p>
+
+            <div class="mb-3 dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownExistingWordsButton" data-bs-toggle="dropdown" aria-expanded="false">
                     Wörter in <span id="voci-set-name-button"></span>
                 </button>
@@ -72,27 +78,30 @@
                 </ul>
             </div>
 
+            <hr class="my-3">
+
             <section id="add-words-section" class="mb-3">
-                <h3>Wörter hinzufügen</h3>
-                <div class="mb-3">
-                    <label for="deutschesWort" class="form-label">Deutsches Wort</label>
-                    <input type="text" class="form-control" id="deutschesWort">
+                <h4>Wörter hinzufügen</h4>
+                <div class="row g-3">
+                    <div class="col-md">
+                        <label for="deutschesWort" class="form-label">Deutsches Wort</label>
+                        <input type="text" class="form-control" id="deutschesWort" placeholder="z.B. Apfel">
+                    </div>
+                    <div class="col-md">
+                        <label for="französischesWort" class="form-label">Französisches Wort</label>
+                        <input type="text" class="form-control" id="französischesWort" placeholder="z.B. pomme">
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="französischesWort" class="form-label">Französisches Wort</label>
-                    <input type="text" class="form-control" id="französischesWort">
-                </div>
-                <button id="addWordButton" class="btn btn-primary">Hinzufügen</button>
+                <button id="addWordButton" class="btn btn-primary mt-3 add-button"><i class="fas fa-plus"></i> Wort hinzufügen</button> <!-- Custom Class -->
             </section>
 
-            <button id="closeAddVociSetSection" class="btn btn-secondary" onclick="hideAddVociSetSection()">Schliessen</button>
         </section>
         <!-- *** ENDE BEREICH: Voci Set hinzufügen *** -->
 
 
     </main>
 
-    <!-- *** NEUES BOOTSTRAP MODAL FÜR SCHÜLER HINZUFÜGEN *** -->
+    <!-- *** BOOTSTRAP MODAL FÜR SCHÜLER HINZUFÜGEN *** -->
     <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -109,7 +118,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schliessen</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
             <button type="button" class="btn btn-primary" id="saveNewStudentButton">Speichern</button>
           </div>
         </div>
@@ -117,8 +126,33 @@
     </div>
     <!-- *** ENDE MODAL *** -->
 
+    <!-- *** NEUES BOOTSTRAP MODAL FÜR KLASSE HINZUFÜGEN *** -->
+    <div class="modal fade" id="addClassModal" tabindex="-1" aria-labelledby="addClassModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addClassModalLabel">Neue Klasse erstellen</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="addClassForm">
+              <div class="mb-3">
+                <label for="classNameInput" class="form-label">Name der Klasse</label>
+                <input type="text" class="form-control" id="classNameInput" required>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+            <button type="button" class="btn btn-primary" id="saveNewClassButton">Erstellen und Schüler hinzufügen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- *** ENDE NEUES MODAL *** -->
 
-    <!-- Korrigierter Bootstrap JS Bundle Link (vom User) -->
+
+    <!-- Bootstrap JS Bundle (Popper included) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/teacher.js') }}"></script>
 </body>

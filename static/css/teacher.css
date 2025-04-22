@@ -1,35 +1,174 @@
-body.animate-background {
-    background: linear-gradient(45deg, #007bff, #6610f2, #dc3545, #ffc107, #28a745); /* Farbiger Gradient */
-    background-size: 400% 400%;
-    animation: gradientAnimation 15s infinite linear;
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Modernere Schriftart */
+    margin: 0;
+    padding: 0;
+    /* Blauer Hintergrund mit Muster */
+    background-color: #eef5f9; /* Sehr heller, kühler Blauton */
+    background-image:
+        repeating-linear-gradient(45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px),
+        repeating-linear-gradient(-45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px);
+    background-position: 0 0, 0 0;
+    background-size: 40px 40px; /* Größe des Musters */
+
+    color: #343a40; /* Dunkler Text */
+    line-height: 1.6;
 }
 
-@keyframes gradientAnimation {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+/* Keine Hintergrundanimation mehr */
+
+.site-header {
+    background-color: #007bff; /* Standard Bootstrap Primärfarbe */
+    color: white;
+    padding: 1rem 1.5rem; /* Etwas mehr Padding */
+    margin-bottom: 2rem; /* Deutlicher Abstand nach Header */
+    box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Dezenter Schatten für Header */
 }
 
-/*  Optional: Passe hier spezifische Bootstrap-Elemente an, falls nötig
-    z.B. um Abstände zu ändern oder Farben leicht zu justieren.
-    Hier ist ein Beispiel, um den Container etwas breiter zu machen: */
-.container {
-    max-width: 1200px; /* Beispiel für breiteren Container */
+.site-header h1 {
+    color: white; /* H1 in Header ist weiß */
+    margin: 0;
+    font-size: 1.75rem; /* Überschriftgröße anpassen */
+}
+
+main.container {
+     /* Standard Bootstrap Container */
+}
+
+.content-section {
+    background-color: #ffffff; /* Weißer Hintergrund für Sektionen */
+    padding: 1.5rem; /* Einheitliches Padding */
+    margin-bottom: 1.5rem; /* Einheitlicher Abstand zwischen Sektionen */
+    border: 1px solid #dee2e6; /* Heller Rand */
+    border-radius: .5rem; /* Abgerundete Ecken */
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075); /* Dezenter Schatten */
+}
+
+/* Initial versteckte Detail-Sektionen */
+.detail-section {
+    display: none;
 }
 
 
-/* Optional: Style für Add Buttons, falls nötig. Bootstrap Buttons können über Klassen angepasst werden. */
-.btn-primary {
-    /* z.B. um die Schrift fetter zu machen: */
-    font-weight: bold;
+.content-section h2,
+.content-section h3,
+.content-section h4 {
+    color: #007bff; /* Primärfarbe für Sektions-Überschriften */
+    border-bottom: 1px solid #e9ecef; /* Dezente Trennlinie */
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
 }
 
-.btn-success {
-    font-weight: bold;
+.content-section h3 {
+    font-size: 1.5rem;
+}
+
+.content-section h4 {
+    font-size: 1.25rem;
+    border-bottom: none; /* Kein Rand unter H4 */
+    padding-bottom: 0;
+    margin-bottom: 1rem;
+}
+
+
+/* Anpassungen für Klassen Cards */
+#klassen-container .card {
+    border-color: #007bff; /* Primärfarbe für Klassen-Card Rand */
+}
+
+#klassen-container .card-body {
+    /* Standard Bootstrap Card Body Styling */
+}
+
+#klassen-container .card-title {
+    color: #007bff; /* Primärfarbe für Klassen Titel */
+}
+
+/* Optional: Hover-Effekt für die View/Delete Buttons */
+.btn-info:hover {
+    opacity: 0.9;
+}
+.btn-danger:hover {
+    opacity: 0.9;
+}
+.btn-success:hover {
+    opacity: 0.9;
+}
+
+
+/* Anpassungen für Listen (Voci Sets & Schüler) */
+.list-group-item {
+    border-color: #e9ecef; /* Heller Rand */
+    background-color: #f8f9fa; /* Sehr heller Hintergrund für Listenelemente */
+     transition: background-color 0.2s ease; /* Leichter Hover-Effekt */
+}
+
+.list-group-item:hover {
+     background-color: #e2e6ea; /* Etwas dunkler beim Hover */
+}
+
+/* Stil für Add Buttons */
+.add-button {
+    /* Nutzt Standard Bootstrap Button Styling */
+     display: inline-flex; /* Icons und Text nebeneinander */
+    align-items: center;
+     gap: 0.5rem; /* Abstand Icon und Text */
+}
+
+/* Stil für Close Buttons in Detail-Divs */
+.close-button {
+     /* Nutzt Standard Bootstrap Button Styling */
+}
+
+/* Feinabstimmung für Icons in Buttons */
+.btn .fas,
+.btn .far,
+.btn .fa {
+    margin-right: 0.5rem; /* Standard Abstand */
+     /* Setze margin-right: 0 für Buttons, die nur ein Icon haben */
+}
+
+/* Anpassung für Icon in addClassStudentButton */
+#addClassStudentButton .fas {
+    margin-right: 0.5rem;
+}
+
+/* Anpassung für Icons in delete-word-button & delete-student-button */
+.delete-word-button .fas,
+.delete-student-button .fas {
+    margin-right: 0; /* Kein Abstand, da Icon allein */
+}
+
+/* Modal Styling (Bootstrap Standard ist gut) */
+.modal-header {
+    border-bottom-color: #e9ecef;
+}
+
+.modal-footer {
+    border-top-color: #e9ecef;
+}
+
+/* Anpassung des Dropdown-Buttons im Voci Set Bereich */
+#dropdownExistingWordsButton {
+    /* Standard Bootstrap Styling */
+}
+
+#existing-words-dropdown .dropdown-item {
+     /* Standard Bootstrap Styling */
+     padding-right: 3rem; /* Platz für den Lösch-Button */
+     position: relative; /* Für absolute Positionierung des Buttons */
+}
+
+/* Positionierung des Lösch-Buttons im Dropdown Item */
+#existing-words-dropdown .delete-word-button {
+    position: absolute;
+    top: 50%;
+    right: .5rem;
+    transform: translateY(-50%);
+    padding: .125rem .25rem; /* Kleineres Padding */
+}
+
+
+/* Anpassung des Lösch-Buttons im Schüler List Item */
+#class-students-list .list-group-item .delete-student-button {
+    padding: .25rem .5rem; /* Standard btn-sm Padding */
 }
