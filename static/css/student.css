@@ -1,0 +1,276 @@
+/* Allgemeine Stile (Basis von Teacher) */
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #eef5f9; /* Heller bläulicher Hintergrund */
+    background-image:
+        repeating-linear-gradient(45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px),
+        repeating-linear-gradient(-45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px);
+    background-position: 0 0, 0 0;
+    background-size: 40px 40px;
+    color: #343a40;
+    line-height: 1.6;
+}
+
+.site-header {
+    background-color: #007bff; /* Blau wie Teacher */
+    color: white;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.site-header h1 {
+    color: white;
+    margin: 0;
+    font-size: 1.75rem;
+}
+.site-header h1 .fas {
+    margin-right: 0.5rem;
+    font-size: 0.9em;
+}
+.site-header .btn .fas {
+     margin-right: 0.5rem;
+}
+
+
+main.container {
+     /* Standard Bootstrap Container */
+}
+
+.content-section {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: .5rem;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+}
+
+.detail-section {
+    /* display: none; wird durch d-none im HTML gesteuert */
+    border-left: 5px solid #007bff; /* Akzent für Detailseiten */
+}
+
+.content-section h2,
+.content-section h3 {
+    color: #007bff;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+.content-section h2 .fas,
+.content-section h3 .fas {
+    margin-right: 0.75rem;
+    color: #0056b3;
+}
+
+.content-section h3 {
+    font-size: 1.5rem;
+}
+
+
+/* --- Studentenspezifische Stile --- */
+
+/* Vokabelset-Karten (Jetzt zum Auswählen) */
+.vociset-card {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.3s ease, background-color 0.3s ease;
+    border: 2px solid #17a2b8; /* Standard-Border */
+}
+
+.vociset-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-color: #138496;
+}
+
+/* Hervorgehobene Karte */
+.vociset-card.active {
+    border-color: #007bff; /* Blauer Rand für Auswahl */
+    background-color: #e7f1ff; /* Leichter blauer Hintergrund */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+}
+
+
+.vociset-card .card-title {
+     color: #17a2b8;
+}
+.vociset-card.active .card-title {
+    color: #0056b3; /* Dunkleres Blau für ausgewählte Karte */
+}
+
+.vociset-card .card-body {
+    /* Standard Card Body */
+}
+.vociset-card .progress {
+    height: 20px;
+    font-size: 0.8rem;
+    background-color: #e9ecef;
+}
+.vociset-card .progress-bar {
+    font-weight: bold;
+    font-size: 0.75em;
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: width 0.6s ease;
+    background-color: #28a745;
+}
+.vociset-card .progress-bar[aria-valuenow="0"],
+.vociset-card .progress-bar[aria-valuenow="1"],
+.vociset-card .progress-bar[aria-valuenow="2"],
+.vociset-card .progress-bar[aria-valuenow="3"],
+.vociset-card .progress-bar[aria-valuenow="4"] {
+     color: transparent;
+     text-shadow: none;
+}
+
+/* Action Button Section */
+#start-action-section h2 {
+    border-bottom: none;
+    margin-bottom: 0.5rem;
+}
+#action-buttons-container .btn {
+    min-width: 180px; /* Mindestbreite für Buttons */
+}
+#action-buttons-container .btn .fas {
+    margin-right: 0.8rem;
+}
+#selected-set-info {
+    font-style: italic;
+}
+
+
+/* Lernseite - Direkte Eingabe */
+.learning-item {
+    background-color: #fff; /* Weißer Hintergrund pro Item */
+    padding: 1rem 1.25rem;
+    border: 1px solid #e9ecef;
+    border-left: 3px solid #6c757d; /* Grauer linker Rand standard */
+    border-radius: .25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem; /* Kleiner Abstand zwischen Items */
+    transition: border-left-color 0.3s ease, background-color 0.3s ease; /* Hintergrund-Transition hinzugefügt */
+}
+.learning-item.is-correct {
+    border-left-color: #28a745; /* Grüner Rand für Richtig */
+    background-color: #f0fff4; /* Sehr helles Grün */
+}
+.learning-item.is-incorrect {
+     border-left-color: #dc3545; /* Roter Rand für Falsch */
+     background-color: #fff5f5; /* Sehr helles Rot */
+}
+
+
+.learning-item label {
+    font-weight: 500;
+    flex-basis: 150px;
+    flex-shrink: 0;
+    text-align: right;
+    color: #495057;
+}
+
+.learning-item input[type="text"] {
+    flex-grow: 1;
+}
+.learning-item .form-control { }
+
+/* Styling für Input Validierung */
+.learning-item .form-control.is-valid {
+    border-color: #28a745;
+    background-image: none;
+}
+.learning-item .form-control.is-invalid {
+     border-color: #dc3545;
+     background-image: none;
+}
+
+/* Indikator Icon (Richtig/Falsch/Fehler) */
+.check-indicator {
+    font-size: 1.25rem;
+    width: 25px;
+    text-align: center;
+    flex-shrink: 0;
+}
+.check-indicator .fa-check-circle { color: #28a745; }
+.check-indicator .fa-times-circle { color: #dc3545; }
+.check-indicator .fa-exclamation-triangle { color: #ffc107; } /* Warnung für API/ID Fehler */
+
+
+/* Anzeige der korrekten Antwort oder Fehlermeldung */
+.correct-answer-display {
+    font-size: 0.9em;
+    color: #6c757d; /* Grau */
+    margin-left: 1rem;
+    font-style: italic;
+}
+.learning-item.is-incorrect .correct-answer-display { /* Nur anzeigen wenn falsch */
+    /* display wird per JS gesteuert (d-none) */
+}
+.learning-item.is-incorrect .correct-answer-display strong {
+    color: #28a745; /* Korrekte Antwort in Grün */
+    font-style: normal;
+}
+/* Styling für Fehlermeldung im Display */
+.learning-item .correct-answer-display:not(:has(strong)) {
+    color: #dc3545; /* Rote Schrift für Fehlermeldungen */
+    font-style: normal;
+    font-weight: bold;
+}
+
+
+/* Button Styling Anpassungen */
+.btn .fas {
+    margin-right: 0.5rem;
+}
+.close-button .fas {
+    margin-right: 0.3rem;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+    #action-buttons-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    #selected-set-info {
+        margin-left: 0 !important;
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .site-header h1 { font-size: 1.4rem; }
+    .content-section h2 { font-size: 1.5rem; }
+    .content-section h3 { font-size: 1.3rem; }
+
+    .learning-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+        position: relative; /* Für absolute Positionierung des Indikators */
+    }
+    .learning-item label {
+        text-align: left;
+        margin-bottom: 0.25rem;
+        flex-basis: auto;
+    }
+    .learning-item .check-indicator {
+       position: absolute;
+       top: 1rem; /* Anpassen nach Bedarf */
+       right: 1rem;
+    }
+     .learning-item .correct-answer-display {
+        margin-left: 0; /* Kein linker Einzug auf kleinen Screens */
+        margin-top: 0.25rem;
+        width: 100%;
+    }
+}

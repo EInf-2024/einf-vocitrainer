@@ -76,6 +76,6 @@ auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/generate-context-s
 auth.route(app, '/api/set-prompt/context-sentences', ['teacher'], ['POST']) \
   (routes.set_prompt_context_sentences)
 
-# Run the app
+# Run the app now
 if __name__ == '__main__':
-  app.run(debug=True, port=5002) # Ändere port=5000 zu port=5001 (oder eine andere freie Nummer)
+  app.run(debug=True, port=3000)
