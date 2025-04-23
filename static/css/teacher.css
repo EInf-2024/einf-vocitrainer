@@ -51,6 +51,11 @@ main.container {
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
 }
+.content-section h5 { /* Styling für Unterüberschriften in Details/Stats */
+    color: #0056b3;
+    margin-bottom: 0.75rem;
+}
+
 
 .content-section h3 {
     font-size: 1.5rem;
@@ -88,6 +93,17 @@ main.container {
 .list-group-item:hover:not(.disabled):not(.list-group-item-danger):not(.list-group-item-warning) {
      background-color: #e2e6ea;
 }
+/* Für Statistik-Liste */
+#stats-departments-container .list-group-item {
+    background-color: #fff; /* Weißer Hintergrund für bessere Abhebung */
+    border-bottom: 1px solid #eee !important; /* Dünnere Trennlinie */
+    padding-top: 0.5rem; /* Weniger vertikaler Platz pro Schüler */
+    padding-bottom: 0.5rem;
+}
+#stats-departments-container .list-group-flush>.list-group-item:last-child {
+     border-bottom-width: 0 !important; /* Keine doppelte Linie am Ende */
+}
+
 
 .add-button {
      display: inline-flex;
@@ -103,8 +119,11 @@ main.container {
     margin-right: 0.5rem; /* Standard Abstand für Icons in Buttons */
 }
 
-#addClassStudentButton .fas {
-    margin-right: 0.5rem; /* Explizit für diesen Button, falls nötig */
+#addClassStudentButton .fas,
+#generatePasswordsButton .fas,
+.edit-vociset-button .fas,   /* Icons für VociSet Buttons */
+.view-stats-button .fas {    /* Icons für VociSet Buttons */
+    margin-right: 0.5rem;
 }
 
 /* Kein rechter Abstand für Icons in kleinen Delete/Action-Buttons */
@@ -113,7 +132,7 @@ main.container {
 .delete-button .fas,
 .view-class-button .fas,
 .remove-class-assignment-button .fas,
-#uploadCsvButton .fas { /* Auch für Upload Button */
+#uploadCsvButton .fas {
     margin-right: 0;
 }
 
@@ -174,20 +193,41 @@ main.container {
     font-size: 0.9em;
     min-height: 1.5em; /* Verhindert Springen des Layouts */
 }
+#csvUploadFeedback.text-danger { color: #dc3545 !important; font-weight: bold; }
+#csvUploadFeedback.text-warning { color: #664d03 !important; }
+#csvUploadFeedback.text-success { color: #198754 !important; }
+#csvUploadFeedback.text-info { color: #055160 !important; }
 
-#csvUploadFeedback.text-danger {
-    color: #dc3545 !important;
+/* Statistik Progress Bar Anpassungen */
+.stats-label {
+    display: inline-block; /* Sorgt dafür, dass width greift */
+    width: 90px; /* Feste Breite für "Richtig:" / "Falsch:" Labels */
+    text-align: right;
+    font-size: 0.9em;
+    color: #6c757d; /* Grau */
+}
+.progress {
+    height: 18px; /* Etwas höhere Progress Bars */
+}
+#stats-departments-container .progress { /* Kleinere Bars für Schüler */
+    height: 12px;
+}
+.progress-bar {
+    font-size: 0.75em; /* Kleinere Schrift in der Bar */
     font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4); /* Bessere Lesbarkeit */
+    display: flex;         /* Ermöglicht Zentrierung des Texts */
+    justify-content: center; /* Zentriert Text horizontal */
+    align-items: center;    /* Zentriert Text vertikal */
+    transition: width 0.6s ease; /* Animation */
 }
-
-#csvUploadFeedback.text-warning {
-    color: #664d03 !important; /* Dunkleres Gelb für bessere Lesbarkeit */
-}
-
-#csvUploadFeedback.text-success {
-    color: #198754 !important;
-}
-
-#csvUploadFeedback.text-info {
-    color: #055160 !important; /* Dunkleres Info für bessere Lesbarkeit */
+/* Verhindert, dass Text bei sehr kleinen Werten angezeigt wird */
+.progress-bar[aria-valuenow="0"],
+.progress-bar[aria-valuenow="1"],
+.progress-bar[aria-valuenow="2"],
+.progress-bar[aria-valuenow="3"],
+.progress-bar[aria-valuenow="4"] {
+     color: transparent;
+     text-shadow: none;
 }

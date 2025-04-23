@@ -25,24 +25,29 @@
         <section id="klassen-section" class="content-section">
             <h2>Klassen</h2>
             <div id="klassen-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-3">
-                <!-- Klassen-Cards -->
+                <!-- Klassen-Cards werden hier eingefügt -->
             </div>
             <button id="addKlasseButton" class="btn btn-primary add-button">
                 <i class="fas fa-plus"></i> Klasse hinzufügen
             </button>
         </section>
 
-        <!-- Klassen Details Section (hidden by default) -->
+        <!-- Klassen Details Section (standardmäßig versteckt) -->
         <section id="class-details-section" class="content-section detail-section">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3>Klasse: <span id="class-details-name"></span></h3>
-                <button id="addClassStudentButton" class="btn btn-success btn-sm add-button">
-                    <i class="fas fa-user-plus"></i> Schüler hinzufügen
-                </button>
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap"> <!-- flex-wrap für kleinere Screens -->
+                <h3 class="me-3">Klasse: <span id="class-details-name"></span></h3>
+                <div class="btn-group" role="group" aria-label="Klassenaktionen"> <!-- Button Group für bessere Struktur -->
+                    <button id="addClassStudentButton" class="btn btn-success btn-sm add-button">
+                        <i class="fas fa-user-plus"></i> Schüler hinzufügen
+                    </button>
+                    <button id="generatePasswordsButton" class="btn btn-warning btn-sm ms-2"> <!-- Neuer Button -->
+                        <i class="fas fa-key"></i> Neue Passwörter generieren
+                    </button>
+                </div>
             </div>
              <h4 class="mb-2">Schülerliste</h4>
             <ul id="class-students-list" class="list-group mb-3">
-                <!-- Schülerliste -->
+                <!-- Schülerliste wird hier eingefügt -->
             </ul>
             <button id="closeClassDetailsSection" class="btn btn-secondary close-button">Schliessen</button>
         </section>
@@ -51,14 +56,67 @@
         <section id="voci-sets-section" class="content-section">
             <h2>Voci Sets</h2>
             <div id="voci-sets-container" class="list-group mb-3">
-                <!-- Voci Sets List -->
+                <!-- Voci Sets Liste wird hier eingefügt -->
             </div>
             <button id="addVociSetButton" class="btn btn-success mt-2 add-button">
                 <i class="fas fa-plus"></i> Voci Set hinzufügen
             </button>
         </section>
 
-        <!-- Voci Set Details/Edit Section (hidden by default) -->
+        <!-- NEUE SEKTION: Voci Set Statistiken (standardmäßig versteckt) -->
+        <section id="vociset-statistics-section" class="content-section detail-section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                 <h3>Statistik für Voci Set: <span id="stats-set-name" class="fw-bold"></span></h3>
+                 <button id="closeStatisticsSection" class="btn btn-secondary btn-sm close-button">Schliessen</button>
+            </div>
+
+            <div id="stats-global-info" class="mb-3 alert alert-info">
+                <!-- Globale Infos wie Gesamtwortzahl werden hier eingefügt -->
+            </div>
+
+            <div id="stats-departments-container">
+                <!-- Statistiken pro Klasse werden hier von JS eingefügt -->
+                <!-- Beispielstruktur für eine Klasse:
+                <div class="mb-4 p-3 border rounded">
+                    <h4>Klasse: Klassenname</h4>
+                    <div class="mb-3">
+                        <h5>Klassendurchschnitt</h5>
+                        <div class="d-flex align-items-center mb-1">
+                            <span class="me-2 stats-label">Richtig: X</span>
+                            <div class="progress flex-grow-1" style="height: 20px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: Y%;" aria-valuenow="Y" aria-valuemin="0" aria-valuemax="100">Y%</div>
+                            </div>
+                            <span class="ms-2 stats-label">Falsch: Z</span>
+                        </div>
+                    </div>
+                    <h5>Einzelauswertung Schüler</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="fw-bold">Schülername</div>
+                            <div class="d-flex align-items-center mt-1">
+                               <span class="me-2 stats-label">Richtig: A</span>
+                               <div class="progress flex-grow-1" style="height: 15px;">
+                                   <div class="progress-bar bg-success" role="progressbar" style="width: B%;" aria-valuenow="B" aria-valuemin="0" aria-valuemax="100"></div>
+                               </div>
+                               <span class="ms-2 stats-label">Falsch: C</span>
+                            </div>
+                        </li>
+                        </ul>
+                </div>
+                 -->
+            </div>
+            <div id="stats-loading-indicator" class="text-center" style="display: none;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Lade Statistiken...</span>
+                </div>
+                <p>Lade Statistiken...</p>
+            </div>
+
+        </section>
+        <!-- ENDE: Voci Set Statistiken Sektion -->
+
+
+        <!-- Voci Set Details/Edit Section (standardmäßig versteckt) -->
         <section id="vociset-detail-section" class="content-section detail-section">
             <div class="d-flex justify-content-between align-items-center mb-3">
                  <h3>Voci Set: <span id="vociset-detail-name-header"></span></h3>
@@ -83,6 +141,7 @@
                         </select>
                         <button class="btn btn-outline-primary" type="button" id="assign-class-button">Zuweisen</button>
                     </div>
+                    <div id="assign-class-feedback" class="form-text text-muted mt-1" style="min-height: 1.2em;"></div>
                  </div>
             </div>
 
@@ -92,7 +151,7 @@
                     Wörter in <span id="vociset-detail-name-button"></span>
                 </button>
                 <ul class="dropdown-menu" id="existing-words-dropdown" aria-labelledby="dropdownExistingWordsButton">
-                    <!-- Wörter -->
+                    <!-- Wörterliste wird hier eingefügt -->
                 </ul>
             </div>
 
@@ -101,14 +160,14 @@
             <!-- CSV Upload Bereich -->
             <section id="upload-words-section" class="mb-4 border p-3 rounded">
                 <h4>Wörter aus CSV hochladen</h4>
-                <p><small>Format: Eine Zeile pro Wortpaar, Deutsch in der ersten Spalte, Französisch in der zweiten, getrennt durch Komma. Eine Kopfzeile wird ignoriert.</small></p>
+                <p><small>Format: Eine Zeile pro Wortpaar, Deutsch in der ersten Spalte, Französisch in der zweiten, getrennt durch **Semikolon (;)**. Eine Kopfzeile wird ignoriert.</small></p>
                 <div class="input-group">
-                    <input type="file" class="form-control" id="csvFileInput" accept=".csv, text/csv"> <!-- Accept erweitert -->
+                    <input type="file" class="form-control" id="csvFileInput" accept=".csv, text/csv">
                     <button class="btn btn-outline-success" type="button" id="uploadCsvButton">
                         <i class="fas fa-upload"></i> Hochladen & Hinzufügen
                     </button>
                 </div>
-                <div id="csvUploadFeedback" class="mt-2" style="min-height: 1.5em;"></div> <!-- Feedback Bereich -->
+                <div id="csvUploadFeedback" class="mt-2" style="min-height: 1.5em;"></div>
             </section>
 
             <!-- Manuelles Wort hinzufügen -->
@@ -134,74 +193,15 @@
     <!-- Modals -->
     <!-- Schüler Hinzufügen Modal -->
     <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addStudentModalLabel">Schüler hinzufügen</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="addStudentForm">
-              <div class="mb-3">
-                <label for="studentUsername" class="form-label">Benutzername des Schülers</label>
-                <input type="text" class="form-control" id="studentUsername" required>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
-            <button type="button" class="btn btn-primary" id="saveNewStudentButton">Speichern</button>
-          </div>
-        </div>
-      </div>
+      <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="addStudentModalLabel">Schüler hinzufügen</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <form id="addStudentForm"> <div class="mb-3"> <label for="studentUsername" class="form-label">Benutzername des Schülers</label> <input type="text" class="form-control" id="studentUsername" required> </div> </form> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button> <button type="button" class="btn btn-primary" id="saveNewStudentButton">Speichern</button> </div> </div> </div>
     </div>
-
     <!-- Voci Set Erstellen Modal -->
     <div class="modal fade" id="createVocisetModal" tabindex="-1" aria-labelledby="createVocisetModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="createVocisetModalLabel">Neues Voci Set erstellen</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="createVocisetForm">
-              <div class="mb-3">
-                <label for="vocisetNameInput" class="form-label">Name des Voci Sets</label>
-                <input type="text" class="form-control" id="vocisetNameInput" required>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
-            <button type="button" class="btn btn-primary" id="saveNewVocisetButton">Erstellen</button>
-          </div>
-        </div>
-      </div>
+       <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="createVocisetModalLabel">Neues Voci Set erstellen</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <form id="createVocisetForm"> <div class="mb-3"> <label for="vocisetNameInput" class="form-label">Name des Voci Sets</label> <input type="text" class="form-control" id="vocisetNameInput" required> </div> </form> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button> <button type="button" class="btn btn-primary" id="saveNewVocisetButton">Erstellen</button> </div> </div> </div>
     </div>
-
     <!-- Klasse Erstellen Modal -->
     <div class="modal fade" id="addClassModal" tabindex="-1" aria-labelledby="addClassModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addClassModalLabel">Neue Klasse erstellen</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="addClassForm">
-              <div class="mb-3">
-                <label for="classNameInput" class="form-label">Name der Klasse</label>
-                <input type="text" class="form-control" id="classNameInput" required placeholder="z.B. Französisch 8b">
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
-            <button type="button" class="btn btn-primary" id="saveNewClassButton">Erstellen</button>
-          </div>
-        </div>
-      </div>
+       <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="addClassModalLabel">Neue Klasse erstellen</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <form id="addClassForm"> <div class="mb-3"> <label for="classNameInput" class="form-label">Name der Klasse</label> <input type="text" class="form-control" id="classNameInput" required placeholder="z.B. Französisch 8b"> </div> </form> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button> <button type="button" class="btn btn-primary" id="saveNewClassButton">Erstellen</button> </div> </div> </div>
     </div>
 
     <!-- Bootstrap JS Bundle -->
