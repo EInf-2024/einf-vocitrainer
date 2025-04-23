@@ -9,15 +9,17 @@ for /f "usebackq tokens=1,* delims==" %%A in (".env") do (
 
 echo open %DEPLOY_HOSTNAME% %DEPLOY_PORT% > ftp_commands.txt
 echo user %DEPLOY_USERNAME% %DEPLOY_PASSWORD% >> ftp_commands.txt
-echo binary >> ftp_commands.txt
+:: echo binary >> ftp_commands.txt
 
-:: Upload app.py and requirements.txt to /
+:: Upload app.py to /
+echo delete /app.py >> ftp_commands.txt
 echo put app.py /app.py >> ftp_commands.txt
 
 :: Upload templates/ folder and its contents
 echo mkdir /templates >> ftp_commands.txt
 for /r "templates" %%F in (*) do (
   set "file=%%~nxF"
+  echo delete "/templates/!file!" >> ftp_commands.txt
   echo put "%%F" "/templates/!file!" >> ftp_commands.txt
 )
 
@@ -25,6 +27,7 @@ for /r "templates" %%F in (*) do (
 echo mkdir /static/js >> ftp_commands.txt
 for /r "static/js" %%F in (*) do (
   set "file=%%~nxF"
+  echo delete "/static/js/!file!" >> ftp_commands.txt
   echo put "%%F" "/static/js/!file!" >> ftp_commands.txt
 )
 
@@ -32,6 +35,7 @@ for /r "static/js" %%F in (*) do (
 echo mkdir /static/css >> ftp_commands.txt
 for /r "static/css" %%F in (*) do (
   set "file=%%~nxF"
+  echo delete "/static/css/!file!" >> ftp_commands.txt
   echo put "%%F" "/static/css/!file!" >> ftp_commands.txt
 )
 
@@ -39,6 +43,7 @@ for /r "static/css" %%F in (*) do (
 echo mkdir /backend >> ftp_commands.txt
 for /r "backend" %%F in (*.py) do (
   set "file=%%~nxF"
+  echo delete "/backend/!file!" >> ftp_commands.txt
   echo put "%%F" "/backend/!file!" >> ftp_commands.txt
 )
 
@@ -46,6 +51,7 @@ for /r "backend" %%F in (*.py) do (
 echo mkdir /backend/routes >> ftp_commands.txt
 for /r "backend/routes" %%F in (*.py) do (
   set "file=%%~nxF"
+  echo delete "/backend/routes/!file!" >> ftp_commands.txt
   echo put "%%F" "/backend/routes/!file!" >> ftp_commands.txt
 )
 
