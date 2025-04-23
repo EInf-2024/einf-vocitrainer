@@ -1,0 +1,22 @@
+type: http_request
+model: http_request
+id: rq_oUDDz2VtaN
+createdAt: 2025-04-23T12:11:20.546713600
+updatedAt: 2025-04-23T12:15:10.249262300
+workspaceId: wk_tD7mhTPLxA
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "label": "Sample API voci"
+    }
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: ''
+sortPriority: 12000.001
+url: localhost:5000/api/vocabulary-sets/1/departments
+urlParameters: []

@@ -15,6 +15,7 @@ from backend.routes.vocabulary_sets_create import vocabulary_sets_create
 from backend.routes.vocabulary_sets_id import vocabulary_sets_id
 from backend.routes.vocabulary_sets_id_delete import vocabulary_sets_id_delete
 
+from backend.routes.vocabulary_sets_id_departments import vocabulary_sets_id_departments
 from backend.routes.vocabulary_sets_id_departments_add import vocabulary_sets_id_departments_add
 from backend.routes.vocabulary_sets_id_departments_remove import vocabulary_sets_id_departments_remove
 
