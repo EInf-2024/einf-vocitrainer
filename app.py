@@ -52,6 +52,8 @@ auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>', ['teacher', 'stu
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/delete', ['teacher'], ['DELETE']) \
   (routes.vocabulary_sets_id_delete)
 
+auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments', ['teacher'], ['GET']) \
+  (routes.vocabulary_sets_id_departments)
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments/add', ['teacher'], ['PATCH']) \
   (routes.vocabulary_sets_id_departments_add)
 auth.route(app, '/api/vocabulary-sets/<int:vocabulary_set_id>/departments/remove', ['teacher'], ['PATCH']) \
