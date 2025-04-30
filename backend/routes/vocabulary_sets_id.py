@@ -61,9 +61,19 @@ def vocabulary_sets_id(vocabulary_set_id: int, user_id: int, user_role: str):
     
     # Get words in the vocabulary set and their progress (from mf_vocabulary_set_word_progress table)
     cursor.execute("""
-      SELECT * 
-      FROM mf_vocabulary_set_word word
-      LEFT JOIN mf_vocabulary_set_word_progress progress ON word.id = progress.vocabulary_set_word_id 
+      SELECT
+        word.id,
+        word.word,
+        word.translation,
+        progress.successive_correct_count,
+        progress.correct_count,
+        progress.incorrect_count
+      FROM 
+        mf_vocabulary_set_word word
+      LEFT JOIN 
+        mf_vocabulary_set_word_progress progress 
+      ON 
+        word.id = progress.vocabulary_set_word_id 
         AND (
           %s != 'teacher' AND 
           progress.student_id = %s
