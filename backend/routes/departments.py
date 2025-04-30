@@ -3,7 +3,7 @@ import backend.connection as connection
 
 def departments(user_id: int, user_role: str):
   """
-  GET /api/departments
+  GET /api/depgitartments
 
   **Response Format**
   .. code-block:: json

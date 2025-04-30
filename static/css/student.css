@@ -1,9 +1,9 @@
-/* Allgemeine Stile (Basis von Teacher) */
+/* Basis-Stile direkt aus teacher.css übernommen */
 body {
     font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #eef5f9; /* Heller bläulicher Hintergrund */
+    background-color: #eef5f9;
     background-image:
         repeating-linear-gradient(45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px),
         repeating-linear-gradient(-45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px);
@@ -14,7 +14,7 @@ body {
 }
 
 .site-header {
-    background-color: #007bff; /* Blau wie Teacher */
+    background-color: #007bff;
     color: white;
     padding: 1rem 1.5rem;
     margin-bottom: 2rem;
@@ -26,14 +26,6 @@ body {
     margin: 0;
     font-size: 1.75rem;
 }
-.site-header h1 .fas {
-    margin-right: 0.5rem;
-    font-size: 0.9em;
-}
-.site-header .btn .fas {
-     margin-right: 0.5rem;
-}
-
 
 main.container {
      /* Standard Bootstrap Container */
@@ -48,78 +40,101 @@ main.container {
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
 }
 
+/* Detail-Sections standardmäßig verstecken */
 .detail-section {
-    /* display: none; wird durch d-none im HTML gesteuert */
-    border-left: 5px solid #007bff; /* Akzent für Detailseiten */
+    display: none;
 }
 
 .content-section h2,
-.content-section h3 {
+.content-section h3,
+.content-section h4 {
     color: #007bff;
     border-bottom: 1px solid #e9ecef;
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
 }
-.content-section h2 .fas,
-.content-section h3 .fas {
-    margin-right: 0.75rem;
+.content-section h5 {
     color: #0056b3;
+    margin-bottom: 0.75rem;
 }
 
 .content-section h3 {
     font-size: 1.5rem;
 }
 
+.content-section h4 {
+    font-size: 1.25rem;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 1rem;
+}
 
-/* --- Studentenspezifische Stile --- */
+/* Hover-Effekte etc. wie bei Teacher */
+.btn-info:hover, .btn-danger:hover, .btn-success:hover, .btn-warning:hover, .btn-primary:hover, .btn-outline-primary:hover, .btn-outline-success:hover {
+    opacity: 0.9;
+}
 
-/* Vokabelset-Karten (Jetzt zum Auswählen) */
+.list-group-item {
+    border-color: #e9ecef;
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease;
+}
+.list-group-item:hover:not(.disabled):not(.list-group-item-danger):not(.list-group-item-warning) {
+     background-color: #e2e6ea;
+}
+
+/* Buttons mit Icons */
+.add-button {
+     display: inline-flex;
+    align-items: center;
+     gap: 0.5rem;
+}
+.btn .fas {
+    margin-right: 0.5rem;
+}
+/* Kein rechter Abstand für Icons in kleinen Action-Buttons (falls benötigt) */
+.close-button .fas, .delete-button .fas { /* Beispiel */
+    margin-right: 0;
+}
+
+/* Modals (falls welche hinzukommen) */
+.modal-header { border-bottom-color: #e9ecef; }
+.modal-footer { border-top-color: #e9ecef; }
+
+/* --- Anpassungen/Ergänzungen für die Studentenseite --- */
+
+/* VociSet Karten im Stil der Klassen-Karten */
 .vociset-card {
+    border-color: #007bff; /* Gleiche Farbe wie Klassen-Karten */
     cursor: pointer;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.3s ease, background-color 0.3s ease;
-    border: 2px solid #17a2b8; /* Standard-Border */
+    height: 100%;
 }
-
-.vociset-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-color: #138496;
-}
-
-/* Hervorgehobene Karte */
-.vociset-card.active {
-    border-color: #007bff; /* Blauer Rand für Auswahl */
-    background-color: #e7f1ff; /* Leichter blauer Hintergrund */
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
-}
-
-
-.vociset-card .card-title {
-     color: #17a2b8;
-}
-.vociset-card.active .card-title {
-    color: #0056b3; /* Dunkleres Blau für ausgewählte Karte */
-}
-
 .vociset-card .card-body {
-    /* Standard Card Body */
+    display: flex;
+    flex-direction: column;
+}
+.vociset-card .card-title {
+    color: #007bff; /* Gleiche Farbe wie Klassen-Titel */
+}
+.vociset-card .card-text {
+    flex-grow: 1; /* Schiebt Progress nach unten */
+    font-size: 0.9em;
+    color: #6c757d;
 }
 .vociset-card .progress {
-    height: 20px;
+    height: 18px; /* Wie Statistik-Progress */
     font-size: 0.8rem;
-    background-color: #e9ecef;
 }
 .vociset-card .progress-bar {
-    font-weight: bold;
     font-size: 0.75em;
+    font-weight: bold;
     color: white;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
     display: flex;
     justify-content: center;
     align-items: center;
     transition: width 0.6s ease;
-    background-color: #28a745;
 }
 .vociset-card .progress-bar[aria-valuenow="0"],
 .vociset-card .progress-bar[aria-valuenow="1"],
@@ -130,44 +145,50 @@ main.container {
      text-shadow: none;
 }
 
-/* Action Button Section */
-#start-action-section h2 {
-    border-bottom: none;
-    margin-bottom: 0.5rem;
+/* Aktive VociSet Karte */
+.vociset-card.active {
+    border-width: 2px; /* Etwas dickerer Rand */
+    border-color: #0d6efd; /* Standard Bootstrap Blau */
+    background-color: #e7f0ff; /* Heller blauer Hintergrund */
+    box-shadow: 0 .25rem .5rem rgba(0,0,0,.1);
 }
-#action-buttons-container .btn {
-    min-width: 180px; /* Mindestbreite für Buttons */
-}
-#action-buttons-container .btn .fas {
-    margin-right: 0.8rem;
-}
+
+/* Auswahl-Info Box */
 #selected-set-info {
+    border: 1px dashed #ced4da;
     font-style: italic;
 }
+#selected-set-info:not(:has(.text-muted)) { /* Wenn aktiv */
+     border-style: solid;
+     border-color: #0d6efd;
+     background-color: #e7f0ff;
+     font-style: normal;
+     font-weight: 500;
+}
 
 
-/* Lernseite - Direkte Eingabe */
+/* Lern-Items im Stil von List-Group Items */
 .learning-item {
-    background-color: #fff; /* Weißer Hintergrund pro Item */
-    padding: 1rem 1.25rem;
-    border: 1px solid #e9ecef;
-    border-left: 3px solid #6c757d; /* Grauer linker Rand standard */
-    border-radius: .25rem;
-    display: flex;
+    /* Verwendet jetzt list-group-item Klasse direkt im JS */
+    display: flex; /* Beibehaltung des Flex-Layouts */
     align-items: center;
     gap: 1rem;
-    margin-bottom: 0.5rem; /* Kleiner Abstand zwischen Items */
-    transition: border-left-color 0.3s ease, background-color 0.3s ease; /* Hintergrund-Transition hinzugefügt */
+    padding: .75rem 1.25rem; /* Standard list-group padding */
 }
-.learning-item.is-correct {
-    border-left-color: #28a745; /* Grüner Rand für Richtig */
-    background-color: #f0fff4; /* Sehr helles Grün */
-}
-.learning-item.is-incorrect {
-     border-left-color: #dc3545; /* Roter Rand für Falsch */
-     background-color: #fff5f5; /* Sehr helles Rot */
+/* Überschreiben der Hover-Farbe für Lern-Items */
+.list-group-item.learning-item:hover {
+    background-color: #f8f9fa; /* Kein starker Hover */
 }
 
+/* Styling für Validierungszustände des Lern-Items */
+.learning-item.is-correct {
+    background-color: #d1e7dd; /* Bootstrap Success Background */
+    border-color: #badbcc;
+}
+.learning-item.is-incorrect {
+    background-color: #f8d7da; /* Bootstrap Danger Background */
+    border-color: #f5c2c7;
+}
 
 .learning-item label {
     font-weight: 500;
@@ -175,16 +196,20 @@ main.container {
     flex-shrink: 0;
     text-align: right;
     color: #495057;
+    margin-bottom: 0; /* Wichtig bei Flex */
 }
 
 .learning-item input[type="text"] {
     flex-grow: 1;
 }
-.learning-item .form-control { }
+.learning-item input[type="text"]:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    color: #6c757d;
+}
 
-/* Styling für Input Validierung */
 .learning-item .form-control.is-valid {
-    border-color: #28a745;
+    border-color: #198754;
     background-image: none;
 }
 .learning-item .form-control.is-invalid {
@@ -192,49 +217,37 @@ main.container {
      background-image: none;
 }
 
-/* Indikator Icon (Richtig/Falsch/Fehler) */
+/* Indikator Icon */
 .check-indicator {
     font-size: 1.25rem;
     width: 25px;
     text-align: center;
     flex-shrink: 0;
 }
-.check-indicator .fa-check-circle { color: #28a745; }
+.check-indicator .fa-check-circle { color: #198754; }
 .check-indicator .fa-times-circle { color: #dc3545; }
-.check-indicator .fa-exclamation-triangle { color: #ffc107; } /* Warnung für API/ID Fehler */
+.check-indicator .fa-exclamation-triangle { color: #dc3545; } /* Fehler auch rot */
 
-
-/* Anzeige der korrekten Antwort oder Fehlermeldung */
+/* Korrekte Antwort Anzeige */
 .correct-answer-display {
     font-size: 0.9em;
-    color: #6c757d; /* Grau */
+    color: #6c757d;
     margin-left: 1rem;
     font-style: italic;
 }
-.learning-item.is-incorrect .correct-answer-display { /* Nur anzeigen wenn falsch */
-    /* display wird per JS gesteuert (d-none) */
-}
 .learning-item.is-incorrect .correct-answer-display strong {
-    color: #28a745; /* Korrekte Antwort in Grün */
+    color: #198754; /* Korrekte Antwort grün */
     font-style: normal;
+    font-weight: bold;
 }
-/* Styling für Fehlermeldung im Display */
+/* Styling für ID-Fehler-Meldung */
 .learning-item .correct-answer-display:not(:has(strong)) {
-    color: #dc3545; /* Rote Schrift für Fehlermeldungen */
+    color: #dc3545;
     font-style: normal;
     font-weight: bold;
 }
 
-
-/* Button Styling Anpassungen */
-.btn .fas {
-    margin-right: 0.5rem;
-}
-.close-button .fas {
-    margin-right: 0.3rem;
-}
-
-/* Responsive Anpassungen */
+/* Responsive Anpassungen wie bei Teacher (können hier bleiben) */
 @media (max-width: 768px) {
     #action-buttons-container {
         flex-direction: column;
@@ -246,7 +259,6 @@ main.container {
         text-align: center;
     }
 }
-
 @media (max-width: 576px) {
     .site-header h1 { font-size: 1.4rem; }
     .content-section h2 { font-size: 1.5rem; }
@@ -256,7 +268,7 @@ main.container {
         flex-direction: column;
         align-items: stretch;
         gap: 0.5rem;
-        position: relative; /* Für absolute Positionierung des Indikators */
+        position: relative;
     }
     .learning-item label {
         text-align: left;
@@ -265,12 +277,12 @@ main.container {
     }
     .learning-item .check-indicator {
        position: absolute;
-       top: 1rem; /* Anpassen nach Bedarf */
+       top: .75rem; /* Anpassen an list-group padding */
        right: 1rem;
     }
      .learning-item .correct-answer-display {
-        margin-left: 0; /* Kein linker Einzug auf kleinen Screens */
+        margin-left: 0;
         margin-top: 0.25rem;
-        width: 100%;
+        width: calc(100% - 35px); /* Platz für Indikator lassen */
     }
 }
