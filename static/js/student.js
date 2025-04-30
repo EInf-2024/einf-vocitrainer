@@ -666,7 +666,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Prüft, ob das Element existiert, bevor der Listener angehängt wird, um Fehler zu vermeiden, falls sich das HTML ändert.
 
     // Logout-Button leitet zur Startseite (oder zum Logout-Endpunkt) weiter.
-    if(logoutButton) logoutButton.onclick = () => { window.location.href = '/'; /* URL bei Bedarf anpassen */ };
+    if(logoutButton) logoutButton.onclick = () => { window.location.pathname = window.location.pathname.split('/').slice(0, -1).join('/'); };
     // Button "Direktes Lernen starten" löst das Laden des Sets für direktes Lernen aus.
     if(startDirectLearnButton) startDirectLearnButton.onclick = loadSetForDirectLearning;
     // Button "Kontextlernen starten" löst das Laden der Kontextsätze aus.

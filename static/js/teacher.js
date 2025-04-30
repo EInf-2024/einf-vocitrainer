@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Event Listeners (Direkt) ---
     // Event-Handler direkt an spezifische Elemente binden.
-    logoutButton.addEventListener('click', () => { window.location.href = '/'; }); // Logout leitet zur Startseite um.
+    logoutButton.addEventListener('click', () => { window.location.pathname = window.location.pathname.split('/').slice(0, -1).join('/'); }); // Logout leitet zur Startseite um.
     addKlasseButton.addEventListener('click', () => { classNameInput.value = ''; addClassModal.show(); }); // Öffnet das Modal zum Hinzufügen einer Klasse.
     addVociSetButtonMainPage.addEventListener('click', () => { vocisetNameInput.value = ''; createVocisetModal.show(); }); // Öffnet das Modal zum Erstellen eines Vokabelsets.
     saveNewClassButton.addEventListener('click', () => { // Speichert die neue Klasse.
