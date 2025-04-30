@@ -2,10 +2,7 @@ body {
     font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #eef5f9;
-    background-image:
-        repeating-linear-gradient(45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px),
-        repeating-linear-gradient(-45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px);
+    background-color:white;
     background-position: 0 0, 0 0;
     background-size: 40px 40px;
     color: #343a40;
@@ -27,7 +24,7 @@ body {
 }
 
 main.container {
-     /* Standard Bootstrap Container */
+     /* Nutzt Bootstrap Container-Styling */
 }
 
 .content-section {
@@ -39,8 +36,9 @@ main.container {
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
 }
 
+/* Detail-Sektionen sind standardmäßig ausgeblendet */
 .detail-section {
-    display: none; /* Sections sind standardmäßig versteckt */
+    display: none;
 }
 
 .content-section h2,
@@ -51,11 +49,11 @@ main.container {
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
 }
-.content-section h5 { /* Styling für Unterüberschriften in Details/Stats */
+/* Styling für Unterüberschriften in Detail/Statistik-Sektionen */
+.content-section h5 {
     color: #0056b3;
     margin-bottom: 0.75rem;
 }
-
 
 .content-section h3 {
     font-size: 1.5rem;
@@ -73,7 +71,7 @@ main.container {
 }
 
 #klassen-container .card-body {
-    /* Standard */
+    /* Standard Bootstrap Card Body Styling */
 }
 
 #klassen-container .card-title {
@@ -93,40 +91,43 @@ main.container {
 .list-group-item:hover:not(.disabled):not(.list-group-item-danger):not(.list-group-item-warning) {
      background-color: #e2e6ea;
 }
-/* Für Statistik-Liste */
+
+/* Anpassungen für die Statistik-Liste */
 #stats-departments-container .list-group-item {
-    background-color: #fff; /* Weißer Hintergrund für bessere Abhebung */
+    background-color: #fff; /* Weißer Hintergrund für bessere Lesbarkeit */
     border-bottom: 1px solid #eee !important; /* Dünnere Trennlinie */
-    padding-top: 0.5rem; /* Weniger vertikaler Platz pro Schüler */
+    padding-top: 0.5rem; /* Weniger vertikaler Abstand */
     padding-bottom: 0.5rem;
 }
+/* Verhindert doppelte Border am Ende einer Flush-Liste */
 #stats-departments-container .list-group-flush>.list-group-item:last-child {
-     border-bottom-width: 0 !important; /* Keine doppelte Linie am Ende */
+     border-bottom-width: 0 !important;
 }
 
 
 .add-button {
-     display: inline-flex;
+     display: inline-flex; /* Richtet Icon und Text nebeneinander aus */
     align-items: center;
      gap: 0.5rem;
 }
 
 .close-button {
-     /* Standard */
+     /* Standard Bootstrap Button Styling */
 }
 
+/* Standard Abstand rechts für Icons in Buttons */
 .btn .fas, .btn .far, .btn .fa {
-    margin-right: 0.5rem; /* Standard Abstand für Icons in Buttons */
+    margin-right: 0.5rem;
 }
 
 #addClassStudentButton .fas,
 #generatePasswordsButton .fas,
-.edit-vociset-button .fas,   /* Icons für VociSet Buttons */
-.view-stats-button .fas {    /* Icons für VociSet Buttons */
+.edit-vociset-button .fas,
+.view-stats-button .fas {
     margin-right: 0.5rem;
 }
 
-/* Kein rechter Abstand für Icons in kleinen Delete/Action-Buttons */
+/* Kein rechter Abstand für Icons in kleinen Action-Buttons (oft nur Icon) */
 .delete-word-button .fas,
 .delete-student-button .fas,
 .delete-button .fas,
@@ -136,7 +137,6 @@ main.container {
     margin-right: 0;
 }
 
-/* Kleinerer Abstand für "Entfernen"-Button Icon */
 .remove-class-assignment-button i {
     margin-right: 0.3rem;
 }
@@ -150,28 +150,27 @@ main.container {
 }
 
 #existing-words-dropdown .dropdown-item {
-     padding-right: 3rem; /* Platz für den Button */
-     position: relative;
+     padding-right: 3rem; /* Platz für den Lösch-Button */
+     position: relative; /* Benötigt für absolute Positionierung des Buttons */
 }
 
+/* Positionierung des Lösch-Buttons im Dropdown-Item */
 #existing-words-dropdown .delete-word-button {
     position: absolute;
     top: 50%;
-    right: .5rem; /* Abstand vom rechten Rand */
+    right: .5rem;
     transform: translateY(-50%); /* Vertikal zentrieren */
-    padding: .125rem .25rem; /* Kleinere Buttons */
+    padding: .125rem .25rem;
 }
 
 #class-students-list .list-group-item .delete-student-button {
-    padding: .25rem .5rem; /* Kleinere Buttons */
+    padding: .25rem .5rem; /* btn-sm Größe */
 }
 
-/* Visuelle Trennung für den Zuweisungsbereich */
 .bg-light {
-    background-color: #f8f9fa !important; /* Sicherstellen, dass es hell ist */
+    background-color: #f8f9fa !important;
 }
 
-/* Styling für Fehlermeldungen */
 .text-danger {
     color: #dc3545 !important;
 }
@@ -187,11 +186,11 @@ main.container {
 }
 
 
-/* Styling für CSV Upload Feedback */
+/* Styling für CSV Upload Feedback-Bereich */
 #csvUploadFeedback {
     font-style: italic;
     font-size: 0.9em;
-    min-height: 1.5em; /* Verhindert Springen des Layouts */
+    min-height: 1.5em; /* Verhindert Layout-Sprünge beim Anzeigen/Verstecken */
 }
 #csvUploadFeedback.text-danger { color: #dc3545 !important; font-weight: bold; }
 #csvUploadFeedback.text-warning { color: #664d03 !important; }
@@ -200,29 +199,30 @@ main.container {
 
 /* Statistik Progress Bar Anpassungen */
 .stats-label {
-    display: inline-block; /* Sorgt dafür, dass width greift */
-    width: 90px; /* Feste Breite für "Richtig:" / "Falsch:" Labels */
+    display: inline-block; /* Erlaubt die Anwendung von width */
+    width: 90px; /* Feste Breite für "Richtig:" / "Falsch:" Labels für einheitliche Ausrichtung */
     text-align: right;
     font-size: 0.9em;
-    color: #6c757d; /* Grau */
+    color: #6c757d;
 }
 .progress {
-    height: 18px; /* Etwas höhere Progress Bars */
+    height: 18px;
 }
-#stats-departments-container .progress { /* Kleinere Bars für Schüler */
+/* Kleinere Progressbars für die Schülerliste in der Statistik */
+#stats-departments-container .progress {
     height: 12px;
 }
 .progress-bar {
-    font-size: 0.75em; /* Kleinere Schrift in der Bar */
+    font-size: 0.75em;
     font-weight: bold;
     color: white;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.4); /* Bessere Lesbarkeit */
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4); /* Verbessert Lesbarkeit des Texts auf dem Balken */
     display: flex;         /* Ermöglicht Zentrierung des Texts */
     justify-content: center; /* Zentriert Text horizontal */
     align-items: center;    /* Zentriert Text vertikal */
-    transition: width 0.6s ease; /* Animation */
+    transition: width 0.6s ease; /* Animiert Änderungen der Breite */
 }
-/* Verhindert, dass Text bei sehr kleinen Werten angezeigt wird */
+/* Versteckt den Text im Fortschrittsbalken bei sehr kleinen Werten (verhindert Überlappung) */
 .progress-bar[aria-valuenow="0"],
 .progress-bar[aria-valuenow="1"],
 .progress-bar[aria-valuenow="2"],

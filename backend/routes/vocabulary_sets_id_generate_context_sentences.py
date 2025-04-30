@@ -72,7 +72,7 @@ def vocabulary_sets_id_generate_context_sentences(vocabulary_set_id: int, user_i
   completion = openai_client.beta.chat.completions.parse(
     model=OPENAI_MODEL,
     messages=[{"role": "user", "content": prompt}],
-    max_tokens=50 * len(vocabulary_set_words),
+    max_tokens=max(50 * len(vocabulary_set_words), 1),
     response_format=ContextSentencesResponseFormat
   ).choices[0]
   

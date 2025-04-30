@@ -1,59 +1,51 @@
 body {
-    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Modernere Schriftart */
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    /* Blauer Hintergrund mit Muster */
-    background-color: #eef5f9; /* Sehr heller, kühler Blauton */
-    background-image:
-        repeating-linear-gradient(45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px),
-        repeating-linear-gradient(-45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px);
+    background-color: white;
     background-position: 0 0, 0 0;
-    background-size: 40px 40px; /* Größe des Musters */
-
-    color: #343a40; /* Dunkler Text */
+    background-size: 40px 40px;
+    color: #343a40;
     line-height: 1.6;
 }
 
-/* Keine Hintergrundanimation mehr */
-
 .site-header {
-    background-color: #007bff; /* Standard Bootstrap Primärfarbe */
+    background-color: #007bff;
     color: white;
-    padding: 1rem 1.5rem; /* Etwas mehr Padding */
-    margin-bottom: 2rem; /* Deutlicher Abstand nach Header */
-    box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Dezenter Schatten für Header */
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
 }
 
 .site-header h1 {
-    color: white; /* H1 in Header ist weiß */
+    color: white;
     margin: 0;
-    font-size: 1.75rem; /* Überschriftgröße anpassen */
+    font-size: 1.75rem;
 }
 
 main.container {
-     /* Standard Bootstrap Container */
+    /* Nutzt standardmässig Bootstrap Container-Styling */
 }
 
 .content-section {
-    background-color: #ffffff; /* Weißer Hintergrund für Sektionen */
-    padding: 1.5rem; /* Einheitliches Padding */
-    margin-bottom: 1.5rem; /* Einheitlicher Abstand zwischen Sektionen */
-    border: 1px solid #dee2e6; /* Heller Rand */
-    border-radius: .5rem; /* Abgerundete Ecken */
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075); /* Dezenter Schatten */
+    background-color: #ffffff;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: .5rem;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
 }
 
-/* Initial versteckte Detail-Sektionen */
+/* Detail-Sektionen sind initial ausgeblendet (werden vermutlich per JS gezeigt) */
 .detail-section {
     display: none;
 }
 
-
 .content-section h2,
 .content-section h3,
 .content-section h4 {
-    color: #007bff; /* Primärfarbe für Sektions-Überschriften */
-    border-bottom: 1px solid #e9ecef; /* Dezente Trennlinie */
+    color: #007bff;
+    border-bottom: 1px solid #e9ecef;
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
 }
@@ -64,81 +56,68 @@ main.container {
 
 .content-section h4 {
     font-size: 1.25rem;
-    border-bottom: none; /* Kein Rand unter H4 */
+    border-bottom: none;
     padding-bottom: 0;
     margin-bottom: 1rem;
 }
 
-
-/* Anpassungen für Klassen Cards */
 #klassen-container .card {
-    border-color: #007bff; /* Primärfarbe für Klassen-Card Rand */
+    border-color: #007bff;
 }
 
 #klassen-container .card-body {
-    /* Standard Bootstrap Card Body Styling */
+    /* Nutzt standardmässig Bootstrap Card Body-Styling */
 }
 
 #klassen-container .card-title {
-    color: #007bff; /* Primärfarbe für Klassen Titel */
+    color: #007bff;
 }
 
-/* Optional: Hover-Effekt für die View/Delete Buttons */
-.btn-info:hover {
-    opacity: 0.9;
-}
-.btn-danger:hover {
-    opacity: 0.9;
-}
+.btn-info:hover,
+.btn-danger:hover,
 .btn-success:hover {
     opacity: 0.9;
 }
 
-
-/* Anpassungen für Listen (Voci Sets & Schüler) */
 .list-group-item {
-    border-color: #e9ecef; /* Heller Rand */
-    background-color: #f8f9fa; /* Sehr heller Hintergrund für Listenelemente */
-     transition: background-color 0.2s ease; /* Leichter Hover-Effekt */
+    border-color: #e9ecef;
+    background-color: #f8f9fa;
+     transition: background-color 0.2s ease;
 }
 
 .list-group-item:hover {
-     background-color: #e2e6ea; /* Etwas dunkler beim Hover */
+     background-color: #e2e6ea;
 }
 
-/* Stil für Add Buttons */
 .add-button {
-    /* Nutzt Standard Bootstrap Button Styling */
-     display: inline-flex; /* Icons und Text nebeneinander */
+    /* Nutzt standardmässig Bootstrap Button-Styling */
+     display: inline-flex; /* Sorgt dafür, dass Icon und Text nebeneinander ausgerichtet werden */
     align-items: center;
-     gap: 0.5rem; /* Abstand Icon und Text */
+     gap: 0.5rem;
 }
 
-/* Stil für Close Buttons in Detail-Divs */
 .close-button {
-     /* Nutzt Standard Bootstrap Button Styling */
+     /* Nutzt standardmässig Bootstrap Button-Styling */
 }
 
-/* Feinabstimmung für Icons in Buttons */
+/* Standard-Abstand für Icons in Buttons */
 .btn .fas,
 .btn .far,
 .btn .fa {
-    margin-right: 0.5rem; /* Standard Abstand */
-     /* Setze margin-right: 0 für Buttons, die nur ein Icon haben */
+    margin-right: 0.5rem;
 }
 
-/* Anpassung für Icon in addClassStudentButton */
+/* Spezifischer Abstand für Icon im addClassStudentButton (falls vom Standard abweichend nötig) */
 #addClassStudentButton .fas {
     margin-right: 0.5rem;
 }
 
-/* Anpassung für Icons in delete-word-button & delete-student-button */
+/* Kein Abstand rechts für Icons, die alleine im Button stehen */
 .delete-word-button .fas,
 .delete-student-button .fas {
-    margin-right: 0; /* Kein Abstand, da Icon allein */
+    margin-right: 0;
 }
 
-/* Modal Styling (Bootstrap Standard ist gut) */
 .modal-header {
     border-bottom-color: #e9ecef;
 }
@@ -147,28 +126,26 @@ main.container {
     border-top-color: #e9ecef;
 }
 
-/* Anpassung des Dropdown-Buttons im Voci Set Bereich */
 #dropdownExistingWordsButton {
-    /* Standard Bootstrap Styling */
+    /* Nutzt standardmässig Bootstrap Dropdown Button-Styling */
 }
 
 #existing-words-dropdown .dropdown-item {
-     /* Standard Bootstrap Styling */
-     padding-right: 3rem; /* Platz für den Lösch-Button */
-     position: relative; /* Für absolute Positionierung des Buttons */
+     /* Nutzt standardmässig Bootstrap Dropdown Item-Styling */
+     padding-right: 3rem; /* Zusätzlicher Platz rechts für den Lösch-Button */
+     position: relative; /* Wird für die absolute Positionierung des Kind-Elements (Lösch-Button) benötigt */
 }
 
-/* Positionierung des Lösch-Buttons im Dropdown Item */
+/* Positionierung des Lösch-Buttons innerhalb des Dropdown Items */
 #existing-words-dropdown .delete-word-button {
     position: absolute;
     top: 50%;
     right: .5rem;
-    transform: translateY(-50%);
-    padding: .125rem .25rem; /* Kleineres Padding */
+    transform: translateY(-50%); /* Vertikal zentrieren */
+    padding: .125rem .25rem;
 }
 
-
-/* Anpassung des Lösch-Buttons im Schüler List Item */
+/* Styling für den Lösch-Button im Schüler List Item */
 #class-students-list .list-group-item .delete-student-button {
-    padding: .25rem .5rem; /* Standard btn-sm Padding */
+    padding: .25rem .5rem; /* Entspricht oft btn-sm Padding */
 }

@@ -1,14 +1,9 @@
-/* Basis-Stile direkt aus teacher.css übernommen */
+/* Basis-Stile */
 body {
     font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #eef5f9;
-    background-image:
-        repeating-linear-gradient(45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px),
-        repeating-linear-gradient(-45deg, rgba(178, 235, 242, 0.2) 0, rgba(178, 235, 242, 0.2) 10px, transparent 10px, transparent 20px);
-    background-position: 0 0, 0 0;
-    background-size: 40px 40px;
+    background-color: #ffffff;
     color: #343a40;
     line-height: 1.6;
 }
@@ -28,7 +23,7 @@ body {
 }
 
 main.container {
-     /* Standard Bootstrap Container */
+     /* Nutzt Bootstrap Container-Styling */
 }
 
 .content-section {
@@ -40,9 +35,13 @@ main.container {
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
 }
 
-/* Detail-Sections standardmäßig verstecken */
+/* Detail-Sektionen initial verstecken (werden per JS gesteuert) */
 .detail-section {
-    display: none;
+    display: none !important; /* Wichtig, um andere display-Regeln zu überschreiben */
+}
+/* Klasse zum Anzeigen der aktiven Detail-Sektion */
+.detail-section.active-section {
+    display: block !important;
 }
 
 .content-section h2,
@@ -69,7 +68,7 @@ main.container {
     margin-bottom: 1rem;
 }
 
-/* Hover-Effekte etc. wie bei Teacher */
+/* Allgemeine Hover-Effekte für Buttons */
 .btn-info:hover, .btn-danger:hover, .btn-success:hover, .btn-warning:hover, .btn-primary:hover, .btn-outline-primary:hover, .btn-outline-success:hover {
     opacity: 0.9;
 }
@@ -79,210 +78,189 @@ main.container {
     background-color: #f8f9fa;
     transition: background-color 0.2s ease;
 }
+/* Hover-Effekt nur für normale Listenelemente */
 .list-group-item:hover:not(.disabled):not(.list-group-item-danger):not(.list-group-item-warning) {
      background-color: #e2e6ea;
 }
 
-/* Buttons mit Icons */
+/* Styling für Buttons mit Icons */
 .add-button {
      display: inline-flex;
     align-items: center;
      gap: 0.5rem;
 }
+/* Standard-Abstand rechts vom Icon */
 .btn .fas {
     margin-right: 0.5rem;
 }
-/* Kein rechter Abstand für Icons in kleinen Action-Buttons (falls benötigt) */
-.close-button .fas, .delete-button .fas { /* Beispiel */
+/* Kein Abstand für Icons in Close/Delete Buttons (wenn Icon alleine steht) */
+.close-button .fas, .delete-button .fas {
     margin-right: 0;
 }
+/* Spezifischer Abstand für Icon im "Nächster Satz"-Button (Icon rechts) */
+#nextContextSentenceButton .fas {
+     margin-left: 0.5rem;
+     margin-right: 0;
+}
 
-/* Modals (falls welche hinzukommen) */
+/* Modal Styling */
 .modal-header { border-bottom-color: #e9ecef; }
 .modal-footer { border-top-color: #e9ecef; }
 
 /* --- Anpassungen/Ergänzungen für die Studentenseite --- */
 
-/* VociSet Karten im Stil der Klassen-Karten */
+/* VociSet Karten Styling */
 .vociset-card {
-    border-color: #007bff; /* Gleiche Farbe wie Klassen-Karten */
+    border: 2px solid transparent;
+    border-radius: .5rem;
     cursor: pointer;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.3s ease, background-color 0.3s ease;
-    height: 100%;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+    height: 100%; /* Sorgt dafür, dass Karten in einer Reihe gleich hoch sind */
 }
-.vociset-card .card-body {
+.vociset-card:hover {
+    border-color: #a0cfff;
+    box-shadow: 0 .2rem .4rem rgba(0,0,0,.075);
+    transform: translateY(-2px); /* Leichter "Heben"-Effekt beim Hover */
+}
+
+/* Visuelle Hervorhebung der aktuell ausgewählten VociSet Karte */
+section#vocisets-section .vociset-card.active {
+    border-color: #007bff !important;
+    background-color: #e7f0ff !important;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+    transform: none !important; /* Hover-Transformation zurücksetzen */
+}
+
+.vociset-card .card-body { display: flex; flex-direction: column; } /* Erlaubt das Positionieren des Progressbereichs unten */
+.vociset-card .card-title { color: #007bff; }
+.vociset-card.active .card-title { font-weight: bold; }
+.vociset-card .card-text { flex-grow: 1; font-size: 0.9em; color: #6c757d; } /* Nimmt verfügbaren Platz ein */
+
+/* Container für Fortschrittsbalken und Zähler innerhalb der Karte */
+.progress-section {
+    margin-top: auto; /* Schiebt diesen Bereich an den unteren Rand der Card-Body */
+    padding-top: 0.75rem;
+}
+
+/* Anzeige für Richtig/Falsch Zähler über dem Fortschrittsbalken */
+.count-display {
     display: flex;
-    flex-direction: column;
-}
-.vociset-card .card-title {
-    color: #007bff; /* Gleiche Farbe wie Klassen-Titel */
-}
-.vociset-card .card-text {
-    flex-grow: 1; /* Schiebt Progress nach unten */
-    font-size: 0.9em;
+    justify-content: space-between;
+    font-size: 0.8em;
     color: #6c757d;
+    margin-bottom: 0.25rem;
 }
-.vociset-card .progress {
-    height: 18px; /* Wie Statistik-Progress */
-    font-size: 0.8rem;
+.count-display .correct-count {
+    color: #198754; /* Grün */
+    font-weight: 500;
 }
-.vociset-card .progress-bar {
-    font-size: 0.75em;
-    font-weight: bold;
-    color: white;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: width 0.6s ease;
+.count-display .incorrect-count {
+     color: #dc3545; /* Rot */
+     font-weight: 500;
 }
+.count-display .fas {
+    margin-right: 0.25rem;
+}
+
+/* Styling für den Fortschrittsbalken in der Karte */
+.vociset-card .progress { height: 18px; font-size: 0.8rem; background-color: #e9ecef; }
+.vociset-card .progress-bar { font-size: 0.75em; font-weight: bold; color: white; text-shadow: 1px 1px 1px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; transition: width 0.6s ease; }
+/* Versteckt den Text im Fortschrittsbalken bei sehr kleinen Werten (verhindert Überlappung) */
 .vociset-card .progress-bar[aria-valuenow="0"],
 .vociset-card .progress-bar[aria-valuenow="1"],
 .vociset-card .progress-bar[aria-valuenow="2"],
 .vociset-card .progress-bar[aria-valuenow="3"],
 .vociset-card .progress-bar[aria-valuenow="4"] {
-     color: transparent;
-     text-shadow: none;
-}
-
-/* Aktive VociSet Karte */
-.vociset-card.active {
-    border-width: 2px; /* Etwas dickerer Rand */
-    border-color: #0d6efd; /* Standard Bootstrap Blau */
-    background-color: #e7f0ff; /* Heller blauer Hintergrund */
-    box-shadow: 0 .25rem .5rem rgba(0,0,0,.1);
-}
-
-/* Auswahl-Info Box */
-#selected-set-info {
-    border: 1px dashed #ced4da;
-    font-style: italic;
-}
-#selected-set-info:not(:has(.text-muted)) { /* Wenn aktiv */
-     border-style: solid;
-     border-color: #0d6efd;
-     background-color: #e7f0ff;
-     font-style: normal;
-     font-weight: 500;
+    color: transparent;
+    text-shadow: none;
 }
 
 
-/* Lern-Items im Stil von List-Group Items */
-.learning-item {
-    /* Verwendet jetzt list-group-item Klasse direkt im JS */
-    display: flex; /* Beibehaltung des Flex-Layouts */
-    align-items: center;
-    gap: 1rem;
-    padding: .75rem 1.25rem; /* Standard list-group padding */
-}
-/* Überschreiben der Hover-Farbe für Lern-Items */
-.list-group-item.learning-item:hover {
-    background-color: #f8f9fa; /* Kein starker Hover */
-}
+/* Styling für einzelne Lern-Elemente (z.B. Wort + Eingabefeld) */
+.learning-item { display: flex; align-items: center; gap: 1rem; padding: .75rem 1.25rem; }
+.list-group-item.learning-item { background-color: #f8f9fa; } /* Überschreibt ggf. Standard .list-group-item */
+.list-group-item.learning-item:hover { background-color: #e2e6ea; }
 
-/* Styling für Validierungszustände des Lern-Items */
-.learning-item.is-correct {
-    background-color: #d1e7dd; /* Bootstrap Success Background */
-    border-color: #badbcc;
-}
-.learning-item.is-incorrect {
-    background-color: #f8d7da; /* Bootstrap Danger Background */
-    border-color: #f5c2c7;
-}
+/* Visuelles Feedback für korrekte/falsche Antworten auf Item-Ebene */
+.learning-item.is-correct { background-color: #d1e7dd !important; border-color: #badbcc !important; }
+.learning-item.is-incorrect { background-color: #f8d7da !important; border-color: #f5c2c7 !important; }
 
-.learning-item label {
-    font-weight: 500;
-    flex-basis: 150px;
-    flex-shrink: 0;
-    text-align: right;
-    color: #495057;
-    margin-bottom: 0; /* Wichtig bei Flex */
-}
+/* Layout innerhalb eines Lern-Items */
+.learning-item label { font-weight: 500; flex-basis: 150px; flex-shrink: 0; text-align: right; color: #495057; margin-bottom: 0; }
+.learning-item input[type="text"] { flex-grow: 1; background-color: white; border-color: #ced4da;}
+.learning-item input[type="text"]:focus { background-color: white; }
+.learning-item input[type="text"]:disabled { background-color: #e9ecef; cursor: not-allowed; color: #6c757d; border-style: dashed; }
 
-.learning-item input[type="text"] {
-    flex-grow: 1;
-}
-.learning-item input[type="text"]:disabled {
-    background-color: #e9ecef;
-    cursor: not-allowed;
-    color: #6c757d;
-}
+/* Anpassung für Bootstrap Validierungs-Stile innerhalb des Items */
+.learning-item .form-control.is-valid { border-color: #198754; background-image: none; background-color: white;}
+.learning-item .form-control.is-invalid { border-color: #dc3545; background-image: none; background-color: white;}
 
-.learning-item .form-control.is-valid {
-    border-color: #198754;
-    background-image: none;
-}
-.learning-item .form-control.is-invalid {
-     border-color: #dc3545;
-     background-image: none;
-}
-
-/* Indikator Icon */
-.check-indicator {
-    font-size: 1.25rem;
-    width: 25px;
-    text-align: center;
-    flex-shrink: 0;
-}
+/* Indikator-Icon (Haken/Kreuz) */
+.check-indicator { font-size: 1.25rem; width: 25px; text-align: center; flex-shrink: 0; }
 .check-indicator .fa-check-circle { color: #198754; }
 .check-indicator .fa-times-circle { color: #dc3545; }
-.check-indicator .fa-exclamation-triangle { color: #dc3545; } /* Fehler auch rot */
+.check-indicator .fa-exclamation-triangle { color: #dc3545; } /* Für Validierungsfehler? */
 
-/* Korrekte Antwort Anzeige */
-.correct-answer-display {
-    font-size: 0.9em;
-    color: #6c757d;
-    margin-left: 1rem;
-    font-style: italic;
-}
-.learning-item.is-incorrect .correct-answer-display strong {
-    color: #198754; /* Korrekte Antwort grün */
-    font-style: normal;
-    font-weight: bold;
-}
-/* Styling für ID-Fehler-Meldung */
-.learning-item .correct-answer-display:not(:has(strong)) {
-    color: #dc3545;
-    font-style: normal;
-    font-weight: bold;
-}
+/* Anzeige der korrekten Antwort bei falscher Eingabe */
+.correct-answer-display { font-size: 0.9em; color: #6c757d; margin-left: 1rem; font-style: italic; }
+.learning-item.is-incorrect .correct-answer-display strong { color: #198754; font-style: normal; font-weight: bold; }
+/* Hebt die korrekte Antwort auch hervor, wenn keine studentische Antwort gegeben wurde (z.B. bei Kontextvalidierungsfehler) */
+.learning-item .correct-answer-display:not(:has(strong)) { color: #dc3545; font-style: normal; font-weight: bold; }
 
-/* Responsive Anpassungen wie bei Teacher (können hier bleiben) */
+/* Kontext Lernseite Stile */
+/* Hervorhebung der Lücke im Satz */
+#context-sentence-display .context-blank {
+    font-weight: bold;
+    color: #0d6efd;
+    border-bottom: 2px dotted #0d6efd;
+    padding: 0 0.5em;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+/* Feedback-Bereich für Kontextaufgaben */
+#context-feedback-area .text-success { font-weight: bold; }
+#context-feedback-area .text-danger { font-weight: bold; }
+#context-feedback-area .correct-answer { margin-left: 0.5em; font-style: italic; color: #198754; }
+
+
+/* Responsive Anpassungen */
 @media (max-width: 768px) {
-    #action-buttons-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    #selected-set-info {
-        margin-left: 0 !important;
-        margin-top: 0.5rem;
-        text-align: center;
-    }
+    /* Aktionsbuttons untereinander auf mittleren Bildschirmen */
+    #action-buttons-container { flex-direction: column; align-items: stretch; }
 }
 @media (max-width: 576px) {
+    /* Anpassungen für kleine Bildschirme */
     .site-header h1 { font-size: 1.4rem; }
     .content-section h2 { font-size: 1.5rem; }
     .content-section h3 { font-size: 1.3rem; }
 
+    /* Lern-Items untereinander anordnen für bessere mobile Darstellung */
     .learning-item {
         flex-direction: column;
         align-items: stretch;
         gap: 0.5rem;
-        position: relative;
+        position: relative; /* Für absolute Positionierung des Check-Indikators */
     }
     .learning-item label {
         text-align: left;
         margin-bottom: 0.25rem;
-        flex-basis: auto;
+        flex-basis: auto; /* Breite zurücksetzen */
     }
+    /* Check-Indikator oben rechts positionieren */
     .learning-item .check-indicator {
-       position: absolute;
-       top: .75rem; /* Anpassen an list-group padding */
-       right: 1rem;
+        position: absolute;
+        top: .75rem;
+        right: 1rem;
     }
-     .learning-item .correct-answer-display {
+    /* Anzeige der korrekten Antwort unter dem Inputfeld */
+    .learning-item .correct-answer-display {
         margin-left: 0;
         margin-top: 0.25rem;
-        width: calc(100% - 35px); /* Platz für Indikator lassen */
+        width: calc(100% - 35px); /* Platz für den Indikator lassen */
     }
+
+    /* Textgrößen für Kontextaufgaben anpassen */
+    #context-sentence-display { font-size: 1.1rem; }
+    #context-answer-input { font-size: 1rem; }
 }
