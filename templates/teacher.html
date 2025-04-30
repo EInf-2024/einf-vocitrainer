@@ -5,9 +5,9 @@
     <title>Lehrer Seite</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Font Awesome -->
+    <!-- Font Awesome für Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Custom CSS -->
+    <!-- Eigene CSS-Datei -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">
 </head>
 <body>
@@ -21,156 +21,122 @@
     </header>
 
     <main class="container mt-4">
-        <!-- Klassen Section -->
+        <!-- Klassen Übersicht -->
         <section id="klassen-section" class="content-section">
             <h2>Klassen</h2>
-            <div id="klassen-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-3">
-                <!-- Klassen-Cards werden hier eingefügt -->
-            </div>
+            <!-- Klassen-Cards werden hier per JS eingefügt -->
+            <div id="klassen-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-3"></div>
             <button id="addKlasseButton" class="btn btn-primary add-button">
                 <i class="fas fa-plus"></i> Klasse hinzufügen
             </button>
         </section>
 
-        <!-- Klassen Details Section (standardmäßig versteckt) -->
-        <section id="class-details-section" class="content-section detail-section">
-            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap"> <!-- flex-wrap für kleinere Screens -->
-                <h3 class="me-3">Klasse: <span id="class-details-name"></span></h3>
-                <div class="btn-group" role="group" aria-label="Klassenaktionen"> <!-- Button Group für bessere Struktur -->
+        <!-- Klassen Details (standardmäßig versteckt, wird per JS angezeigt) -->
+        <section id="class-details-section" class="content-section detail-section" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+                <h3 class="me-3">Klasse: <span id="class-details-name"></span></h3> <!-- Klassenname wird hier angezeigt -->
+                <div class="btn-group" role="group" aria-label="Klassenaktionen">
                     <button id="addClassStudentButton" class="btn btn-success btn-sm add-button">
                         <i class="fas fa-user-plus"></i> Schüler hinzufügen
                     </button>
-                    <button id="generatePasswordsButton" class="btn btn-warning btn-sm ms-2"> <!-- Neuer Button -->
+                    <button id="generatePasswordsButton" class="btn btn-warning btn-sm ms-2">
                         <i class="fas fa-key"></i> Neue Passwörter generieren
                     </button>
                 </div>
             </div>
              <h4 class="mb-2">Schülerliste</h4>
-            <ul id="class-students-list" class="list-group mb-3">
-                <!-- Schülerliste wird hier eingefügt -->
-            </ul>
+             <!-- Schülerliste wird hier per JS eingefügt -->
+            <ul id="class-students-list" class="list-group mb-3"></ul>
             <button id="closeClassDetailsSection" class="btn btn-secondary close-button">Schliessen</button>
         </section>
 
-        <!-- Voci Sets Section -->
+        <!-- Voci Sets Übersicht -->
         <section id="voci-sets-section" class="content-section">
             <h2>Voci Sets</h2>
-            <div id="voci-sets-container" class="list-group mb-3">
-                <!-- Voci Sets Liste wird hier eingefügt -->
-            </div>
+             <!-- Voci Sets Liste wird hier per JS eingefügt -->
+            <div id="voci-sets-container" class="list-group mb-3"></div>
             <button id="addVociSetButton" class="btn btn-success mt-2 add-button">
                 <i class="fas fa-plus"></i> Voci Set hinzufügen
             </button>
         </section>
 
-        <!-- NEUE SEKTION: Voci Set Statistiken (standardmäßig versteckt) -->
-        <section id="vociset-statistics-section" class="content-section detail-section">
+        <!-- Voci Set Statistiken (standardmäßig versteckt) -->
+        <section id="vociset-statistics-section" class="content-section detail-section" style="display: none;">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                 <h3>Statistik für Voci Set: <span id="stats-set-name" class="fw-bold"></span></h3>
+                 <h3>Statistik für Voci Set: <span id="stats-set-name" class="fw-bold"></span></h3> <!-- Set-Name wird hier angezeigt -->
                  <button id="closeStatisticsSection" class="btn btn-secondary btn-sm close-button">Schliessen</button>
             </div>
-
-            <div id="stats-global-info" class="mb-3 alert alert-info">
-                <!-- Globale Infos wie Gesamtwortzahl werden hier eingefügt -->
-            </div>
-
-            <div id="stats-departments-container">
-                <!-- Statistiken pro Klasse werden hier von JS eingefügt -->
-                <!-- Beispielstruktur für eine Klasse:
-                <div class="mb-4 p-3 border rounded">
-                    <h4>Klasse: Klassenname</h4>
-                    <div class="mb-3">
-                        <h5>Klassendurchschnitt</h5>
-                        <div class="d-flex align-items-center mb-1">
-                            <span class="me-2 stats-label">Richtig: X</span>
-                            <div class="progress flex-grow-1" style="height: 20px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: Y%;" aria-valuenow="Y" aria-valuemin="0" aria-valuemax="100">Y%</div>
-                            </div>
-                            <span class="ms-2 stats-label">Falsch: Z</span>
-                        </div>
-                    </div>
-                    <h5>Einzelauswertung Schüler</h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <div class="fw-bold">Schülername</div>
-                            <div class="d-flex align-items-center mt-1">
-                               <span class="me-2 stats-label">Richtig: A</span>
-                               <div class="progress flex-grow-1" style="height: 15px;">
-                                   <div class="progress-bar bg-success" role="progressbar" style="width: B%;" aria-valuenow="B" aria-valuemin="0" aria-valuemax="100"></div>
-                               </div>
-                               <span class="ms-2 stats-label">Falsch: C</span>
-                            </div>
-                        </li>
-                        </ul>
-                </div>
-                 -->
-            </div>
+            <!-- Globale Infos wie Gesamtwortzahl -->
+            <div id="stats-global-info" class="mb-3 alert alert-info"></div>
+            <!-- Statistiken pro Klasse werden hier von JS eingefügt -->
+            <div id="stats-departments-container"></div>
+            <!-- Ladeanzeige für Statistiken -->
             <div id="stats-loading-indicator" class="text-center" style="display: none;">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Lade Statistiken...</span>
                 </div>
                 <p>Lade Statistiken...</p>
             </div>
-
         </section>
-        <!-- ENDE: Voci Set Statistiken Sektion -->
 
-
-        <!-- Voci Set Details/Edit Section (standardmäßig versteckt) -->
-        <section id="vociset-detail-section" class="content-section detail-section">
+        <!-- Voci Set Details/Bearbeiten (standardmäßig versteckt) -->
+        <section id="vociset-detail-section" class="content-section detail-section" style="display: none;">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                 <h3>Voci Set: <span id="vociset-detail-name-header"></span></h3>
+                 <h3>Voci Set: <span id="vociset-detail-name-header"></span></h3> <!-- Set-Name wird hier angezeigt -->
                  <button id="closeVocisetDetailSection" class="btn btn-secondary btn-sm close-button">Schliessen</button>
             </div>
 
-            <!-- Klassenzuweisung -->
+            <!-- Bereich für Klassenzuweisung -->
             <div class="mb-4 border p-3 rounded bg-light">
                  <h4 class="mb-3">Klassenzuweisung</h4>
                  <div class="mb-3">
                      <h5>Aktuell zugewiesen:</h5>
-                     <ul id="vociset-assigned-classes-list" class="list-group list-group-flush">
-                        <li class="list-group-item disabled" id="no-assigned-classes-message" style="display: none;">Dieses Voci Set ist keiner Klasse zugewiesen.</li>
-                     </ul>
+                     <!-- Liste der zugewiesenen Klassen -->
+                     <ul id="vociset-assigned-classes-list" class="list-group list-group-flush"></ul>
+                     <!-- Meldung, falls keine Klassen zugewiesen sind -->
+                     <div id="no-assigned-classes-message" class="list-group-item disabled" style="display: none;">Dieses Voci Set ist keiner Klasse zugewiesen.</div>
                  </div>
                  <hr>
                  <div class="mt-3">
                      <h5>Neue Klasse zuweisen:</h5>
                      <div class="input-group">
+                        <!-- Dropdown zur Auswahl einer Klasse -->
                         <select class="form-select" id="assign-class-select">
                             <option selected disabled value="">-- Klasse auswählen --</option>
                         </select>
                         <button class="btn btn-outline-primary" type="button" id="assign-class-button">Zuweisen</button>
                     </div>
+                    <!-- Feedback zur Zuweisung -->
                     <div id="assign-class-feedback" class="form-text text-muted mt-1" style="min-height: 1.2em;"></div>
                  </div>
             </div>
 
-            <!-- Wörter Dropdown -->
+            <!-- Dropdown für vorhandene Wörter -->
             <div class="mb-3 dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownExistingWordsButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Wörter in <span id="vociset-detail-name-button"></span>
+                    Wörter in <span id="vociset-detail-name-button"></span> <!-- Set-Name im Button -->
                 </button>
-                <ul class="dropdown-menu" id="existing-words-dropdown" aria-labelledby="dropdownExistingWordsButton">
-                    <!-- Wörterliste wird hier eingefügt -->
-                </ul>
+                <!-- Wörterliste wird hier per JS eingefügt -->
+                <ul class="dropdown-menu" id="existing-words-dropdown" aria-labelledby="dropdownExistingWordsButton"></ul>
             </div>
 
             <hr class="my-3">
 
-            <!-- CSV Upload Bereich -->
+            <!-- Bereich für CSV Upload -->
             <section id="upload-words-section" class="mb-4 border p-3 rounded">
                 <h4>Wörter aus CSV hochladen</h4>
-                <p><small>Format: Eine Zeile pro Wortpaar, Deutsch in der ersten Spalte, Französisch in der zweiten, getrennt durch **Semikolon (;)**. Eine Kopfzeile wird ignoriert.</small></p>
+                <p><small>Format: Eine Zeile pro Wortpaar, Deutsch;Französisch (Semikolon-getrennt). Kopfzeile wird ignoriert.</small></p>
                 <div class="input-group">
                     <input type="file" class="form-control" id="csvFileInput" accept=".csv, text/csv">
                     <button class="btn btn-outline-success" type="button" id="uploadCsvButton">
                         <i class="fas fa-upload"></i> Hochladen & Hinzufügen
                     </button>
                 </div>
+                <!-- Feedback zum CSV Upload -->
                 <div id="csvUploadFeedback" class="mt-2" style="min-height: 1.5em;"></div>
             </section>
 
-            <!-- Manuelles Wort hinzufügen -->
+            <!-- Bereich zum manuellen Hinzufügen von Wörtern -->
             <section id="add-words-section" class="mb-3">
                 <h4>Wort manuell hinzufügen</h4>
                 <div class="row g-3">
@@ -186,11 +152,11 @@
                 <button id="addWordButton" class="btn btn-primary mt-3 add-button"><i class="fas fa-plus"></i> Wort hinzufügen</button>
             </section>
 
-        </section> <!-- END Voci Set Details Section -->
+        </section> <!-- Ende Voci Set Details -->
 
-    </main> <!-- END Main Container -->
+    </main> <!-- Ende Hauptcontainer -->
 
-    <!-- Modals -->
+    <!-- Modals für Pop-up Fenster -->
     <!-- Schüler Hinzufügen Modal -->
     <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
       <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="addStudentModalLabel">Schüler hinzufügen</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <form id="addStudentForm"> <div class="mb-3"> <label for="studentUsername" class="form-label">Benutzername des Schülers</label> <input type="text" class="form-control" id="studentUsername" required> </div> </form> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button> <button type="button" class="btn btn-primary" id="saveNewStudentButton">Speichern</button> </div> </div> </div>
@@ -204,9 +170,9 @@
        <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="addClassModalLabel">Neue Klasse erstellen</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <form id="addClassForm"> <div class="mb-3"> <label for="classNameInput" class="form-label">Name der Klasse</label> <input type="text" class="form-control" id="classNameInput" required placeholder="z.B. Französisch 8b"> </div> </form> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button> <button type="button" class="btn btn-primary" id="saveNewClassButton">Erstellen</button> </div> </div> </div>
     </div>
 
-    <!-- Bootstrap JS Bundle -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!-- Custom JS -->
+    <!-- Eigenes JavaScript für die Lehrer-Dashboard-Logik -->
     <script src="{{ url_for('static', filename='js/teacher.js') }}"></script>
 </body>
 </html>
