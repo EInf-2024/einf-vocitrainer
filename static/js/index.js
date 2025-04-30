@@ -24,9 +24,9 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
             // Leitet den Benutzer basierend auf der vom Server zurückgegebenen Rolle weiter
             if (data.role === "student") {
-                window.location.href = "/student"; // Zur Schüler-Ansicht
+                window.location.pathname += "/student"; // Zur Schüler-Ansicht
             } else if (data.role === "teacher") {
-                window.location.href = "/teacher"; // Zur Lehrer-Ansicht
+                window.location.pathname += "/teacher"; // Zur Lehrer-Ansicht
             }
             // Falls es weitere Rollen gäbe, müssten sie hier behandelt werden
         } else {
