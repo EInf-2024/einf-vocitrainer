@@ -9,7 +9,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
     try {
         // Sendet eine POST-Anfrage an den Server-Endpunkt /api/login
-        const response = await fetch("/api/login", {
+        const response = await fetch("api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json" // Teilt dem Server mit, dass JSON-Daten gesendet werden

@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
         vocisetsContainer.innerHTML = '<div class="col-12 text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-2">Lade Vokabelsets...</p></div>';
         disableActionButtons();
         try {
-            const data = await fetchData("/api/vocabulary-sets");
+            const data = await fetchData("api/vocabulary-sets");
             vocisetsContainer.innerHTML = "";
             if (!data.sets || data.sets.length === 0) { vocisetsContainer.innerHTML = '<div class="col-12"><p class="text-muted text-center">Keine Vokabelsets verfügbar.</p></div>'; return; }
 
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
         showSection(learnPage); flashcardsLearningContainer.innerHTML = ""; learnLoadingIndicator.classList.remove('d-none');
         if(learnSetTitle) learnSetTitle.textContent = selectedVociSetLabel; checkAnswersButton.disabled = true;
         try {
-            currentSetDataForLearning = await fetchData(`/api/vocabulary-sets/${selectedVociSetId}`); learnLoadingIndicator.classList.add('d-none');
+            currentSetDataForLearning = await fetchData(`api/vocabulary-sets/${selectedVociSetId}`); learnLoadingIndicator.classList.add('d-none');
             if (!currentSetDataForLearning.words || currentSetDataForLearning.words.length === 0) { flashcardsLearningContainer.innerHTML = '<p class="list-group-item text-muted">Keine Vokabeln.</p>'; checkAnswersButton.disabled = true; return; }
             const shuffledWords = [...currentSetDataForLearning.words].sort(() => Math.random() - 0.5);
             shuffledWords.forEach((word) => {
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
             item.classList.remove('is-correct', 'is-incorrect'); input.classList.remove('is-valid', 'is-invalid'); indicator.innerHTML = ''; correctAnswerDisplay.classList.add('d-none'); correctAnswerDisplay.textContent = '';
             if (!userAnswer) {/* Leer ignorieren */} else {
                 const numericWordId = parseInt(wordId, 10); if (isNaN(numericWordId)) { console.error(`ID ${wordId} ungültig`); return; }
-                const url = `/api/vocabulary-sets/${selectedVociSetId}/words/${numericWordId}/log`; const payload = { answer: userAnswer };
+                const url = `api/vocabulary-sets/${selectedVociSetId}/words/${numericWordId}/log`; const payload = { answer: userAnswer };
                 const promise = fetchData(url, { method: 'PATCH', body: JSON.stringify(payload) })
                     .then(result => {
                         if (result.isCorrect) { item.classList.add('is-correct'); input.classList.add('is-valid'); indicator.innerHTML = '<i class="fas fa-check-circle text-success"></i>'; input.disabled = true; correctAnswerDisplay.classList.add('d-none'); }
@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
         showSection(contextLearnPage); contextContentArea.classList.add('d-none'); contextLoadingIndicator.classList.remove('d-none');
         if(contextLearnSetTitle) contextLearnSetTitle.textContent = selectedVociSetLabel; contextNoSentences.classList.add('d-none'); resetContextUI();
         try {
-            const data = await fetchData(`/api/vocabulary-sets/${selectedVociSetId}/generate-context-sentences`); contextLoadingIndicator.classList.add('d-none');
+            const data = await fetchData(`api/vocabulary-sets/${selectedVociSetId}/generate-context-sentences`); contextLoadingIndicator.classList.add('d-none');
             if (!data.contextSentences || data.contextSentences.length === 0) { contextNoSentences.classList.remove('d-none'); contextContentArea.classList.remove('d-none'); contextSentenceContainer.classList.add('d-none'); nextContextSentenceButton.disabled = true; return; }
             contextSentences = data.contextSentences; currentSentenceIndex = 0; displayCurrentContextSentence(); contextContentArea.classList.remove('d-none');
         } catch (error) { console.error("Fehler Kontextladen:", error); contextLoadingIndicator.classList.add('d-none'); contextContentArea.classList.remove('d-none'); contextNoSentences.textContent = `Fehler: ${error.message}`; contextNoSentences.classList.remove('d-none', 'text-muted'); contextNoSentences.classList.add('text-danger'); contextSentenceContainer.classList.add('d-none'); }
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
         else { contextAnswerInput.classList.add('is-invalid'); contextFeedbackArea.innerHTML = `Falsch. Richtig: <strong class="correct-answer">${correctAnswer}</strong>`; contextFeedbackArea.className = 'mt-2 text-danger'; }
         if (currentContextWordId !== null && currentContextWordId !== undefined) {
             const numericWordId = parseInt(currentContextWordId, 10); if (isNaN(numericWordId)) { console.error(`Ungültige Kontext ID ${currentContextWordId}`); return; }
-            const url = `/api/vocabulary-sets/${selectedVociSetId}/words/${numericWordId}/log`; const payload = { answer: userAnswer };
+            const url = `api/vocabulary-sets/${selectedVociSetId}/words/${numericWordId}/log`; const payload = { answer: userAnswer };
             try { const result = await fetchData(url, { method: 'PATCH', body: JSON.stringify(payload) }); console.log(`Kontext geloggt ${currentContextWordId}. API: ${result.isCorrect}`); fetchVocabularySets(); }
             catch (error) { console.error(`Log Fehler Kontext ${currentContextWordId}:`, error); contextFeedbackArea.innerHTML += `<br><small class="text-muted">(Fehler: ${error.message})</small>`; }
         } else { console.error("Keine ID zum Loggen Kontext."); contextFeedbackArea.innerHTML += `<br><small class="text-muted">(Fehler intern.)</small>`; }
