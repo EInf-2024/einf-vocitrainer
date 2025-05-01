@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Erstellt eine neue Klasse über die API.
     async function createNewKlasse(className) {
-        const url = '/api/departments/create';
+        const url = 'api/departments/create';
         try {
             await fetchData(url, { method: 'POST', body: JSON.stringify({ label: className }) });
             alert(`Klasse "${className}" erfolgreich erstellt!`);
@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Erstellt ein neues Vokabelset über die API.
     async function createNewVociset(name) {
-        const url = '/api/vocabulary-sets/create';
+        const url = 'api/vocabulary-sets/create';
         try {
             const data = await fetchData(url, { method: 'POST', body: JSON.stringify({ label: name }) });
             alert(`Vokabelset "${data.label}" erfolgreich erstellt!`);
@@ -421,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Füllt das Dropdown-Menü zur Klassenzuweisung mit Klassen, die noch nicht zugewiesen sind.
     async function populateClassAssignmentDropdown(assignedIds = []) {
-        const url = '/api/departments'; // Endpunkt zum Abrufen aller Klassen.
+        const url = 'api/departments'; // Endpunkt zum Abrufen aller Klassen.
         assignClassSelect.innerHTML = '<option selected disabled value="">Lade Klassen...</option>'; // Ladezustand anzeigen.
         assignClassSelect.disabled = true;
         assignClassButton.disabled = true;
@@ -673,7 +673,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Lädt die Liste aller Klassen und zeigt sie an.
     async function loadKlassen() {
-        const url = '/api/departments';
+        const url = 'api/departments';
         try {
             const data = await fetchData(url);
             const depts = data.departments;
@@ -723,7 +723,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Lädt die Liste aller Vokabelsets und zeigt sie an.
     async function loadVociSets() {
-        const url = '/api/vocabulary-sets';
+        const url = 'api/vocabulary-sets';
         try {
             const data = await fetchData(url);
             const sets = data.sets;
