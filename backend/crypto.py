@@ -1,9 +1,14 @@
 import secrets
 import bcrypt
+import random
 
-# TODO: Does this need to be more secure?
-def generate_password(department_label: str, student_username: str) -> str:
-  return f"{department_label}_{student_username}"
+password_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?"
+password_length = (8, 10)
+def generate_password(_department_label: str, _student_username: str) -> str:
+  return "".join(random.choices(
+    password_chars,
+    k=random.randint(*password_length)
+  ))
 
 def hash_password(password: str) -> str:
   salt = bcrypt.gensalt()

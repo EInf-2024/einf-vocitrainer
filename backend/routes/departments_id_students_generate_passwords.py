@@ -32,7 +32,7 @@ def departments_id_students_generate_passwords(department_id: int, user_id: int,
     department_label = department['label']
     
     # Fetch students from the department
-    cursor.execute("SELECT id, username FROM mf_student WHERE department_id = %s", (department_id,))
+    cursor.execute("SELECT id, username, plaintext_password FROM mf_student WHERE department_id = %s", (department_id,))
     students = cursor.fetchall()
     cursor.nextset()
     
@@ -40,12 +40,16 @@ def departments_id_students_generate_passwords(department_id: int, user_id: int,
     for student in students:
       student_id = student['id']
       student_username = student['username']
-      student_password = crypto.generate_password(department_label, student_username)
-      student_password_hash = crypto.hash_password(student_password)
+      student_password = student['plaintext_password']
       
-      # Add the password to the database
-      cursor.execute("UPDATE mf_student SET password_hash = %s WHERE id = %s", (student_password_hash, student_id))
-      conn.commit()
+      # Create a new password if the student does not have one
+      if student_password is None:
+        student_password = crypto.generate_password(department_label, student_username)
+        student_password_hash = crypto.hash_password(student_password)
+      
+        # Add the password to the database
+        cursor.execute("UPDATE mf_student SET password_hash = %s, plaintext_password = %s WHERE id = %s", (student_password_hash, student_password, student_id))
+        conn.commit()
       
       # Append the student data to the response
       updated_students_response.append({
